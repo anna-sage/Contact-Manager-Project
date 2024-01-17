@@ -4,18 +4,34 @@
 	<script type="text/javascript" src="js/md5.js"></script>
 	<script type="text/javascript" src="js/code.js"></script>
     <link href="css/styles.css" rel="stylesheet">	
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=DM+Sans" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
 </head>
 
 <body>
 
+	<div id="nav">
+		<ul>
+			<li><a>Info</a></li>
+			<li><a>Register/Log In</a></li>
+		</ul>
+	</div>
+
 	<h1 id="title">We love COP 4331</h1>
 
+	<div id="info">
+		<h3 id="subtitle">A Simple Contact Manager</h3>
+		<p id="desc">
+			Allows users to log in and create, read, update, and delete (CRUD) contact information.
+		</p>
+	</div>
+
+
 	<div id="loginDiv">
-		<span id="inner-title">temporary -Flakkid/Andy</span>
+		<span id="inner-title">Enter login credentials</span>
 		<input type="text" id="loginName" placeholder="Username" /><br />
 		<input type="password" id="loginPassword" placeholder="Password"/><br />
-		<button type="button" id="loginButton" class="buttons" onclick="doLogin();"> Do It </button>
+		<button type="button" id="loginButton" class="buttons" onclick="doLogin();"> Login </button>
 		<span id="loginResult"></span>
 	</div>
 

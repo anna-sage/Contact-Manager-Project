@@ -1,4 +1,4 @@
-const urlBase = 'http://http://64.23.164.124/LAMPAPI';
+const urlBase = 'http://cop4331groupss.xyz/';
 const extension = 'php';
 
 let userId = 0;
@@ -46,7 +46,7 @@ function doLogin()
 
 				saveCookie();
 	
-				window.location.href = "color.html";
+				window.location.href = "contact.html";
 			}
 		};
 		xhr.send(jsonPayload);
