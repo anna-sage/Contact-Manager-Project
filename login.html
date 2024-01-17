@@ -13,18 +13,17 @@
 
 	<div id="nav">
 		<ul>
-			<li><a>Info</a></li>
-			<li><a href="login.html">Register/Log In</a></li>
+			<li><a href="index.html">Info</a></li>
+			<li><a>Register/Log In</a></li>
 		</ul>
 	</div>
 
-	<h1 id="title">C O S M O S</h1>
-	<h3 id="subtitle">A Simple Contact Manager</h3>
-
-	<div id="info">
-		<p id="desc">
-			Allows users to log in and create, read, update, and delete (CRUD) contact information.
-		</p>
+	<div id="loginDiv">
+		<span id="inner-title">Enter login credentials</span>
+		<input type="text" id="loginName" placeholder="Username" /><br />
+		<input type="password" id="loginPassword" placeholder="Password"/><br />
+		<button type="button" id="loginButton" class="buttons" onclick="doLogin();"> Login </button>
+		<span id="loginResult"></span>
 	</div>
 
 </body>
