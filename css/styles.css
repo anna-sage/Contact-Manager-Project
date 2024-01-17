@@ -1,16 +1,16 @@
 body 
 {
-    background: radial-gradient(circle at top, #008FC3 , #d3edc4)
+    background: radial-gradient(circle at top, #060c60 , #8c6c9d)
 }
 
 #title 
 {
-    font-size: 50px;
+    font-size: 70px;
     width: 100%;
     margin-top: 5%;
-    margin-bottom: 10%;
+    margin-bottom: 2%;
     text-align: center;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Trispace', sans-serif;
     color: #ffffff;
 }
 
@@ -67,8 +67,8 @@ body
     padding-bottom: 10%;
 	margin: auto;
 	margin-bottom: 50px;
-	background-color: #eee09a;
-	border: 2px solid #65f6c6;
+	background-color: #a5a295;
+    opacity: 70%;
 }
 
 #desc 
