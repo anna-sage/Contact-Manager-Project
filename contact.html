@@ -4,23 +4,45 @@
 	<script type="text/javascript" src="js/code.js"></script>
     <link href="css/styles.css" rel="stylesheet">	
     <link href="https://fonts.googleapis.com/css?family=DM+Sans" rel="stylesheet">
-	
-	<script type="text/javascript">
-	document.addEventListener('DOMContentLoaded', function() 
-	{
-		readCookie();
-	}, false);
-	</script>
+	<!--
+		<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function() 
+		{
+			readCookie();
+		}, false);
+		</script>	
+	-->
 	
 </head>
 <body>
+	<header>
+		<h3 style="font-family: 'Trispace', sans-serif;">COSMOS</h3>
+		<span id="userName"></span>
+		<nav>
+			<button type="button" id="logoutButton" class="buttons" onclick="doLogout();">Log out</button>
+		</nav>
+	</header>
 
-<h1 id="title">COP 4331 LAMP Stack Demo</h1>
+	<main>
+		<h1>CONTACTS</h1>
+		<div id="searchAddBar">
+			<button>+ Add</button>
+			<input type="search" placeholder="Search ...">
+			<button id="searchBtn" class="buttons">Search</button>
+		</div>
+		<div id="contactsDisplay">
 
-<div id="loggedInDiv">
-	<span id="userName"></span><br />
-	<button type="button" id="logoutButton" class="buttons" onclick="doLogout();"> Log Out </button>
-</div>
+		</div>
+	</main>
+
+<h1 id="title">Cosmos</h1>
+
+<!--
+	<div id="loggedInDiv">
+		<span id="userName"></span><br />
+		<button type="button" id="logoutButton" class="buttons" onclick="doLogout();"> Log Out </button>
+	</div>
+-->
 
 <div id="accessUIDiv">
 	<br />
