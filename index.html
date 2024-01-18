@@ -1,25 +1,47 @@
 <html>
 <head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 	<title>COP 4331 LAMP Stack Demo</title>
 	<script type="text/javascript" src="js/md5.js"></script>
 	<script type="text/javascript" src="js/code.js"></script>
-    <link href="css/styles.css" rel="stylesheet">	
+    <link href="css/index.css" rel="stylesheet">	
     <link href="https://fonts.googleapis.com/css?family=DM+Sans" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Trispace" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
 </head>
 
 <body>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
-	<div id="nav">
-		<ul>
-			<li><a>Info</a></li>
-			<li><a href="login.html">Register/Log In</a></li>
-		</ul>
+	<nav class="navbar navbar-expand-sm bg-light navbar-custom", id="nav">
+		<div class="container-fluid">
+			<ul class="navbar-nav mr-auto">
+				<li>
+					<a class="navbar-brand" href="index.html" style="font-family:'DM Sans';">
+						<img src="images/logo.png" alt="Logo" style="width:45px;" class="rounded-pill"> 
+						cosmos
+					</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav ms-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="index.html">Info</a>
+			  	</li>
+				<li class="nav-item">
+					<a class="nav-link" href="login.html"><i class="fa fa-fw fa-user"></i> Login/Register</a>
+			  	</li>
+			</ul>
+		  </div>
+	  </nav>
+
+	
+	<div id="branding">
+		<h1 id="title">cosmos</h1>
+		<h3 id="subtitle">A Simple Contact Manager</h3>
+		<img id="logo" src="images/logo.png" alt="Cosmos Logo">
 	</div>
-
-	<h1 id="title">C O S M O S</h1>
-	<h3 id="subtitle">A Simple Contact Manager</h3>
 
 	<div id="info">
 		<p id="desc">
