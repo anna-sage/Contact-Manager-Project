@@ -1,0 +1,74 @@
+body 
+{
+    background: radial-gradient(circle at top, #060c60 , #8c6c9d);
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.nav-link, .navbar-brand
+{
+    font-family: 'Comfortaa', sans-serif;
+    color: rgb(75, 12, 102);
+}
+
+.navbar-nav .nav-item.active .nav-link,
+.navbar-nav .nav-item:hover .nav-link {
+    color: white;
+    background-color: rgb(75, 12, 102);
+}
+
+#branding
+{
+    padding-bottom: 5%;
+}
+
+#title 
+{
+    font-size: 100px;
+    width: 100%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+    color: #ffffff;
+}
+
+#subtitle 
+{
+    font-size: 30px;
+    width: 100%;
+    text-align: center;
+    font-style: italic;
+    font-weight: bolder;
+    font-family: 'Comfortaa', sans-serif;
+    color: #ffffff;
+}
+
+#logo
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#info
+{
+	width: 80%;
+	padding: 15px;
+    padding-bottom: 10%;
+	margin: auto;
+	margin-bottom: 50px;
+	background-color: #a5a295;
+}
+
+#desc 
+{
+    font-size: 18px;
+    width: 100%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+    color: #000000;
+}

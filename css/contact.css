@@ -1,0 +1,178 @@
+body 
+{
+    background: radial-gradient(circle at top, #060c60 , #8c6c9d)
+}
+
+#title 
+{
+    font-size: 70px;
+    width: 100%;
+    margin-top: 5%;
+    margin-bottom: 2%;
+    text-align: center;
+    font-family: 'Trispace', sans-serif;
+    color: #ffffff;
+}
+
+#subtitle 
+{
+    font-size: 40px;
+    width: 100%;
+    margin-top: 2%;
+    text-align: center;
+    font-style: italic;
+    font-weight: bolder;
+    font-family: 'Comfortaa', sans-serif;
+    color: #ffffff;
+}
+
+#nav 
+{
+	background-image: url(https://t3.ftcdn.net/jpg/01/21/77/78/240_F_121777813_2D9oUTeYerqVNeJfNGd9btI3BO9JnfDg.jpg);
+	height: 50px;
+	margin-bottom: 4%;
+	text-align:center;
+}
+	
+#nav li 
+{
+	display: inline;
+	font-family: Optima, Segoe, "Segoe UI"
+}
+	
+#nav li a 
+{
+	color: black;
+	font-size: 35px;
+	text-align: center;
+	text-decoration: none;
+	font-weight: bold;
+	cursor: pointer;
+	padding-left: 65px;
+	padding-right: 65px;
+	padding-top: 14px;
+	padding-bottom: 20px;
+	
+}
+	
+#nav li a:hover 
+{
+	background-color: #ffffff;
+}
+
+#loggedInDiv
+{
+    font-size: 30px;
+    width: 70%;
+    margin-left: 15%;
+    padding: 25px;
+    background-color: #b2b2b2;
+}
+
+#accessUIDiv
+{
+    font-size: 30px;
+    width: 70%;
+    margin-left: 15%;
+    padding: 25px;
+    background-color: #b2b2b2;
+}
+
+.buttons
+{
+    font-size: 30px;
+    border-radius: 25px;
+    width: 50%;
+    margin-left: 25%;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.buttons:hover{
+    background-color: #00d5124f;
+    color: #FFFFFF;
+    opacity: 50%;
+}
+
+#loginName
+{
+	font-size: 30px;
+}
+#loginPassword
+{
+	font-size: 30px;
+}
+#searchText
+{
+	font-size: 30px;
+}
+#colorText
+{
+	font-size: 30px;
+}
+
+input[type="text"],input[type="password"]{
+    border-radius: 25px;
+    text-align: center;
+    width: 80%;
+    margin-left: 10%;
+    margin-bottom: 2%;
+    font-family: 'DM Sans', sans-serif;
+}
+
+#inner-title{
+    display: inline-block;
+    font-size: 0.8em;
+    width: 90%;
+    text-align: center;
+    margin-left: 5%;
+    margin-bottom: 2%;
+    font-family: 'DM Sans', sans-serif;
+    color: #95060a;
+}
+
+#loginResult{
+    display: inline-block;
+    font-size: 0.8em;
+    width: 90%;
+    text-align: center;
+    margin-left: 5%;
+    margin-bottom: 2%;
+    font-family: 'DM Sans', sans-serif;
+    color: #95060a;
+}
+
+#userName{
+    display: inline-block;
+    width: 80%;
+    margin-left: 10%;
+    text-align: center;
+}
+
+#logoutButton{
+    width: 20%;
+    margin-left: 40%;
+}
+
+select{
+    width: 30%;
+    margin-left: 35%;
+    margin-top: 2%;
+    font-size: 0.75em;
+    font-family: 'DM Sans', sans-serif;
+}
+
+#colorSearchResult{
+    display: none;
+}
+
+#colorAddResult{
+    display: inline-block;
+    font-size: 0.8em;
+    width: 90%;
+    text-align: center;
+    margin-left: 5%;
+    margin-top: 2%;
+    margin-bottom: 1%;
+    font-family: 'DM Sans', sans-serif;
+    color: #95060a;
+}
