@@ -9,6 +9,7 @@ body
 .nav-link, .navbar-brand
 {
     font-family: 'Comfortaa', sans-serif;
+    text-align: center;
     color: rgb(75, 12, 102);
 }
 
