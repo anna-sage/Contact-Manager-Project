@@ -1,8 +1,31 @@
 body 
 {
-    background: radial-gradient(circle at top, #060c60 , #8c6c9d)
+    background: radial-gradient(circle at top, #060c60 , #8c6c9d);
 }
 
+.navbar-brand {
+    font-family:'DM Sans';
+    color: rgb(75, 12, 102);
+}
+
+#contactsTitle {
+    text-align: center;
+    font-family: 'Trispace', sans-serif;
+    /* font-family: 'DM Sans', sans-serif; */
+    /* letter-spacing: 5px; */
+}
+
+#searchAddBar {
+    /* background-color: white; */
+    border-color: black;
+    font-family: 'DM Sans';
+    border-radius: 4cap 4cap 0 0;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 5px;
+}
+
+/*
 #navBarDiv {
     letter-spacing: 10px;
     font-family: 'Trispace', sans-serif;
@@ -34,10 +57,11 @@ body
 #nav 
 {
 	background-image: url(https://t3.ftcdn.net/jpg/01/21/77/78/240_F_121777813_2D9oUTeYerqVNeJfNGd9btI3BO9JnfDg.jpg);
-	/* height: 50px; */
+	height: 50px;
 	margin-bottom: 4%;
 	text-align:center;
 }
+
 	
 #nav li 
 {
@@ -64,7 +88,9 @@ body
 {
 	background-color: #ffffff;
 }
+*/
 
+/*
 #loggedInDiv
 {
     font-size: 30px;
@@ -185,3 +211,4 @@ select{
     font-family: 'DM Sans', sans-serif;
     color: #95060a;
 }
+*/

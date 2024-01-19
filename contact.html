@@ -25,16 +25,20 @@
 	<header>
 		<nav class="navbar navbar-expand-sm bg-light">
 			<div class="container-fluid">
-				<ul class="navbar-nav">
+				<ul class="navbar-nav flex-row">
 					<li class="nav-item">
 						<a href="contact.html" class="nav-link">
 							<img src="images/logo.png" alt="Logo" style="width:45px;" class="rounded-pill">
 						</a>
 					</li>
 					<li class="nav-item navbar-brand" style="font-family:'DM Sans';">
-						<a href="contact.html" class="nav-link">
-							<span id="siteName">cosmos</span>
-						</a>
+						<a href="contact.html" class="nav-link">cosmos</a>
+					</li>
+				</ul>
+				<ul class="navbar-nav flex-row">
+					<li class="nav-item">
+						<!-- todo: popup to allow user to log out? -->
+						<span>User</span>
 					</li>
 				</ul>
 			</div>
@@ -50,41 +54,37 @@
 	</header>
 
 	<main>
-		<div id="accessUIDiv" class="container justify-content-center">
-			<h1 class="container" style="border: 3px solid white">CONTACTS</h1>
-			<div id="searchAddBar" class="container row rounded justify-content-center bg-dark">
-				<button id="addBtn" type="button" class="btn float-start btn-outline-light text-light">+ Add</button>
-				<div class="input-group float-end col-8">
-					<input type="search" placeholder="Enter contact information" class="form-control">
-					<button id="searchBtn" class="btn btn-outline-light text-light" type="submit">Search</button>
-				</div>
+		<div id="accessUIDiv" class="justify-content-center" style="background-color: transparent;">
+			<div class="container justify-content-center" style="margin-top: 1cm;">
+				<h1 id="contactsTitle" class="container text-light">Contacts</h1>
+
+				<!-- Search and add navigation bar -->
+				<ul id="searchAddBar" class="nav">
+					<li class="nav-item">
+						<button id="addBtn" type="button" 
+						class="lightBtn btn float-start btn-outline-dark text-dark">+ Add</button>
+					</li>
+					<li class="nav-item">
+						<div class="input-group">
+							<input id="searchBar" type="search" placeholder="Enter contact information" class="form-control">
+							<button id="searchBtn" class="btn btn-outline-dark text-dark" type="submit">Search</button>
+						</div>
+					</li>
+				</ul>
 			</div>
-			<div id="contactsDisplay">
-	
+
+			<div id="contactsDisplay" class="container border">
+				<div class="d-flex flex-column my-2">
+					<div class="border my-1">
+						<span style="text-align: center;">contact 1</span>
+					</div>
+					<div class="border my-1">
+						<span style="text-align: center;">contact 2</span>
+					</div>
+				</div>
 			</div>
 		</div>
 	</main>
-
-<!--
-	<div id="loggedInDiv">
-		<span id="userName"></span><br />
-		<button type="button" id="logoutButton" class="buttons" onclick="doLogout();"> Log Out </button>
-	</div>
--->
-
-<div id="accessUIDiv">
-	<br />
-
-	<input type="text" id="searchText" placeholder="Color To Search For"/>
-	<button type="button" id="searchColorButton" class="buttons" onclick="searchColor();"> Search Color </button><br />
-	<span id="colorSearchResult"></span>
-	<p id="colorList">
-	</p><br /><br />
-
-	<input type="text" id="colorText" placeholder="Color To Add">
-	<button type="button" id="addColorButton" class="buttons" onclick="addColor();"> Add Color </button><br />
-	<span id="colorAddResult"></span>
-</div>
 
 </body>
 </html>
