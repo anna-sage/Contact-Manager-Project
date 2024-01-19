@@ -1,12 +1,39 @@
 body 
 {
     background: radial-gradient(circle at top, #060c60 , #8c6c9d);
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
 }
 
-.navbar-brand {
-    font-family:'DM Sans';
+.nav-link, .navbar-brand
+{
+    font-family: 'Comfortaa', sans-serif;
     color: rgb(75, 12, 102);
 }
+
+.navbar-nav .nav-item.active .nav-link,
+.navbar-nav .nav-item:hover .nav-link {
+    color: white;
+    background-color: rgb(75, 12, 102);
+}
+
+/*
+
+.nav-link, .navbar-brand
+{
+    font-family:'Comfortaa', sans-serif;
+    color: rgb(75, 12, 102);
+}
+
+.navbar-nav .nav-item.active .nav-link,
+.navbar-nav .nav-item:hover .nav-link 
+{
+    color: white;
+    background-color: rgb(75, 12, 102);
+}
+*/
+
 
 #contactsTitle {
     text-align: center;
@@ -53,16 +80,14 @@ body
     font-family: 'Comfortaa', sans-serif;
     color: #ffffff;
 }
-
+*/
 #nav 
 {
-	background-image: url(https://t3.ftcdn.net/jpg/01/21/77/78/240_F_121777813_2D9oUTeYerqVNeJfNGd9btI3BO9JnfDg.jpg);
-	height: 50px;
-	margin-bottom: 4%;
+	height: 60px;
 	text-align:center;
 }
 
-	
+/*	
 #nav li 
 {
 	display: inline;

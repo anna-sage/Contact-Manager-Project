@@ -22,34 +22,25 @@
 	
 </head>
 <body>
+	
 	<header>
-		<nav class="navbar navbar-expand-sm bg-light">
+		<nav class="navbar navbar-expand-sm bg-light" id="nav">
 			<div class="container-fluid">
 				<ul class="navbar-nav flex-row">
 					<li class="nav-item">
-						<a href="contact.html" class="nav-link">
+						<a href="contact.html" class="navbar-brand" style="color: rgb(75, 12, 102);">
 							<img src="images/logo.png" alt="Logo" style="width:45px;" class="rounded-pill">
+							cosmos
 						</a>
-					</li>
-					<li class="nav-item navbar-brand" style="font-family:'DM Sans';">
-						<a href="contact.html" class="nav-link">cosmos</a>
 					</li>
 				</ul>
 				<ul class="navbar-nav flex-row">
 					<li class="nav-item">
-						<!-- todo: popup to allow user to log out? -->
 						<span>User</span>
+						<button type="button" id="logoutButton" class="buttons" onclick="doLogout();">Log out</button>
 					</li>
 				</ul>
 			</div>
-				<!--
-				<img src="images/logo.png" alt="Logo" style="width:45px;" class="rounded-pill">
-				<h3 id="siteName" style="font-family: 'Trispace', sans-serif;">COSMOS</h3>
-				<span id="userName"></span>
-				-->
-				<!--
-				<button type="button" id="logoutButton" class="buttons" onclick="doLogout();">Log out</button>
-				-->
 		</nav>
 	</header>
 
