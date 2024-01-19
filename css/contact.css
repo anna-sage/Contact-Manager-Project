@@ -3,6 +3,11 @@ body
     background: radial-gradient(circle at top, #060c60 , #8c6c9d)
 }
 
+#navBarDiv {
+    letter-spacing: 10px;
+    font-family: 'Trispace', sans-serif;
+}
+
 #title 
 {
     font-size: 70px;
@@ -29,7 +34,7 @@ body
 #nav 
 {
 	background-image: url(https://t3.ftcdn.net/jpg/01/21/77/78/240_F_121777813_2D9oUTeYerqVNeJfNGd9btI3BO9JnfDg.jpg);
-	height: 50px;
+	/* height: 50px; */
 	margin-bottom: 4%;
 	text-align:center;
 }
@@ -91,6 +96,10 @@ body
     background-color: #00d5124f;
     color: #FFFFFF;
     opacity: 50%;
+}
+
+#addBtn:hover {
+    color: black;
 }
 
 #loginName
