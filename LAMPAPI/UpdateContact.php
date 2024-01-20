@@ -21,7 +21,7 @@ if ($conn->connect_error) {
 
     if ($result->num_rows > 0) {
         // Update the contact with the given ID
-        $stmt = $conn->prepare("UPDATE Contacts SET FirstName=?, LastName=?, Phone=?, Email=? WHERE ID=?");
+        $stmt = $conn->prepare("UPDATE Contacts SET First_Name=?, Last_Name=?, Phone=?, Email=? WHERE ID=?");
         $stmt->bind_param("sssss", $firstName, $lastName, $phone, $email, $contactId);
         $stmt->execute();
         $stmt->close();
