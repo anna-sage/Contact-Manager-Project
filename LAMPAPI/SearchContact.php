@@ -14,11 +14,11 @@ if ($conn->connect_error) {
     if (isset($inData["userId"])) {
         // Search for contacts of a specific user if userId is provided
         $userId = $inData["userId"];
-        $stmt = $conn->prepare("SELECT * FROM Contacts WHERE (FirstName LIKE ? OR LastName LIKE ? OR Phone LIKE ? OR Email LIKE ?) AND UserID = ?");
+        $stmt = $conn->prepare("SELECT * FROM Contacts WHERE (First_Name LIKE ? OR Last_Name LIKE ? OR Phone LIKE ? OR Email LIKE ?) AND UserID = ?");
         $stmt->bind_param("sssss", $searchTerm, $searchTerm, $searchTerm, $searchTerm, $userId);
     } else {
         // Search for contacts across all users if userId is not provided
-        $stmt = $conn->prepare("SELECT * FROM Contacts WHERE (FirstName LIKE ? OR LastName LIKE ? OR Phone LIKE ? OR Email LIKE ?)");
+        $stmt = $conn->prepare("SELECT * FROM Contacts WHERE (First_Name LIKE ? OR Last_Name LIKE ? OR Phone LIKE ? OR Email LIKE ?)");
         $stmt->bind_param("ssss", $searchTerm, $searchTerm, $searchTerm, $searchTerm);
     }
 
@@ -31,7 +31,7 @@ if ($conn->connect_error) {
             $searchResults .= ",";
         }
         $searchCount++;
-        $searchResults .= '{"FirstName":"' . $row["FirstName"] . '","LastName":"' . $row["LastName"] . '","Phone":"' . $row["Phone"] . '","Email":"' . $row["Email"] . '"}';
+        $searchResults .= '{"First_Name":"' . $row["First_Name"] . '","Last_Name":"' . $row["Last_Name"] . '","Phone":"' . $row["Phone"] . '","Email":"' . $row["Email"] . '"}';
     }
 
     if ($searchCount == 0) {
