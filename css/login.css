@@ -59,6 +59,10 @@ body
     opacity: 90%;
 }
 
+.buttons:active{
+    transform: scale(0.9);
+}
+
 #loginName, #loginPassword, #registerName, #registerPassword
 {
 	font-size: 30px;

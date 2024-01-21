@@ -56,23 +56,39 @@ body
     max-width: 500px;   
 }
 
-#info
+.card
 {
-	width: 80%;
-	padding: 15px;
-    padding-bottom: 10%;
-	margin: auto;
-	margin-bottom: 50px;
-	background-color: #a5a295;
+	margin-left: 2%;
+    margin-right: 2%;
+    margin-bottom: 12%;
+    box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.card:hover{
+    transform: scale(1.1);
+    box-shadow: 5px -5px 10px rgba(255, 255, 255, 0.4);
+}
+
+.card:hover .card-text
+{
+    display:block;
+}
+
+.card-title
+{
+    font-family: 'DM Sans', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.card-text
+{
+    display:none
 }
 
 #desc 
 {
-    font-size: 18px;
     width: 100%;
     margin-top: 2%;
-    margin-bottom: 2%;
-    text-align: center;
-    font-family: 'DM Sans', sans-serif;
-    color: #000000;
+    margin-bottom: 5%;
 }
