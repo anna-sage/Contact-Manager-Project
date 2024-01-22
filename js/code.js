@@ -47,6 +47,26 @@ function doLogin()
 				saveCookie();
 	
 				window.location.href = "contact.html";
+
+				// Display each contact associated with the user.
+				if (document.readyState !== 'loading') 
+				{
+					console.log('document is already ready, just execute code here');
+					for (const cont of jsonObject.contacts)
+					{
+						console.log(cont);
+					}
+				}
+				else
+				{
+					document.addEventListener("DOMContentLoaded", function()
+					{
+						for (const cont of jsonObject.contacts)
+						{
+							console.log(cont);
+						}
+					});
+				}
 			}
 		};
 		xhr.send(jsonPayload);
