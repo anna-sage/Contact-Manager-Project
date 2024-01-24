@@ -7,11 +7,6 @@ body
     background-attachment: fixed;
 }
 
-.rightNavItems > *
-{
-    margin-left: 1.5cap;
-}
-
 .nav-item, .navbar-brand
 {
     font-family: 'Comfortaa', sans-serif;
@@ -48,6 +43,12 @@ body
     width: 7%;
 }
 
+.icons 
+{
+    height: 50px;
+    width: 50px;
+}
+
 .contactBtns
 {
     color: rgb(75, 12, 102);
@@ -62,10 +63,4 @@ body
 {
     color: white;
     background-color: rgb(75, 12, 102);
-}
-
-.icons 
-{
-    height: 50px;
-    width: 50px;
 }

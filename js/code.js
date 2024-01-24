@@ -104,12 +104,12 @@ function loadContacts()
 					// Edit and delete buttons.
 					text += "<td class=\'contactIconArea\'>";
 					text += "<button class=\'contactBtns\'>";
-					text += "<span class=\'material-symbols-outlined\'>edit</span>"
+					text += "<span class=\'material-symbols-outlined\'>edit</span>";
 					text += "</button></td>";
 
 					text += "<td class=\'contactIconArea\'>";
 					text += "<button class=\'contactBtns\'>";
-					text += "<span class=\'material-symbols-outlined\'>delete</span>"
+					text += "<span class=\'material-symbols-outlined\'>delete</span>";
 					text += "</button></td>";
 
 					text += "</tr>";
