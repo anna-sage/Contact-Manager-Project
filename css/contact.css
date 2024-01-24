@@ -24,6 +24,12 @@ body
     background-color: rgb(75, 12, 102);
 }
 
+#nav 
+{
+	height: 60px;
+	text-align:center;
+}
+
 #contactsTitle {
     text-align: center;
     font-family: 'Trispace', sans-serif;
@@ -37,8 +43,29 @@ body
     padding-bottom: 5px;
 }
 
-#nav 
+.contactIconArea
 {
-	height: 60px;
-	text-align:center;
+    width: 7%;
+}
+
+.contactBtns
+{
+    color: rgb(75, 12, 102);
+    background-color: white;
+    border: 1px solid rgb(75, 12, 102);
+    border-radius: 4cap;
+    height: 50px;
+    width: 50px;
+}
+
+.contactBtns:hover
+{
+    color: white;
+    background-color: rgb(75, 12, 102);
+}
+
+.icons 
+{
+    height: 50px;
+    width: 50px;
 }
