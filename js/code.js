@@ -1,4 +1,4 @@
-const urlBase = 'http://cop4331groupss.xyz';
+const urlBase = 'http://cop4331groupss.xyz/LAMPAPI';
 const extension = 'php';
 
 let userId = 0;
@@ -21,7 +21,7 @@ function doLogin()
 //	var tmp = {login:login,password:hash};
 	let jsonPayload = JSON.stringify( tmp );
 	
-	let url = urlBase + '/LAMPAPI/Login.' + extension;
+	let url = urlBase + '/Login.' + extension;
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -34,6 +34,7 @@ function doLogin()
 			{
 				let jsonObject = JSON.parse( xhr.responseText );
 				userId = jsonObject.id;
+				console.log("after assignment " + userId);
 		
 				if( userId < 1 )
 				{		
@@ -45,6 +46,7 @@ function doLogin()
 				lastName = jsonObject.lastName;
 
 				saveCookie();
+				console.log("after saveCookie: " + userId);
 	
 				window.location.href = "contact.html";
 			}
@@ -54,6 +56,73 @@ function doLogin()
 	catch(err)
 	{
 		document.getElementById("loginResult").innerHTML = err.message;
+	}
+	console.log("after try catch block: " + userId);
+}
+
+// Loads in the contacts associated with a particular user.
+function loadContacts()
+{
+	console.log("at start of loadContacts: " + userId);
+	let tmp = {
+        search: "",
+        userId: userId
+    };
+
+    let jsonPayload = JSON.stringify(tmp);
+	
+    let url = urlBase + '/SearchContact.' + extension;
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+	try {
+		xhr.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+                let jsonObject = JSON.parse(xhr.responseText);
+                if (jsonObject.error) {
+                    console.log(jsonObject.error);
+                    return;
+                }
+
+				// Prepare data to be added to table rows.
+				let text = "";
+				for (let i = 0; i < jsonObject.results.length; i++)
+				{
+					text += "<tr id=\'row" + i + "\'>";
+	
+					// Profile picture.
+					text += "<td class=\'contactIconArea\'>";
+					text += "<img src=\'images/planeticon1.png\' alt=\'Default profile picture\' class=\'icons float-start\'></td>";
+	
+					// Contact information.
+					text += "<td>" + jsonObject.results[i].FirstName + "</td>";
+					text += "<td>" + jsonObject.results[i].LastName + "</td>";
+					text += "<td>" + jsonObject.results[i].Phone + "</td>";
+					text += "<td>" + jsonObject.results[i].Email + "</td>";
+
+					// Edit and delete buttons.
+					text += "<td class=\'contactIconArea\'>";
+					text += "<button class=\'contactBtns\'>";
+					text += "<span class=\'material-symbols-outlined\'>edit</span>"
+					text += "</button></td>";
+
+					text += "<td class=\'contactIconArea\'>";
+					text += "<button class=\'contactBtns\'>";
+					text += "<span class=\'material-symbols-outlined\'>delete</span>"
+					text += "</button></td>";
+
+					text += "</tr>";
+				}
+
+				// Add the contacts to the page.
+				document.getElementById("contactsBody").innerHTML = text;
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err) {
+		console.log(err.message);
 	}
 }
 
