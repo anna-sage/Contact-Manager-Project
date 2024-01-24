@@ -51,6 +51,7 @@ body
     margin-top: 8%;
     margin-left: 25%;
     font-family: 'DM Sans', sans-serif;
+    transition: 0.2s;
 }
 
 .buttons:hover{
