@@ -63,7 +63,6 @@ function doLogin()
 // Loads in the contacts associated with a particular user.
 function loadContacts()
 {
-	console.log("at start of loadContacts: " + userId);
 	let tmp = {
         search: "",
         userId: userId
