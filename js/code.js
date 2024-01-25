@@ -189,10 +189,10 @@ function addContact()
 		firstName: newFname,
 		lastName: newLname,
 		phone: newPhNum,
-		email: newEmail
+		email: newEmail,
+		userId: userId
 	};
 	let jsonPayload = JSON.stringify( tmp );
-	console.log(jsonPayload);
 
 	let url = urlBase + '/AddContact.' + extension;
 	
@@ -205,7 +205,7 @@ function addContact()
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				console.log("the api is working as intended");
+				loadContacts();
 			}
 		};
 		xhr.send(jsonPayload);
