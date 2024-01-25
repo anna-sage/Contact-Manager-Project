@@ -10,6 +10,7 @@ body
 .nav-item, .navbar-brand
 {
     font-family: 'Comfortaa', sans-serif;
+    text-align: center;
     color: rgb(75, 12, 102);
 }
 
@@ -19,10 +20,20 @@ body
     background-color: rgb(75, 12, 102);
 }
 
+.material-symbols-outlined
+{
+    vertical-align: middle;
+}
+
 #nav 
 {
 	height: 60px;
 	text-align:center;
+}
+
+#nav-user
+{
+    margin-right: 10%;
 }
 
 #contactsTitle {

@@ -5,6 +5,7 @@
 	<script type="text/javascript" src="js/code.js"></script>
 	<link href="css/contact.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=DM+Sans" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
 	<!-- Bootstrap -->
@@ -24,6 +25,7 @@
 			loadContacts();
 		}, false);
 	</script>
+
 </head>
 <body>
 	
@@ -40,15 +42,14 @@
 					</li>
 				</ul>
 				<!-- First name and logout button -->
-				<ul class="navbar-nav flex-row">
-					<li class="nav-item" style="font-size: 17px;">
-						<span id="navUser" class="me-2 mt-3">User</span>
-						<!-- <span class="material-symbols-outlined" style="align-self: center;">logout</span>Log out -->
+				<ul class="navbar-nav ms-auto">
+					<li class="nav-item">
+						<span id="navUser">User</span>
 					</li>
-					<li class="nav-item" style="font-size: 17px;">
-						<button id="logoutBtn" class="nav-link" type="button" onclick="doLogout();">
-							Log out
+					<li class="nav-item">
+						<button class="nav-link" type="button" id="logoutButton" onclick="doLogout();">
 							<span class="material-symbols-outlined">logout</span>
+							Log out
 						</button>
 					</li>
 				</ul>
