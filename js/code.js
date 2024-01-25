@@ -176,15 +176,25 @@ function doLogout()
 	window.location.href = "index.html";
 }
 
-function addColor()
+function addContact()
 {
-	let newColor = document.getElementById("colorText").value;
-	document.getElementById("colorAddResult").innerHTML = "";
+	let newFname = document.getElementById("addFname").value;
+	let newLname = document.getElementById("addLname").value;
+	let newPhNum = document.getElementById("addPhNum").value;
+	let newEmail = document.getElementById("addEmail").value;
 
-	let tmp = {color:newColor,userId,userId};
+	// document.getElementById("colorAddResult").innerHTML = "";
+
+	let tmp = {
+		firstName: newFname,
+		lastName: newLname,
+		phone: newPhNum,
+		email: newEmail
+	};
 	let jsonPayload = JSON.stringify( tmp );
+	console.log(jsonPayload);
 
-	let url = urlBase + '/AddColor.' + extension;
+	let url = urlBase + '/AddContact.' + extension;
 	
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -195,14 +205,14 @@ function addColor()
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				document.getElementById("colorAddResult").innerHTML = "Color has been added";
+				console.log("the api is working as intended");
 			}
 		};
 		xhr.send(jsonPayload);
 	}
 	catch(err)
 	{
-		document.getElementById("colorAddResult").innerHTML = err.message;
+		console.log("addContact API error:" + err.message);
 	}
 	
 }

@@ -16,14 +16,14 @@
 
 	<!-- Load in the contacts associated with the user. -->
 	
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		document.addEventListener('DOMContentLoaded', function()
 		{
 			readCookie();
 			document.getElementById("navUser").innerHTML = firstName;
 			loadContacts();
 		}, false);
-	</script>
+	</script> -->
 </head>
 <body>
 	
@@ -41,14 +41,14 @@
 				</ul>
 				<!-- First name and logout button -->
 				<ul class="navbar-nav flex-row">
-					<li class="nav-item rightNavItems" style="font-size: 17px;">
-						<span id="navUser" class="mr-2 my-auto">User</span>
+					<li class="nav-item" style="font-size: 17px;">
+						<span id="navUser" class="me-2 mt-3">User</span>
 						<!-- <span class="material-symbols-outlined" style="align-self: center;">logout</span>Log out -->
 					</li>
-					<li class="nav-item rightNavItems" style="font-size: 17px;">
-						<button class="nav-link" type="button" id="logoutButton" onclick="doLogout();">
-							<span class="material-symbols-outlined">logout</span>
+					<li class="nav-item" style="font-size: 17px;">
+						<button id="logoutBtn" class="nav-link" type="button" onclick="doLogout();">
 							Log out
+							<span class="material-symbols-outlined">logout</span>
 						</button>
 					</li>
 				</ul>
@@ -65,7 +65,7 @@
 				<ul id="searchAddBar" class="nav bg-light rounded-pill">
 					<li class="nav-item mt-2 mb-1 ms-4">
 						<button id="addBtn" type="button" 
-						class="btn btn-outline-dark rounded-pill">+ Add</button>
+						class="btn btn-outline-dark rounded-pill" data-bs-toggle="modal" data-bs-target="#addModal">+ Add</button>
 					</li>
 					<li class="nav-item mt-2 mb-1 me-4">
 						<div class="input-group">
@@ -74,7 +74,32 @@
 						</div>
 					</li>
 				</ul>
+
+				<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+					  <div class="modal-content">
+						<div class="modal-header">
+						  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+						  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						  </button>
+						</div>
+						<div class="modal-body">
+							<input id="addFname" type="text" placeholder="First name">
+							<input id="addLname" type="text" placeholder="Last name">
+							<input id="addPhNum" type="text" placeholder="555-555-5555">
+							<input id="addEmail" type="text" placeholder="example@email.com">
+						</div>
+						<div class="modal-footer">
+						  <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+						  <button type="button" class="btn btn-primary" onclick="addContact();">Submit</button>
+						</div>
+					  </div>
+					</div>
+				  </div>
 			</div>
+
+			<!-- Modal -->
 
 			<!-- Container for contacts -->
 			<div id="contactsDisplay" class="container">
@@ -93,6 +118,7 @@
 					<tbody id="contactsBody" class="container align-middle"></tbody>
 				</table>
 			</div>
+
 		</div>
 	</main>
 
