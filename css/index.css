@@ -19,6 +19,11 @@ body
     background-color: rgb(75, 12, 102);
 }
 
+.material-symbols-outlined
+{
+    vertical-align: middle;
+}
+
 #branding
 {
     padding-bottom: 5%;
