@@ -179,7 +179,7 @@ function addContact()
 {
 	let newFname = document.getElementById("addFname").value;
 	let newLname = document.getElementById("addLname").value;
-	let newphoneNum = document.getElementById("addphoneNum").value;
+	let newphoneNum = document.getElementById("addPhNum").value;
 	let newEmail = document.getElementById("addEmail").value;
 
 	// document.getElementById("colorAddResult").innerHTML = "";
