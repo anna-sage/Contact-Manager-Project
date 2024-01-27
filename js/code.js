@@ -216,14 +216,64 @@ function addContact()
 	
 }
 
-// Formats first or last name correctly.
-function nameFormat(input)
+function contactFormValidation()
 {
-	const capitalName = input.charAt(0).toUpperCase() + input.slice(1);
-	return capitalName;
-}
+	let fnameErr = lnameErr = phErr = emailErr = false;
 
-// todo phone formatting
+	let formElement = document.getElementById("addForm");
+	let fnameElement = document.getElementById("addFname");
+	let lnameElement = document.getElementById("addLname");
+	let phNumElement = document.getElementById("addPhNum");
+	let emailElement = document.getElementById("addEmail");
+
+	// Automatically capitalize the first and last names.
+	let fnameFormatted = fnameElement.value.charAt(0).toUpperCase() + fnameElement.value.slice(1);
+	let lnameFormatted = lnameElement.value.charAt(0).toUpperCase() + lnameElement.value.slice(1);
+	fnameElement.innerHTML = fnameFormatted;
+	lnameElement.innerHTML = lnameFormatted;
+	console.log("formatted name: " + fnameFormatted + " " + lnameFormatted);
+
+	// Validate the first name.
+	if (fnameElement.innerHTML == "")
+	{
+		fnameElement.classList.add("is-invalid");
+		console.log(fnameElement.classList.contains("is-invalid"));
+		fnameErr = true;
+	}
+
+	// Validate the phone number.
+	let phNum = phNumElement.value.replace(/\D/g,'');
+	let phRegex = /[(]?[0-9]{3}[)]?[-\.]?[0-9]{3}[-\.]?[0-9]{4}$/
+	console.log("phone number regex test: " + phRegex.test(phNum));
+	if (phNum == "" || phRegex.test(phNum) == false)
+	{
+		document.getElementById("addPhNum").classList.add("is-invalid");
+		console.log(document.getElementById("addPhNum").classList.contains("is-invalid"));
+		phErr = true;
+	}
+
+	// Format the phone number.
+	if (phErr == false)
+	{
+		phNum = phNum.substring(0, 10);
+		phNum = phNum.slice(0, 3) + "-" + phNum.slice(3, 6) + "-" + phNum.slice(6);
+		document.getElementById("addPhNum").innerHTML = phNum;
+		phNumElement.classList.add("is-valid");
+	}
+
+	// todo handle email
+
+	if ((fnameErr || phErr || emailErr) == true)
+	{
+		formElement.classList.add("was-validated");
+		return false;
+	}
+
+	formElement.classList.remove("was-validated");
+	// Clear fields
+	formElement.reset();
+	return true;
+}
 
 function searchColor()
 {
