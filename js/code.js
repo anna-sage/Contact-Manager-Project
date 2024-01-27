@@ -179,7 +179,7 @@ function addContact()
 {
 	let newFname = document.getElementById("addFname").value;
 	let newLname = document.getElementById("addLname").value;
-	let newPhNum = document.getElementById("addPhNum").value;
+	let newphoneNum = document.getElementById("addphoneNum").value;
 	let newEmail = document.getElementById("addEmail").value;
 
 	// document.getElementById("colorAddResult").innerHTML = "";
@@ -187,7 +187,7 @@ function addContact()
 	let tmp = {
 		firstName: newFname,
 		lastName: newLname,
-		phone: newPhNum,
+		phone: newphoneNum,
 		email: newEmail,
 		userId: userId
 	};
@@ -216,63 +216,47 @@ function addContact()
 	
 }
 
-function contactFormValidation()
+function validateContactForm(formId, phoneId, emailId)
 {
-	let fnameErr = lnameErr = phErr = emailErr = false;
+	let fnameErr = lnameErr = phoneErr = emailErr = false;
 
-	let formElement = document.getElementById("addForm");
-	let fnameElement = document.getElementById("addFname");
-	let lnameElement = document.getElementById("addLname");
-	let phNumElement = document.getElementById("addPhNum");
-	let emailElement = document.getElementById("addEmail");
-
-	// Automatically capitalize the first and last names.
-	let fnameFormatted = fnameElement.value.charAt(0).toUpperCase() + fnameElement.value.slice(1);
-	let lnameFormatted = lnameElement.value.charAt(0).toUpperCase() + lnameElement.value.slice(1);
-	fnameElement.innerHTML = fnameFormatted;
-	lnameElement.innerHTML = lnameFormatted;
-	console.log("formatted name: " + fnameFormatted + " " + lnameFormatted);
-
-	// Validate the first name.
-	if (fnameElement.innerHTML == "")
-	{
-		fnameElement.classList.add("is-invalid");
-		console.log(fnameElement.classList.contains("is-invalid"));
-		fnameErr = true;
-	}
+	let form = document.getElementById(formId);
+	let phone = document.getElementById(phoneId);
+	let email = document.getElementById(emailId);
 
 	// Validate the phone number.
-	let phNum = phNumElement.value.replace(/\D/g,'');
-	let phRegex = /[(]?[0-9]{3}[)]?[-\.]?[0-9]{3}[-\.]?[0-9]{4}$/
-	console.log("phone number regex test: " + phRegex.test(phNum));
-	if (phNum == "" || phRegex.test(phNum) == false)
+	let phoneNum = phone.value;
+	phoneNum = phoneNum.slice(0, 3) + "-" + phoneNum.slice(3, 6) + "-" + phoneNum.slice(6);
+	let phRegex = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/
+	if (phRegex.test(phoneNum) == false)
 	{
-		document.getElementById("addPhNum").classList.add("is-invalid");
-		console.log(document.getElementById("addPhNum").classList.contains("is-invalid"));
-		phErr = true;
+		phone.setCustomValidity("Invalid field.");
+		phoneErr = true;
 	}
 
-	// Format the phone number.
-	if (phErr == false)
+	// Validate the email.
+	let emailRegex = /^[a-zA-Z0-9_\-.]+@[a-z]+\.[a-z]+$/
+	if (emailRegex.test(email.value) == false)
 	{
-		phNum = phNum.substring(0, 10);
-		phNum = phNum.slice(0, 3) + "-" + phNum.slice(3, 6) + "-" + phNum.slice(6);
-		document.getElementById("addPhNum").innerHTML = phNum;
-		phNumElement.classList.add("is-valid");
+		email.setCustomValidity("Invalid field.");
+		emailErr = true;
 	}
 
-	// todo handle email
-
-	if ((fnameErr || phErr || emailErr) == true)
+	if ((fnameErr || phoneErr || emailErr) == true)
 	{
-		formElement.classList.add("was-validated");
+		form.classList.add("was-validated");
 		return false;
 	}
 
-	formElement.classList.remove("was-validated");
-	// Clear fields
-	formElement.reset();
 	return true;
+}
+
+function closeModalForm(modalId, formId)
+{
+	let form = document.getElementById(formId);
+	form.classList.remove("was-validated");
+	form.reset();
+	bootstrap.Modal.getInstance(document.getElementById(modalId)).hide();
 }
 
 function searchColor()
