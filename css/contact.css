@@ -38,6 +38,19 @@ body
     padding-bottom: 5px;
 }
 
+.searchAddItems
+{
+    color: rgb(75, 12, 102);
+    border: 5px solid rgb(75, 12, 102);
+}
+
+#searchAddBar button:hover
+{
+    background-color: rgb(75, 12, 102);
+    color: white;
+    border: 1px solid rgb(75, 12, 102);
+}
+
 .contactIconArea
 {
     width: 7%;

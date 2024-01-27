@@ -216,6 +216,14 @@ function addContact()
 	
 }
 
+// Converts a phone number to the expected format.
+function formatPhoneNumber(input)
+{
+	input = input.replace(/\D/g, '');
+	input = input.slice(0, 3) + "-" + input.slice(3, 6) + "-" + input.slice(6);
+	return input;
+}
+
 function validateContactForm(formId, phoneId, emailId)
 {
 	let fnameErr = lnameErr = phoneErr = emailErr = false;
@@ -226,16 +234,18 @@ function validateContactForm(formId, phoneId, emailId)
 
 	// Validate the phone number.
 	let phoneNum = phone.value;
-	phoneNum = phoneNum.slice(0, 3) + "-" + phoneNum.slice(3, 6) + "-" + phoneNum.slice(6);
-	let phRegex = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/
+	let phRegex = /^[(]?[0-9]{3}[)]?[-\.]?[0-9]{3}[-\.]?[0-9]{4}$/;
 	if (phRegex.test(phoneNum) == false)
 	{
 		phone.setCustomValidity("Invalid field.");
 		phoneErr = true;
 	}
 
+	// Format the phone number.
+	phone.value = formatPhoneNumber(phoneNum);
+
 	// Validate the email.
-	let emailRegex = /^[a-zA-Z0-9_\-.]+@[a-z]+\.[a-z]+$/
+	let emailRegex = /^[a-zA-Z0-9_\-.]+@[a-z]+\.[a-z]+$/;
 	if (emailRegex.test(email.value) == false)
 	{
 		email.setCustomValidity("Invalid field.");

@@ -65,12 +65,12 @@
 				<ul id="searchAddBar" class="nav bg-light rounded-pill">
 					<li class="nav-item mt-2 mb-1 ms-4">
 						<button id="addBtn" type="button" 
-						class="btn btn-outline-dark rounded-pill" data-bs-toggle="modal" data-bs-target="#addModal">+ Add</button>
+						class="btn btn-outline-dark rounded-pill searchAddItems" data-bs-toggle="modal" data-bs-target="#addModal">+ Add</button>
 					</li>
 					<li class="nav-item mt-2 mb-1 me-4">
 						<div class="input-group">
-							<input id="searchBar" type="search" placeholder="Enter contact information" class="form-control" style="border: 1px solid black">
-							<button id="searchBtn" class="btn btn-outline-dark" type="submit">Search</button>
+							<input id="searchBar" type="search" placeholder="Enter contact information" class="form-control searchAddItems" style="border: 1px solid black">
+							<button id="searchBtn" class="btn btn-outline-dark searchAddItems" type="submit">Search</button>
 						</div>
 					</li>
 				</ul>
@@ -100,8 +100,7 @@
 								</div>
 								<div class="mb-3">
 									<label for="addPhNum" class="form-label">Phone number</label>
-									<input id="addPhNum" type="tel" placeholder="ex. 555-555-5555" class="form-control"
-									oninput="this.value = this.value.replace(/\D/g, '');" required>
+									<input id="addPhNum" type="tel" placeholder="ex. 555-555-5555" class="form-control" required>
 									<div id="addPhNum-feedback" class="invalid-feedback">Valid phone number required.</div>
 								</div>
 								<div class="mb-3">

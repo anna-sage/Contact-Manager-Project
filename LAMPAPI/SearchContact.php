@@ -14,7 +14,7 @@ if ($conn->connect_error) {
     if (isset($inData["userId"])) {
         // Search for contacts of a specific user if userId is provided
         $userId = $inData["userId"];
-        $stmt = $conn->prepare("SELECT * FROM Contacts WHERE (First_Name LIKE ? OR Last_Name LIKE ? OR Phone LIKE ? OR Email LIKE ?) AND UserID = ?");
+        $stmt = $conn->prepare("SELECT * FROM Contacts WHERE (First_Name LIKE ? OR Last_Name LIKE ? OR Phone LIKE ? OR Email LIKE ?) AND UserID = ? ORDER BY First_Name");
         $stmt->bind_param("sssss", $searchTerm, $searchTerm, $searchTerm, $searchTerm, $userId);
     } 
 
