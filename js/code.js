@@ -216,6 +216,15 @@ function addContact()
 	
 }
 
+// Formats first or last name correctly.
+function nameFormat(input)
+{
+	const capitalName = input.charAt(0).toUpperCase() + input.slice(1);
+	return capitalName;
+}
+
+// todo phone formatting
+
 function searchColor()
 {
 	let srch = document.getElementById("searchText").value;
