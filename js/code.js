@@ -179,7 +179,7 @@ function addContact()
 {
 	let newFname = document.getElementById("addFname").value;
 	let newLname = document.getElementById("addLname").value;
-	let newPhNum = document.getElementById("addPhNum").value;
+	let newphoneNum = document.getElementById("addPhNum").value;
 	let newEmail = document.getElementById("addEmail").value;
 
 	// document.getElementById("colorAddResult").innerHTML = "";
@@ -187,7 +187,7 @@ function addContact()
 	let tmp = {
 		firstName: newFname,
 		lastName: newLname,
-		phone: newPhNum,
+		phone: newphoneNum,
 		email: newEmail,
 		userId: userId
 	};
@@ -216,14 +216,48 @@ function addContact()
 	
 }
 
-// Formats first or last name correctly.
-function nameFormat(input)
+function validateContactForm(formId, phoneId, emailId)
 {
-	const capitalName = input.charAt(0).toUpperCase() + input.slice(1);
-	return capitalName;
+	let fnameErr = lnameErr = phoneErr = emailErr = false;
+
+	let form = document.getElementById(formId);
+	let phone = document.getElementById(phoneId);
+	let email = document.getElementById(emailId);
+
+	// Validate the phone number.
+	let phoneNum = phone.value;
+	phoneNum = phoneNum.slice(0, 3) + "-" + phoneNum.slice(3, 6) + "-" + phoneNum.slice(6);
+	let phRegex = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/
+	if (phRegex.test(phoneNum) == false)
+	{
+		phone.setCustomValidity("Invalid field.");
+		phoneErr = true;
+	}
+
+	// Validate the email.
+	let emailRegex = /^[a-zA-Z0-9_\-.]+@[a-z]+\.[a-z]+$/
+	if (emailRegex.test(email.value) == false)
+	{
+		email.setCustomValidity("Invalid field.");
+		emailErr = true;
+	}
+
+	if ((fnameErr || phoneErr || emailErr) == true)
+	{
+		form.classList.add("was-validated");
+		return false;
+	}
+
+	return true;
 }
 
-// todo phone formatting
+function closeModalForm(modalId, formId)
+{
+	let form = document.getElementById(formId);
+	form.classList.remove("was-validated");
+	form.reset();
+	bootstrap.Modal.getInstance(document.getElementById(modalId)).hide();
+}
 
 function searchColor()
 {

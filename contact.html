@@ -82,29 +82,50 @@
 					  <div class="modal-content">
 						<div class="modal-header">
 						  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-						  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						  <button type="button" class="close" aria-label="Close" onclick="closeModalForm('addModal', 'addForm');">
 							<span aria-hidden="true">&times;</span>
 						  </button>
 						</div>
 						<div class="modal-body">
-							<form>
-								<label for="addFname" class="form-label">First name</label>
-								<input id="addFname" type="text" placeholder="First name" class="form-control" 
-								oninput="this.value = nameFormat(this.value);">
-								<label for="addLname" class="form-label">Last name</label>
-								<input id="addLname" type="text" placeholder="Last name" class="form-control" 
-								oninput="this.value = nameFormat(this.value);">
-								<label for="addPhNum" class="form-label">Phone number</label>
-								<input id="addPhNum" type="text" placeholder="ex. 555-555-5555" class="form-control"
-								oninput="this.value = phoneFormat(this.value);">
-								<label for="addEmail" class="form-label">Email</label>
-								<input id="addEmail" type="text" placeholder="ex. example@email.com" class="form-control"
-								oninput="this.value = emailFormat(this.value);">
+							<form id="addForm">
+								<div class="mb-3">
+									<label for="addFname" class="form-label">First name</label>
+									<input id="addFname" type="text" placeholder="First name" class="form-control" 
+									oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);" required>
+									<div class="invalid-feedback">Required.</div>
+								</div>
+								<div class="mb-3">
+									<label for="addLname" class="form-label">Last name</label>
+									<input id="addLname" type="text" placeholder="Last name" class="form-control" 
+									oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);">
+								</div>
+								<div class="mb-3">
+									<label for="addPhNum" class="form-label">Phone number</label>
+									<input id="addPhNum" type="tel" placeholder="ex. 555-555-5555" class="form-control"
+									oninput="this.value = this.value.replace(/\D/g, '');" required>
+									<div id="addPhNum-feedback" class="invalid-feedback">Valid phone number required.</div>
+								</div>
+								<div class="mb-3">
+									<label for="addEmail" class="form-label">Email</label>
+									<input id="addEmail" type="email" placeholder="ex. example@email.com" class="form-control"
+									oninput="this.value = this.value.toLowerCase();" required>
+									<div id="addEmail-feedback" class="invalid-feedback">Valid email address required.</div>
+								</div>
 							</form>
 						</div>
 						<div class="modal-footer">
-						  <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-						  <button type="button" class="btn btn-primary" onclick="addContact();">Submit</button>
+						  <button type="button" class="btn btn-outline-primary" onclick="closeModalForm('addModal', 'addForm');">
+							Close
+						  </button>
+						  <button type="submit" class="btn btn-primary"
+						  onclick="
+						  if(validateContactForm('addForm', 'addPhNum', 'addEmail')) 
+						  {
+							addContact(); 
+							closeModalForm('addModal', 'addForm');
+						  }">
+						  	Submit
+						</button>
 						</div>
 					  </div>
 					</div>
