@@ -60,10 +60,63 @@ function doLogin()
 	console.log("after try catch block: " + userId);
 }
 
+function doRegister()
+{
+    firstName = document.getElementById("firstName").value;
+    lastName = document.getElementById("lastName").value;
+    
+    let login = document.getElementById("registerName").value;
+    let password = document.getElementById("registerPassword").value;
+//    var hash = md5( password );
+    
+    document.getElementById("registerResult").innerHTML = "";
+
+    let tmp = {firstName:firstName,lastName:lastName,login:login,password:password};
+//    var tmp = {login:login,password:hash};
+    let jsonPayload = JSON.stringify( tmp );
+    
+    let url = urlBase + '/Register.' + extension;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    try
+    {
+        xhr.onreadystatechange = function() 
+        {
+            if (this.status == 409) {
+                document.getElementById("registerResult").innerHTML = "User already exists";
+                return;
+            }
+
+            else if (this.readyState == 4 && this.status == 200) 
+            {
+                let jsonObject = JSON.parse( xhr.responseText );
+                userId = jsonObject.id;
+                document.getElementById("registerResult").innerHTML = "User added";
+                console.log("after assignment " + userId);
+        
+                firstName = jsonObject.firstName;
+                lastName = jsonObject.lastName;
+
+                saveCookie();
+                console.log("after saveCookie: " + userId);
+    
+                window.location.href = "contact.html";
+            }
+        };
+        xhr.send(jsonPayload);
+    }
+    catch(err)
+    {
+        document.getElementById("registerResult").innerHTML = err.message;
+    }
+    console.log("after try catch block: " + userId);
+}
+
 // Loads in the contacts associated with a particular user.
 function loadContacts()
 {
-	console.log("at start of loadContacts: " + userId);
 	let tmp = {
         search: "",
         userId: userId
@@ -176,15 +229,25 @@ function doLogout()
 	window.location.href = "index.html";
 }
 
-function addColor()
+function addContact()
 {
-	let newColor = document.getElementById("colorText").value;
-	document.getElementById("colorAddResult").innerHTML = "";
+	let newFname = document.getElementById("addFname").value;
+	let newLname = document.getElementById("addLname").value;
+	let newphoneNum = document.getElementById("addPhNum").value;
+	let newEmail = document.getElementById("addEmail").value;
 
-	let tmp = {color:newColor,userId,userId};
+	// document.getElementById("colorAddResult").innerHTML = "";
+
+	let tmp = {
+		firstName: newFname,
+		lastName: newLname,
+		phone: newphoneNum,
+		email: newEmail,
+		userId: userId
+	};
 	let jsonPayload = JSON.stringify( tmp );
 
-	let url = urlBase + '/AddColor.' + extension;
+	let url = urlBase + '/AddContact.' + extension;
 	
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -195,16 +258,69 @@ function addColor()
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				document.getElementById("colorAddResult").innerHTML = "Color has been added";
+				loadContacts();
 			}
 		};
 		xhr.send(jsonPayload);
 	}
 	catch(err)
 	{
-		document.getElementById("colorAddResult").innerHTML = err.message;
+		console.log("addContact API error:" + err.message);
 	}
 	
+}
+
+// Converts a phone number to the expected format.
+function formatPhoneNumber(input)
+{
+	input = input.replace(/\D/g, '');
+	input = input.slice(0, 3) + "-" + input.slice(3, 6) + "-" + input.slice(6);
+	return input;
+}
+
+function validateContactForm(formId, phoneId, emailId)
+{
+	let fnameErr = lnameErr = phoneErr = emailErr = false;
+
+	let form = document.getElementById(formId);
+	let phone = document.getElementById(phoneId);
+	let email = document.getElementById(emailId);
+
+	// Validate the phone number.
+	let phoneNum = phone.value;
+	let phRegex = /^[(]?[0-9]{3}[)]?[-\.]?[0-9]{3}[-\.]?[0-9]{4}$/;
+	if (phRegex.test(phoneNum) == false)
+	{
+		phone.setCustomValidity("Invalid field.");
+		phoneErr = true;
+	}
+
+	// Format the phone number.
+	phone.value = formatPhoneNumber(phoneNum);
+
+	// Validate the email.
+	let emailRegex = /^[a-zA-Z0-9_\-.]+@[a-z]+\.[a-z]+$/;
+	if (emailRegex.test(email.value) == false)
+	{
+		email.setCustomValidity("Invalid field.");
+		emailErr = true;
+	}
+
+	if ((fnameErr || phoneErr || emailErr) == true)
+	{
+		form.classList.add("was-validated");
+		return false;
+	}
+
+	return true;
+}
+
+function closeModalForm(modalId, formId)
+{
+	let form = document.getElementById(formId);
+	form.classList.remove("was-validated");
+	form.reset();
+	bootstrap.Modal.getInstance(document.getElementById(modalId)).hide();
 }
 
 function searchColor()

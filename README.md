@@ -8,3 +8,6 @@ AddContactAPI Doc: https://app.swaggerhub.com/apis/BENJAMINBELIZAIRE_1/AddContac
 
 DeleteContactAPI Doc: https://app.swaggerhub.com/apis/BENJAMINBELIZAIRE_1/DeleteContact/1.0.0
 
+SearchContact API Doc: https://app.swaggerhub.com/apis/0MARVINO02/SearchAPI/1.0.0
+
+UpdateContact API Doc: https://app.swaggerhub.com/apis/0MARVINO02/UpdateContact/1.0.0

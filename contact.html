@@ -61,22 +61,78 @@
 	<main>
 		<div id="accessUIDiv" class="justify-content-center" style="background-color: transparent;">
 			<div class="container justify-content-center" style="margin-top: 1cm;">
-				<h1 id="contactsTitle" class="container text-light">Contacts</h1>
+				<!-- <h1 id="contactsTitle" class="container text-light">Contacts</h1> -->
 
 				<!-- Search and add navigation bar -->
 				<ul id="searchAddBar" class="nav bg-light rounded-pill">
 					<li class="nav-item mt-2 mb-1 ms-4">
 						<button id="addBtn" type="button" 
-						class="btn btn-outline-dark rounded-pill">+ Add</button>
+						class="btn btn-outline-dark rounded-pill searchAddItems" data-bs-toggle="modal" data-bs-target="#addModal">+ Add</button>
 					</li>
 					<li class="nav-item mt-2 mb-1 me-4">
 						<div class="input-group">
-							<input id="searchBar" type="search" placeholder="Enter contact information" class="form-control" style="border: 1px solid black">
-							<button id="searchBtn" class="btn btn-outline-dark" type="submit">Search</button>
+							<input id="searchBar" type="search" placeholder="Enter contact information" class="form-control searchAddItems" style="border: 1px solid black">
+							<button id="searchBtn" class="btn btn-outline-dark searchAddItems" type="submit">Search</button>
 						</div>
 					</li>
 				</ul>
+
+				<!-- Add contacts dialogue box. -->
+				<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+					  <div class="modal-content">
+						<div class="modal-header">
+						  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+						  <button type="button" class="close" aria-label="Close" onclick="closeModalForm('addModal', 'addForm');">
+							<span aria-hidden="true">&times;</span>
+						  </button>
+						</div>
+						<div class="modal-body">
+							<form id="addForm">
+								<div class="mb-3">
+									<label for="addFname" class="form-label">First name</label>
+									<input id="addFname" type="text" placeholder="First name" class="form-control" 
+									oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);" required>
+									<div class="invalid-feedback">Required.</div>
+								</div>
+								<div class="mb-3">
+									<label for="addLname" class="form-label">Last name</label>
+									<input id="addLname" type="text" placeholder="Last name" class="form-control" 
+									oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);">
+								</div>
+								<div class="mb-3">
+									<label for="addPhNum" class="form-label">Phone number</label>
+									<input id="addPhNum" type="tel" placeholder="ex. 555-555-5555" class="form-control" required>
+									<div id="addPhNum-feedback" class="invalid-feedback">Valid phone number required.</div>
+								</div>
+								<div class="mb-3">
+									<label for="addEmail" class="form-label">Email</label>
+									<input id="addEmail" type="email" placeholder="ex. example@email.com" class="form-control"
+									oninput="this.value = this.value.toLowerCase();" required>
+									<div id="addEmail-feedback" class="invalid-feedback">Valid email address required.</div>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+						  <button type="button" class="btn btn-outline-primary" onclick="closeModalForm('addModal', 'addForm');">
+							Close
+						  </button>
+						  <button type="submit" class="btn btn-primary"
+						  onclick="
+						  if(validateContactForm('addForm', 'addPhNum', 'addEmail')) 
+						  {
+							addContact(); 
+							closeModalForm('addModal', 'addForm');
+						  }">
+						  	Submit
+						</button>
+						</div>
+					  </div>
+					</div>
+				  </div>
 			</div>
+
+			<!-- Modal -->
 
 			<!-- Container for contacts -->
 			<div id="contactsDisplay" class="container">
@@ -95,6 +151,7 @@
 					<tbody id="contactsBody" class="container align-middle"></tbody>
 				</table>
 			</div>
+
 		</div>
 	</main>
 
