@@ -7,33 +7,37 @@ body
     background-attachment: fixed;
 }
 
-.nav-item, .navbar-brand
+.nav-item, .navbar-brand, .navbar-text
 {
     font-family: 'Comfortaa', sans-serif;
+    padding-inline: 10px;
     text-align: center;
     color: rgb(75, 12, 102);
 }
 
-.navbar-nav .nav-item.active .nav-link,
-.navbar-nav .nav-item:hover .nav-link {
+.navbar-nav .nav-item:hover .nav-link,
+.navbar-nav .nav-item:hover #logoutButton
+{
+    color: white;
+    background-color: #6b1e94;
+}
+
+.navbar-nav .nav-item:active .nav-link,
+.navbar-nav .nav-item:active #logoutButton
+{
     color: white;
     background-color: rgb(75, 12, 102);
+}
+
+#logoutButton
+{
+    border-color: rgb(75, 12, 102);
+    color: rgb(75, 12, 102);
 }
 
 .material-symbols-outlined
 {
     vertical-align: middle;
-}
-
-#nav 
-{
-	height: 60px;
-	text-align:center;
-}
-
-#nav-user
-{
-    margin-right: 10%;
 }
 
 #contactsTitle {
