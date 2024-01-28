@@ -273,7 +273,7 @@ function closeModalForm(modalId, formId)
 
 function searchContacts()
 {
-	const srch = document.getElementById("searchText").value;
+	const srch = document.getElementById("searchText").value.toLowerCase();
 	const terms = srch.split(" ");
 	console.log("terms: " + terms);
 
@@ -289,8 +289,8 @@ function searchContacts()
 	for (let i = 0; i < rows.length; i++)
 	{
 		console.log("iteration " + i);
-		let fName = rows[i].getElementsByTagName("td")[1];
-		let lName = rows[i].getElementsByTagName("td")[2];
+		let fName = rows[i].getElementsByTagName("td")[1].innerText.toLowerCase();
+		let lName = rows[i].getElementsByTagName("td")[2].innerText.toLowerCase();
 
 		console.log("-- checking first: " + fName.innerText);
 		console.log("\t-- included? " + terms.includes(fName.innerText));
@@ -299,7 +299,7 @@ function searchContacts()
 
 		// Hide contact unless it matches the search text.
 		// todo consider displaying if only one matches. (this is what i'm doing here!)
-		if (!terms.includes(fName.innerText) && !terms.includes(lName.innerText))
+		if (!terms.includes(fName) && !terms.includes(lName))
 			rows[i].style.display = "none";
 		else
 			rows[i].style.display = "";
