@@ -22,7 +22,7 @@
 		{
 			readCookie();
 			document.getElementById("navUser").innerHTML = firstName;
-			loadContacts();
+			displayContacts("");
 		}, false);
 	</script>
 	-->
@@ -71,8 +71,11 @@
 					</li>
 					<li class="nav-item mt-2 mb-1 me-4">
 						<div class="input-group">
-							<input id="searchBar" type="search" placeholder="Enter contact information" class="form-control searchAddItems" style="border: 1px solid black">
-							<button id="searchBtn" class="btn btn-outline-dark searchAddItems" type="submit">Search</button>
+							<input id="searchText" type="search" placeholder="Enter contact information" class="form-control searchAddItems" style="border: 1px solid black">
+							<button id="searchBtn" class="btn btn-outline-dark searchAddItems" type="submit" 
+							onclick="searchContacts();" data-bs-toggle="popover" data-bs-content="No contacts found" data-bs-trigger="manual" data-bs-custom-class="custom-popover">
+								Search
+							</button>
 						</div>
 					</li>
 				</ul>
