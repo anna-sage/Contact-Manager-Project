@@ -5,7 +5,7 @@ let userId = 0;
 let firstName = "";
 let lastName = "";
 
-// let initLoaded = false;
+let initLoaded = false;
 let contacts; // All contacts associated with the user.
 
 function doLogin()
@@ -180,10 +180,10 @@ function displayContacts(srch)
 				console.log("text is " + text);
 
 				// On initial page load, store all contacts associated with the user.
-				// if (!initLoaded)
+				if (!initLoaded)
 					contacts = document.getElementById("contactsBody").getElementsByTagName("tr");
 
-				// initLoaded = true;
+				initLoaded = true;
 				// resultsFound = jsonObject.results.length > 0;
 			}
 		};
@@ -192,7 +192,7 @@ function displayContacts(srch)
 	}
 	catch(err) {
 		console.log(err.message);
-		document.getElementById("contactsBody").innerHTML = "";
+		// document.getElementById("contactsBody").innerHTML = "";
 		// console.log("initLoaded = " + initLoaded);
 		// if (initLoaded)
 		// 	console.log("should be displaying popover");
@@ -291,6 +291,11 @@ function addContact()
 		console.log("addContact API error:" + err.message);
 	}
 	
+}
+
+function formatName(input)
+{
+	return input.charAt(0).toUpperCase() + input.slice(1);
 }
 
 // Converts a phone number to the expected format.
@@ -404,52 +409,3 @@ function searchContacts()
 		document.getElementById("noResultsTxt").style.display = "";
 	}
 }
-
-
-// function searchContacts()
-// {
-// 	let srch = document.getElementById("searchText").value;
-// 	// document.getElementById("colorSearchResult").innerHTML = "";
-	
-// 	let contactList = "";
-
-// 	let tmp = {search:srch,userId:userId};
-// 	let jsonPayload = JSON.stringify( tmp );
-// 	console.log("search json payload: " + jsonPayload);
-
-// 	let url = urlBase + '/SearchContact.' + extension;
-	
-// 	let xhr = new XMLHttpRequest();
-// 	xhr.open("POST", url, true);
-// 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-// 	try
-// 	{
-// 		xhr.onreadystatechange = function() 
-// 		{
-// 			if (this.readyState == 4 && this.status == 200) 
-// 			{
-// 				// document.getElementById("colorSearchResult").innerHTML = "Color(s) has been retrieved";
-// 				let jsonObject = JSON.parse( xhr.responseText );
-// 				console.log(jsonObject);
-				
-// 				for( let i=0; i<jsonObject.results.length; i++ )
-// 				{
-// 					colorList += jsonObject.results[i];
-// 					if( i < jsonObject.results.length - 1 )
-// 					{
-// 						colorList += "<br />\r\n";
-// 					}
-// 				}
-				
-// 				document.getElementsByTagName("p")[0].innerHTML = colorList;
-// 			}
-// 		};
-// 		xhr.send(jsonPayload);
-// 	}
-// 	catch(err)
-// 	{
-// 		// document.getElementById("colorSearchResult").innerHTML = err.message;
-// 		console.log(err.message);
-// 	}
-	
-// }
