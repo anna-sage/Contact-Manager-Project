@@ -5,7 +5,7 @@ let userId = 0;
 let firstName = "";
 let lastName = "";
 
-let initLoaded = false;
+// let initLoaded = false;
 let contacts; // All contacts associated with the user.
 
 function doLogin()
@@ -148,6 +148,7 @@ function displayContacts(srch)
 				let text = "";
 				for (let i = 0; i < jsonObject.results.length; i++)
 				{
+					console.log("search returned " + jsonObject.results[i].FirstName);
 					text += "<tr id=\'row" + i + "\'>";
 	
 					// Profile picture.
@@ -176,12 +177,13 @@ function displayContacts(srch)
 
 				// Add the contacts to the page.
 				document.getElementById("contactsBody").innerHTML = text;
+				console.log("text is " + text);
 
 				// On initial page load, store all contacts associated with the user.
-				if (!initLoaded)
+				// if (!initLoaded)
 					contacts = document.getElementById("contactsBody").getElementsByTagName("tr");
 
-				initLoaded = true;
+				// initLoaded = true;
 				// resultsFound = jsonObject.results.length > 0;
 			}
 		};
@@ -190,6 +192,7 @@ function displayContacts(srch)
 	}
 	catch(err) {
 		console.log(err.message);
+		document.getElementById("contactsBody").innerHTML = "";
 		// console.log("initLoaded = " + initLoaded);
 		// if (initLoaded)
 		// 	console.log("should be displaying popover");
@@ -348,8 +351,11 @@ function searchContacts()
 	// for (const c of contacts)
 	// 	console.log(c);
 	// Hide the popover.
-	const srchPopover = bootstrap.Popover.getOrCreateInstance("#searchBtn");
-	srchPopover.hide();
+	// const srchPopover = bootstrap.Popover.getOrCreateInstance("#searchBtn");
+	// srchPopover.hide();
+
+	// Clear the "no results found" text.
+	document.getElementById("noResultsTxt").style.display = "none";
 
 	const srch = document.getElementById("searchText").value.toLowerCase();
 	const terms = srch.split(" ");
@@ -376,7 +382,8 @@ function searchContacts()
 		// console.log("-- checking last: " + lName);
 		// console.log("\t-- included? " + terms.includes(lName));
 
-		// Keep track of matches.
+		// Hide all by default and keep track of matches.
+		contacts[i].style.display = "none";
 		if (fName.includes(terms[0]) && lName.includes(terms[1]))
 		{
 			// console.log("\t-- match!");
@@ -387,18 +394,14 @@ function searchContacts()
 
 	if (matches.size > 0)
 	{
-		// console.log("matches found!");
-		for (let i = 0; i < contacts.length; i++)
-			contacts[i].style.display = "none";
-
 		// Display only the matches.
 		for (const row of matches)
 			row.style.display = "";
 	}
 	else
 	{
-		// console.log("should be displaying popover");
-		srchPopover.show();
+		// srchPopover.show();
+		document.getElementById("noResultsTxt").style.display = "";
 	}
 }
 

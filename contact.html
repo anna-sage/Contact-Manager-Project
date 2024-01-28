@@ -134,11 +134,9 @@
 				  </div>
 			</div>
 
-			<!-- Modal -->
-
 			<!-- Container for contacts -->
 			<div id="contactsDisplay" class="container">
-				<table class="table table-striped my-1">
+				<table id="contacts" class="table table-striped my-1">
 					<thead>
 						<tr>
 							<th></th>
@@ -152,6 +150,11 @@
 					</thead>
 					<tbody id="contactsBody" class="container align-middle"></tbody>
 				</table>
+				<div id="noResultsContainer" class="wig" style="border: 5px solid yellow;">
+					<h3 id="noResultsTxt" class="text-center" style="display: none;">
+						No results found
+					</h3>
+				</div>
 			</div>
 
 		</div>
