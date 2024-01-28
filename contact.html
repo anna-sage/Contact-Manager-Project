@@ -72,7 +72,9 @@
 						<div class="input-group">
 							<input id="searchText" type="search" placeholder="Enter contact information" class="form-control searchAddItems" style="border: 1px solid black">
 							<button id="searchBtn" class="btn btn-outline-dark searchAddItems" type="submit" 
-							onclick="searchContacts();">Search</button>
+							onclick="searchContacts();" data-bs-toggle="popover" data-bs-content="No contacts found" data-bs-trigger="manual" data-bs-custom-class="custom-popover">
+								Search
+							</button>
 						</div>
 					</li>
 				</ul>

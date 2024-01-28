@@ -5,6 +5,9 @@ let userId = 0;
 let firstName = "";
 let lastName = "";
 
+let initLoaded = false;
+let contacts; // All contacts associated with the user.
+
 function doLogin()
 {
 	userId = 0;
@@ -131,6 +134,7 @@ function displayContacts(srch)
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
+	// let resultsFound = false;
 	try {
 		xhr.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
@@ -172,12 +176,26 @@ function displayContacts(srch)
 
 				// Add the contacts to the page.
 				document.getElementById("contactsBody").innerHTML = text;
+
+				// On initial page load, store all contacts associated with the user.
+				if (!initLoaded)
+					contacts = document.getElementById("contactsBody").getElementsByTagName("tr");
+
+				initLoaded = true;
+				// resultsFound = jsonObject.results.length > 0;
 			}
 		};
 		xhr.send(jsonPayload);
+		// return resultsFound;
 	}
 	catch(err) {
 		console.log(err.message);
+		// console.log("initLoaded = " + initLoaded);
+		// if (initLoaded)
+		// 	console.log("should be displaying popover");
+		// if (initLoaded)
+		// 	srchPopover.show();
+		// return false;
 	}
 }
 
@@ -327,6 +345,12 @@ function closeModalForm(modalId, formId)
 
 function searchContacts()
 {
+	// for (const c of contacts)
+	// 	console.log(c);
+	// Hide the popover.
+	const srchPopover = bootstrap.Popover.getOrCreateInstance("#searchBtn");
+	srchPopover.hide();
+
 	const srch = document.getElementById("searchText").value.toLowerCase();
 	const terms = srch.split(" ");
 	console.log("terms: " + terms);
@@ -334,31 +358,47 @@ function searchContacts()
 	// If searching a single term, look through all columns.
 	if (terms.length == 1)
 	{
-		displayContacts(terms[0]);
+		console.log("display returns: " + displayContacts(terms[0]));
 		return;
 	}
 
 	// If searching two terms, search for matching first and last name.
-	const rows = document.getElementById("contactsBody").getElementsByTagName("tr");
-	for (let i = 0; i < rows.length; i++)
+	const matches = new Set();
+	let matchFound = false;
+	for (let i = 0; i < contacts.length; i++)
 	{
-		console.log("iteration " + i);
-		let fName = rows[i].getElementsByTagName("td")[1].innerText.toLowerCase();
-		let lName = rows[i].getElementsByTagName("td")[2].innerText.toLowerCase();
+		// console.log("iteration " + i);
+		let fName = contacts[i].getElementsByTagName("td")[1].innerText.toLowerCase();
+		let lName = contacts[i].getElementsByTagName("td")[2].innerText.toLowerCase();
 
-		console.log("-- checking first: " + fName.innerText);
-		console.log("\t-- included? " + terms.includes(fName.innerText));
-		console.log("-- checking last: " + lName.innerText);
-		console.log("\t-- included? " + terms.includes(lName.innerText));
+		// console.log("-- checking first: " + fName);
+		// console.log("\t-- included? " + terms.includes(fName));
+		// console.log("-- checking last: " + lName);
+		// console.log("\t-- included? " + terms.includes(lName));
 
-		// Hide contact unless it matches the search text.
-		// todo consider displaying if only one matches. (this is what i'm doing here!)
-		if (!terms.includes(fName) && !terms.includes(lName))
-			rows[i].style.display = "none";
-		else
-			rows[i].style.display = "";
+		// Keep track of matches.
+		if (fName.includes(terms[0]) && lName.includes(terms[1]))
+		{
+			// console.log("\t-- match!");
+			matches.add(contacts[i]);
+			matchFound = true
+		}
+	}
 
-		// todo is else part even necessary.
+	if (matches.size > 0)
+	{
+		// console.log("matches found!");
+		for (let i = 0; i < contacts.length; i++)
+			contacts[i].style.display = "none";
+
+		// Display only the matches.
+		for (const row of matches)
+			row.style.display = "";
+	}
+	else
+	{
+		// console.log("should be displaying popover");
+		srchPopover.show();
 	}
 }
 

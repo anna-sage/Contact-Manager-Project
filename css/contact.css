@@ -62,6 +62,12 @@ body
     border: 1px solid rgb(75, 12, 102);
 }
 
+.custom-popover
+{
+    --bs-popover-background-color: rgb(75, 12, 102);
+    --bs-popover-color: white;
+}
+
 .contactIconArea
 {
     width: 7%;
