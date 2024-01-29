@@ -17,7 +17,7 @@
 
 	<!-- Load in the contacts associated with the user. -->
 	
-	<!--<script type="text/javascript">
+	<script type="text/javascript">
 		document.addEventListener('DOMContentLoaded', function()
 		{
 			readCookie();
@@ -25,7 +25,6 @@
 			displayContacts("");
 		}, false);
 	</script>
-	-->
 
 </head>
 <body>
@@ -45,7 +44,7 @@
 				<!-- First name and logout button -->
 				<ul class="navbar-nav ms-auto">
 					<li class="nav-item navbar-text">
-						<span id="navUser">User</span>
+						<span id="navUser" style="color: rgb(75, 12, 102);">User</span>
 					</li>
 					<li class="nav-item">
 						<button class="btn" type="button" id="logoutButton" onclick="doLogout();">
@@ -134,6 +133,55 @@
 					</div>
 				  </div>
 			</div>
+
+			<!--Edit contacts-->
+			<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <h5 class="modal-title" id="exampleModalLabel">Edit Contact</h5>
+					  <button type="button" class="close" aria-label="Close" onclick="closeModalForm('editModal', 'editForm');">
+						<span aria-hidden="true">&times;</span>
+					  </button>
+					</div>
+					<div class="modal-body">
+						<form id="editForm">
+							<div class="mb-3">
+								<label for="editFname" class="form-label">First name</label>
+								<input id="editFname" type="text" placeholder="First name" class="form-control" 
+								oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);" required>
+								<div class="invalid-feedback">Required.</div>
+							</div>
+							<div class="mb-3">
+								<label for="editLname" class="form-label">Last name</label>
+								<input id="editLname" type="text" placeholder="Last name" class="form-control" 
+								oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);">
+							</div>
+							<div class="mb-3">
+								<label for="editPhNum" class="form-label">Phone number</label>
+								<input id="editPhNum" type="tel" placeholder="ex. 555-555-5555" class="form-control" required>
+								<div id="addPhNum-feedback" class="invalid-feedback">Valid phone number required.</div>
+							</div>
+							<div class="mb-3">
+								<label for="editEmail" class="form-label">Email</label>
+								<input id="editEmail" type="email" placeholder="ex. example@email.com" class="form-control"
+								oninput="this.value = this.value.toLowerCase();" required>
+								<div id="addEmail-feedback" class="invalid-feedback">Valid email address required.</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-outline-primary" onclick="closeModalForm('editModal', 'editForm');">
+						Close
+					  </button>
+					  <button id ="updateButton" type="submit" class="btn btn-primary" onclick="console.log('dummy')">
+						  Submit
+					  </button>
+					</div>
+				  </div>
+				</div>
+			  </div>
+		</div>
 
 			<!-- Modal -->
 

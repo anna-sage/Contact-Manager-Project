@@ -4,6 +4,7 @@ const extension = 'php';
 let userId = 0;
 let firstName = "";
 let lastName = "";
+const cid_list = [];
 
 let initLoaded = false;
 let contacts; // All contacts associated with the user.
@@ -148,6 +149,7 @@ function displayContacts(srch)
 				let text = "";
 				for (let i = 0; i < jsonObject.results.length; i++)
 				{
+					cid[i] = jsonObject.results[i].ID;
 					text += "<tr id=\'row" + i + "\'>";
 	
 					// Profile picture.
@@ -155,14 +157,14 @@ function displayContacts(srch)
 					text += "<img src=\'images/planeticon1.png\' alt=\'Default profile picture\' class=\'icons float-start\'></td>";
 	
 					// Contact information.
-					text += "<td>" + jsonObject.results[i].FirstName + "</td>";
-					text += "<td>" + jsonObject.results[i].LastName + "</td>";
-					text += "<td>" + jsonObject.results[i].Phone + "</td>";
-					text += "<td>" + jsonObject.results[i].Email + "</td>";
+					text += "<td id=\'fName_" + i + "\'>" + jsonObject.results[i].FirstName + "</td>";
+					text += "<td id=\'lName_" + i + "\'>" + jsonObject.results[i].LastName + "</td>";
+					text += "<td id=\'phone_" + i + "\'>" + jsonObject.results[i].Phone + "</td>";
+					text += "<td id=\'row_" + i + "\'>" + jsonObject.results[i].Email + "</td>";
 
 					// Edit and delete buttons.
 					text += "<td class=\'contactIconArea\'>";
-					text += "<button class=\'contactBtns\'>";
+					text += "<button class=\'contactBtns\' data-bs-toggle=\'modal\' data-bs-target=\'#editModal\' onclick='edit_row(" + i + ")'>";
 					text += "<span class=\'material-symbols-outlined\'>edit</span>";
 					text += "</button></td>";
 
@@ -286,6 +288,68 @@ function addContact()
 	catch(err)
 	{
 		console.log("addContact API error:" + err.message);
+	}
+	
+}
+
+function editContact(contactIndex)
+{
+	let currFname = document.getElementById("fName_" + contactIndex).value;
+	let currLname = document.getElementById("lName_" + contactIndex).value;
+	let currPhNum = document.getElementById("phone_" + contactIndex).value;
+	let currEmail = document.getElementById("email_" + contactIndex).value;
+
+	document.getElementById(editFname) = currFname;
+	document.getElementById(editLname) = currLname;
+	document.getElementById(editPhNum) = currPhNum;
+	document.getElementById(editEmail) = currEmail;
+
+	document.getElementById(updateButton).setAttribute("onclick", "javascript: updateSubmit(" + contactIndex + ");");
+}
+
+function updateSubmit(cid) {
+	if(validateContactForm('editForm', 'editPhNum', 'editEmail')) 
+	{
+	  updateContact(cid); 
+	  closeModalForm('editModal', 'editForm');
+	}
+}
+
+function updateContact(contactIndex)
+{
+	let saveFname = document.getElementById("editFname").value;
+	let saveLname = document.getElementById("editLname").value;
+	let savephoneNum = document.getElementById("editPhNum").value;
+	let saveEmail = document.getElementById("editEmail").value;
+
+	let tmp = {
+		contactId: cid_list[contactIndex],
+		firstName: saveFname,
+		lastName: saveLname,
+		phone: savephoneNum,
+		email: saveEmail
+	};
+	let jsonPayload = JSON.stringify( tmp );
+
+	let url = urlBase + '/UpdateContact.' + extension;
+	
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				displayContacts("");
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		console.log("UpdateContact API error:" + err.message);
 	}
 	
 }
