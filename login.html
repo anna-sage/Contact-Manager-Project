@@ -69,8 +69,8 @@
 			<div class="tab-pane fade" id="registerDiv" role="tabpanel" aria-labelledby="register-tab">
 				<form style="max-width: 480px;margin:auto">
 					<span id="inner-title">Enter details to create an account</span>
-					<input type="text" id="firstName" placeholder="First name" oninput="this.value = nameFormat(this.value);" /><br />
-					<input type="text" id="lastName" placeholder="Last name" oninput="this.value = nameFormat(this.value);" /><br />
+					<input type="text" id="firstName" placeholder="First name" oninput="this.value = formatName(this.value);" /><br />
+					<input type="text" id="lastName" placeholder="Last name" oninput="this.value = formatName(this.value);" /><br />
 					<input type="text" id="registerName" placeholder="Username" /><br />
 					<input type="password" id="registerPassword" placeholder="Password"/><br />
 					<button type="button" id="registerButton" class="buttons" onclick="doRegister();"> REGISTER </button>

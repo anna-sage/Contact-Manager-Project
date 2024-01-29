@@ -4,7 +4,6 @@ const extension = 'php';
 let userId = 0;
 let firstName = "";
 let lastName = "";
-const cid_list = [];
 
 let initLoaded = false;
 let contacts; // All contacts associated with the user.
@@ -149,7 +148,7 @@ function displayContacts(srch)
 				let text = "";
 				for (let i = 0; i < jsonObject.results.length; i++)
 				{
-					cid_list[i] = jsonObject.results[i].ID;
+					console.log("search returned " + jsonObject.results[i].FirstName);
 					text += "<tr id=\'row" + i + "\'>";
 	
 					// Profile picture.
@@ -157,14 +156,14 @@ function displayContacts(srch)
 					text += "<img src=\'images/planeticon1.png\' alt=\'Default profile picture\' class=\'icons float-start\'></td>";
 	
 					// Contact information.
-					text += "<td id=\'fName_" + i + "\'>" + jsonObject.results[i].FirstName + "</td>";
-					text += "<td id=\'lName_" + i + "\'>" + jsonObject.results[i].LastName + "</td>";
-					text += "<td id=\'phone_" + i + "\'>" + jsonObject.results[i].Phone + "</td>";
-					text += "<td id=\'email_" + i + "\'>" + jsonObject.results[i].Email + "</td>";
+					text += "<td>" + jsonObject.results[i].FirstName + "</td>";
+					text += "<td>" + jsonObject.results[i].LastName + "</td>";
+					text += "<td>" + jsonObject.results[i].Phone + "</td>";
+					text += "<td>" + jsonObject.results[i].Email + "</td>";
 
 					// Edit and delete buttons.
 					text += "<td class=\'contactIconArea\'>";
-					text += "<button class=\'contactBtns\' data-bs-toggle=\'modal\' data-bs-target=\'#editModal\' onclick='editContact(" + i + ")'>";
+					text += "<button class=\'contactBtns\'>";
 					text += "<span class=\'material-symbols-outlined\'>edit</span>";
 					text += "</button></td>";
 
@@ -178,6 +177,7 @@ function displayContacts(srch)
 
 				// Add the contacts to the page.
 				document.getElementById("contactsBody").innerHTML = text;
+				console.log("text is " + text);
 
 				// On initial page load, store all contacts associated with the user.
 				if (!initLoaded)
@@ -192,6 +192,7 @@ function displayContacts(srch)
 	}
 	catch(err) {
 		console.log(err.message);
+		// document.getElementById("contactsBody").innerHTML = "";
 		// console.log("initLoaded = " + initLoaded);
 		// if (initLoaded)
 		// 	console.log("should be displaying popover");
@@ -299,10 +300,10 @@ function editContact(contactIndex)
 	let currPhNum = document.getElementById("phone_" + contactIndex).value;
 	let currEmail = document.getElementById("email_" + contactIndex).value;
 
-	document.getElementById(editFname).setAttribute("value", "currFname");
-	document.getElementById(editLname).setAttribute("value", "currLname");
-	document.getElementById(editPhNum).setAttribute("value", "currPhNum");
-	document.getElementById(editEmail).setAttribute("value", "currEmail");
+	document.getElementById(editFname).setAttribute("value", currFname);
+	document.getElementById(editLname).setAttribute("value", currLname);
+	document.getElementById(editPhNum).setAttribute("value", currPhNum);
+	document.getElementById(editEmail).setAttribute("value", currEmail);
 
 	document.getElementById(updateButton).setAttribute("onclick", "javascript: updateSubmit(" + contactIndex + ");");
 }
@@ -352,6 +353,11 @@ function updateContact(contactIndex)
 		console.log("UpdateContact API error:" + err.message);
 	}
 	
+}
+
+function formatName(input)
+{
+	return input.charAt(0).toUpperCase() + input.slice(1);
 }
 
 // Converts a phone number to the expected format.
@@ -412,8 +418,11 @@ function searchContacts()
 	// for (const c of contacts)
 	// 	console.log(c);
 	// Hide the popover.
-	const srchPopover = bootstrap.Popover.getOrCreateInstance("#searchBtn");
-	srchPopover.hide();
+	// const srchPopover = bootstrap.Popover.getOrCreateInstance("#searchBtn");
+	// srchPopover.hide();
+
+	// Clear the "no results found" text.
+	document.getElementById("noResultsTxt").style.display = "none";
 
 	const srch = document.getElementById("searchText").value.toLowerCase();
 	const terms = srch.split(" ");
@@ -440,7 +449,8 @@ function searchContacts()
 		// console.log("-- checking last: " + lName);
 		// console.log("\t-- included? " + terms.includes(lName));
 
-		// Keep track of matches.
+		// Hide all by default and keep track of matches.
+		contacts[i].style.display = "none";
 		if (fName.includes(terms[0]) && lName.includes(terms[1]))
 		{
 			// console.log("\t-- match!");
@@ -451,17 +461,13 @@ function searchContacts()
 
 	if (matches.size > 0)
 	{
-		// console.log("matches found!");
-		for (let i = 0; i < contacts.length; i++)
-			contacts[i].style.display = "none";
-
 		// Display only the matches.
 		for (const row of matches)
 			row.style.display = "";
 	}
 	else
 	{
-		// console.log("should be displaying popover");
-		srchPopover.show();
+		// srchPopover.show();
+		document.getElementById("noResultsTxt").style.display = "";
 	}
 }

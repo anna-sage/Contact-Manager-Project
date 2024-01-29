@@ -49,8 +49,9 @@ body
 #searchAddBar {
     font-family: 'DM Sans';
     display: flex;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
     padding-bottom: 5px;
+    border-radius: 35px;
 }
 
 .searchAddItems
@@ -98,3 +99,11 @@ body
     color: white;
     background-color: rgb(75, 12, 102);
 }
+
+#contacts
+{
+    border-spacing: 0;
+    border-collapse: separate;
+    border-radius: 35px;
+}
+

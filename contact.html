@@ -62,22 +62,27 @@
 			<div class="container justify-content-center" style="margin-top: 1cm;">
 				<!-- <h1 id="contactsTitle" class="container text-light">Contacts</h1> -->
 
-				<!-- Search and add navigation bar -->
-				<ul id="searchAddBar" class="nav bg-light rounded-pill">
-					<li class="nav-item mt-2 mb-1 ms-4">
+				<div id="searchAddBar" class="nav d-flex bg-light">
+					<div class="nav-item p-2 flex-grow-1 ms-2" style="text-align: start;">
 						<button id="addBtn" type="button" 
 						class="btn btn-outline-dark rounded-pill searchAddItems" data-bs-toggle="modal" data-bs-target="#addModal">+ Add</button>
-					</li>
-					<li class="nav-item mt-2 mb-1 me-4">
+					</div>
+					<div class="nav-item p-2">
 						<div class="input-group">
 							<input id="searchText" type="search" placeholder="Enter contact information" class="form-control searchAddItems" style="border: 1px solid black">
 							<button id="searchBtn" class="btn btn-outline-dark searchAddItems" type="submit" 
-							onclick="searchContacts();" data-bs-toggle="popover" data-bs-content="No contacts found" data-bs-trigger="manual" data-bs-custom-class="custom-popover">
+							onclick="searchContacts();">
 								Search
 							</button>
 						</div>
-					</li>
-				</ul>
+					</div>
+					<div class="nav-item p-2 me-2">
+						<button id="clearBtn" type="button" class="btn btn-outline-dark rounded-pill searchAddItems" 
+						onclick="displayContacts(''); document.getElementById('searchText').innerHTML = '';">
+							Clear
+						</button>
+					</div>
+				</div>
 
 				<!-- Add contacts dialogue box. -->
 				<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -94,13 +99,13 @@
 								<div class="mb-3">
 									<label for="addFname" class="form-label">First name</label>
 									<input id="addFname" type="text" placeholder="First name" class="form-control" 
-									oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);" required>
+									oninput="this.value = formatName(this.value);" required>
 									<div class="invalid-feedback">Required.</div>
 								</div>
 								<div class="mb-3">
 									<label for="addLname" class="form-label">Last name</label>
 									<input id="addLname" type="text" placeholder="Last name" class="form-control" 
-									oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);">
+									oninput="this.value = formatName(this.value);">
 								</div>
 								<div class="mb-3">
 									<label for="addPhNum" class="form-label">Phone number</label>
@@ -172,7 +177,7 @@
 					</div>
 					<div class="modal-footer">
 					  <button type="button" class="btn btn-outline-primary" onclick="closeModalForm('editModal', 'editForm');">
-						Close
+						Close	
 					  </button>
 					  <button id ="updateButton" type="submit" class="btn btn-primary" onclick="console.log('dummy')">
 						  Submit
@@ -183,11 +188,9 @@
 			  </div>
 		</div>
 
-			<!-- Modal -->
-
 			<!-- Container for contacts -->
-			<div id="contactsDisplay" class="container">
-				<table class="table table-striped my-1">
+			<div id="contactsDisplay" class="container mt-3">
+				<table id="contacts" class="table table-striped table-borderless overflow-hidden my-1">
 					<thead>
 						<tr>
 							<th></th>
@@ -201,6 +204,11 @@
 					</thead>
 					<tbody id="contactsBody" class="container align-middle"></tbody>
 				</table>
+				<div id="noResultsContainer">
+					<h3 id="noResultsTxt" class="text-center" style="display: none;">
+						No results found
+					</h3>
+				</div>
 			</div>
 
 		</div>
