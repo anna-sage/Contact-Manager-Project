@@ -76,6 +76,7 @@ body
     border-spacing: 0;
     border-collapse: separate;
     border-radius: 35px;
+    font-family: 'DM Sans', sans-serif;
 }
 
 .contactIconArea
@@ -103,4 +104,30 @@ body
 {
     color: white;
     background-color: rgb(75, 12, 102);
+}
+
+/* todo below not applying */
+.modalClose
+{
+    color: #5643fd;
+    border-color: #5643fd;
+}
+
+.modalClose:hover
+{
+    color: white;
+    background-color: #5643fd;
+}
+
+.modal .modal-body .modalSubmit
+{
+    color: white;
+    background-color: #5643fd;
+}
+
+.modal .modal-body .modalSubmit:hover
+{
+    color: #5643fd;
+    border-color: #5643fd;
+    background-color: white;
 }

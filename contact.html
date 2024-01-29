@@ -89,7 +89,7 @@
 					<div class="modal-dialog" role="document">
 					  <div class="modal-content">
 						<div class="modal-header">
-						  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+						  <h5 class="modal-title" id="exampleModalLabel">New contact details</h5>
 						  <button type="button" class="close" aria-label="Close" onclick="closeModalForm('addModal', 'addForm');">
 							<span aria-hidden="true">&times;</span>
 						  </button>
@@ -110,7 +110,7 @@
 								<div class="mb-3">
 									<label for="addPhNum" class="form-label">Phone number</label>
 									<input id="addPhNum" type="tel" placeholder="ex. 555-555-5555" class="form-control" required>
-									<div id="addPhNum-feedback" class="invalid-feedback">Valid phone number required.</div>
+									<div id="addPhNum-feedback" class="invalid-feedback">Valid 10 digit phone number required.</div>
 								</div>
 								<div class="mb-3">
 									<label for="addEmail" class="form-label">Email</label>
@@ -121,10 +121,10 @@
 							</form>
 						</div>
 						<div class="modal-footer">
-						  <button type="button" class="btn btn-outline-primary" onclick="closeModalForm('addModal', 'addForm');">
+						  <button type="button" class="btn modalClose" onclick="closeModalForm('addModal', 'addForm');">
 							Close
 						  </button>
-						  <button type="submit" class="btn btn-primary"
+						  <button type="submit" class="btn modalSubmit"
 						  onclick="
 						  if(validateContactForm('addForm', 'addPhNum', 'addEmail')) 
 						  {
@@ -157,7 +157,7 @@
 				</table>
 				<div id="noResultsContainer">
 					<h3 id="noResultsTxt" class="text-center" style="display: none;">
-						No results found
+						No contacts found
 					</h3>
 				</div>
 			</div>

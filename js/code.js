@@ -17,7 +17,6 @@ function doLogin()
 	let login = document.getElementById("loginName").value;
 	let password = document.getElementById("loginPassword").value;
 	let hash = md5( password );
-	console.log("login hash for " + login + ": " + hash);
 	
 	document.getElementById("loginResult").innerHTML = "";
 
@@ -50,7 +49,6 @@ function doLogin()
 				lastName = jsonObject.lastName;
 
 				saveCookie();
-				console.log("after saveCookie: " + userId);
 	
 				window.location.href = "contact.html";
 			}
@@ -61,7 +59,6 @@ function doLogin()
 	{
 		document.getElementById("loginResult").innerHTML = err.message;
 	}
-	console.log("after try catch block: " + userId);
 }
 
 function doRegister()
@@ -72,7 +69,6 @@ function doRegister()
     let login = document.getElementById("registerName").value;
     let password = document.getElementById("registerPassword").value;
     let hash = md5( password );
-	console.log("register hash for " + login + ": " + hash);
     
     document.getElementById("registerResult").innerHTML = "";
 
@@ -168,12 +164,12 @@ function displayContacts(srch)
 
 					// Edit and delete buttons.
 					text += "<td class=\'contactIconArea\'>";
-					text += "<button class=\'contactBtns\'>";
+					text += "<button class=\'contactBtns\' aria-label=\'Edit\'>";
 					text += "<span class=\'material-symbols-outlined\'>edit</span>";
 					text += "</button></td>";
 
 					text += "<td class=\'contactIconArea\'>";
-					text += "<button class=\'contactBtns\'>";
+					text += "<button class=\'contactBtns\' aria-label=\'Delete\'>";
 					text += "<span class=\'material-symbols-outlined\'>delete</span>";
 					text += "</button></td>";
 
@@ -291,6 +287,8 @@ function addContact()
 		console.log("addContact API error:" + err.message);
 	}
 	
+	// In case a user is adding their first contact.
+	document.getElementById("noResultsTxt").style.display = "none";
 }
 
 // Capitalizes a first or last name.
