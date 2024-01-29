@@ -149,7 +149,7 @@ function displayContacts(srch)
 				let text = "";
 				for (let i = 0; i < jsonObject.results.length; i++)
 				{
-					cid[i] = jsonObject.results[i].ID;
+					cid_list[i] = jsonObject.results[i].ID;
 					text += "<tr id=\'row" + i + "\'>";
 	
 					// Profile picture.
@@ -160,11 +160,11 @@ function displayContacts(srch)
 					text += "<td id=\'fName_" + i + "\'>" + jsonObject.results[i].FirstName + "</td>";
 					text += "<td id=\'lName_" + i + "\'>" + jsonObject.results[i].LastName + "</td>";
 					text += "<td id=\'phone_" + i + "\'>" + jsonObject.results[i].Phone + "</td>";
-					text += "<td id=\'row_" + i + "\'>" + jsonObject.results[i].Email + "</td>";
+					text += "<td id=\'email_" + i + "\'>" + jsonObject.results[i].Email + "</td>";
 
 					// Edit and delete buttons.
 					text += "<td class=\'contactIconArea\'>";
-					text += "<button class=\'contactBtns\' data-bs-toggle=\'modal\' data-bs-target=\'#editModal\' onclick='edit_row(" + i + ")'>";
+					text += "<button class=\'contactBtns\' data-bs-toggle=\'modal\' data-bs-target=\'#editModal\' onclick='editContact(" + i + ")'>";
 					text += "<span class=\'material-symbols-outlined\'>edit</span>";
 					text += "</button></td>";
 
@@ -299,10 +299,10 @@ function editContact(contactIndex)
 	let currPhNum = document.getElementById("phone_" + contactIndex).value;
 	let currEmail = document.getElementById("email_" + contactIndex).value;
 
-	document.getElementById(editFname) = currFname;
-	document.getElementById(editLname) = currLname;
-	document.getElementById(editPhNum) = currPhNum;
-	document.getElementById(editEmail) = currEmail;
+	document.getElementById(editFname).setAttribute("value", "currFname");
+	document.getElementById(editLname).setAttribute("value", "currLname");
+	document.getElementById(editPhNum).setAttribute("value", "currPhNum");
+	document.getElementById(editEmail).setAttribute("value", "currEmail");
 
 	document.getElementById(updateButton).setAttribute("onclick", "javascript: updateSubmit(" + contactIndex + ");");
 }
@@ -465,52 +465,3 @@ function searchContacts()
 		srchPopover.show();
 	}
 }
-
-
-// function searchContacts()
-// {
-// 	let srch = document.getElementById("searchText").value;
-// 	// document.getElementById("colorSearchResult").innerHTML = "";
-	
-// 	let contactList = "";
-
-// 	let tmp = {search:srch,userId:userId};
-// 	let jsonPayload = JSON.stringify( tmp );
-// 	console.log("search json payload: " + jsonPayload);
-
-// 	let url = urlBase + '/SearchContact.' + extension;
-	
-// 	let xhr = new XMLHttpRequest();
-// 	xhr.open("POST", url, true);
-// 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-// 	try
-// 	{
-// 		xhr.onreadystatechange = function() 
-// 		{
-// 			if (this.readyState == 4 && this.status == 200) 
-// 			{
-// 				// document.getElementById("colorSearchResult").innerHTML = "Color(s) has been retrieved";
-// 				let jsonObject = JSON.parse( xhr.responseText );
-// 				console.log(jsonObject);
-				
-// 				for( let i=0; i<jsonObject.results.length; i++ )
-// 				{
-// 					colorList += jsonObject.results[i];
-// 					if( i < jsonObject.results.length - 1 )
-// 					{
-// 						colorList += "<br />\r\n";
-// 					}
-// 				}
-				
-// 				document.getElementsByTagName("p")[0].innerHTML = colorList;
-// 			}
-// 		};
-// 		xhr.send(jsonPayload);
-// 	}
-// 	catch(err)
-// 	{
-// 		// document.getElementById("colorSearchResult").innerHTML = err.message;
-// 		console.log(err.message);
-// 	}
-	
-// }
