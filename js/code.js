@@ -16,13 +16,13 @@ function doLogin()
 	
 	let login = document.getElementById("loginName").value;
 	let password = document.getElementById("loginPassword").value;
-	var hash = md5( password );
+	let hash = md5( password );
 	console.log("login hash for " + login + ": " + hash);
 	
 	document.getElementById("loginResult").innerHTML = "";
 
-	let tmp = {login:login,password:password};
-//	var tmp = {login:login,password:hash};
+	// let tmp = {login:login,password:password};
+	let tmp = {login:login,password:hash};
 	let jsonPayload = JSON.stringify( tmp );
 	
 	let url = urlBase + '/Login.' + extension;
@@ -71,13 +71,13 @@ function doRegister()
     
     let login = document.getElementById("registerName").value;
     let password = document.getElementById("registerPassword").value;
-    var hash = md5( password );
+    let hash = md5( password );
 	console.log("register hash for " + login + ": " + hash);
     
     document.getElementById("registerResult").innerHTML = "";
 
-    let tmp = {firstName:firstName,lastName:lastName,login:login,password:password};
-//    var tmp = {login:login,password:hash};
+    // let tmp = {firstName:firstName,lastName:lastName,login:login,password:password};
+    let tmp = {firstName:firstName,lastName:lastName,login:login,password:hash};
     let jsonPayload = JSON.stringify( tmp );
     
     let url = urlBase + '/Register.' + extension;
