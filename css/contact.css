@@ -67,10 +67,12 @@ body
     border: 1px solid rgb(75, 12, 102);
 }
 
-.custom-popover
+#noResultsTxt
 {
-    --bs-popover-background-color: rgb(75, 12, 102);
-    --bs-popover-color: white;
+    margin-top: 100px;
+    color: white;
+    font-family: Optima, Segoe, "Segoe UI";
+    text-decoration: none;
 }
 
 .contactIconArea
