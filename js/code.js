@@ -5,7 +5,7 @@ let userId = 0;
 let firstName = "";
 let lastName = "";
 
-let initLoaded = false;
+let loadedAll = false;
 let contacts; // All contacts associated with the user.
 
 function doLogin()
@@ -16,7 +16,8 @@ function doLogin()
 	
 	let login = document.getElementById("loginName").value;
 	let password = document.getElementById("loginPassword").value;
-//	var hash = md5( password );
+	var hash = md5( password );
+	console.log("login hash for " + login + ": " + hash);
 	
 	document.getElementById("loginResult").innerHTML = "";
 
@@ -70,7 +71,8 @@ function doRegister()
     
     let login = document.getElementById("registerName").value;
     let password = document.getElementById("registerPassword").value;
-//    var hash = md5( password );
+    var hash = md5( password );
+	console.log("register hash for " + login + ": " + hash);
     
     document.getElementById("registerResult").innerHTML = "";
 
@@ -134,13 +136,16 @@ function displayContacts(srch)
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
-	// let resultsFound = false;
 	try {
 		xhr.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
                 let jsonObject = JSON.parse(xhr.responseText);
                 if (jsonObject.error) {
                     console.log(jsonObject.error);
+
+					// Display no contacts found message.
+					document.getElementById("contactsBody").innerHTML = "";
+					document.getElementById("noResultsTxt").style.display = "";
                     return;
                 }
 
@@ -179,26 +184,19 @@ function displayContacts(srch)
 				document.getElementById("contactsBody").innerHTML = text;
 				console.log("text is " + text);
 
-				// On initial page load, store all contacts associated with the user.
-				if (!initLoaded)
+				// On initial page load or post addContact(),
+				// store all contacts associated with the user.
+				if (!loadedAll)
 					contacts = document.getElementById("contactsBody").getElementsByTagName("tr");
 
-				initLoaded = true;
-				// resultsFound = jsonObject.results.length > 0;
+				loadedAll = true;
 			}
 		};
 		xhr.send(jsonPayload);
-		// return resultsFound;
 	}
-	catch(err) {
+	catch(err) 
+	{
 		console.log(err.message);
-		// document.getElementById("contactsBody").innerHTML = "";
-		// console.log("initLoaded = " + initLoaded);
-		// if (initLoaded)
-		// 	console.log("should be displaying popover");
-		// if (initLoaded)
-		// 	srchPopover.show();
-		// return false;
 	}
 }
 
@@ -239,6 +237,7 @@ function readCookie()
 	}
 	else
 	{
+		// todo delete this block?
 		// document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
 	}
 }
@@ -258,8 +257,6 @@ function addContact()
 	let newLname = document.getElementById("addLname").value;
 	let newphoneNum = document.getElementById("addPhNum").value;
 	let newEmail = document.getElementById("addEmail").value;
-
-	// document.getElementById("colorAddResult").innerHTML = "";
 
 	let tmp = {
 		firstName: newFname,
@@ -281,7 +278,10 @@ function addContact()
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
+				// Contact has been added to database.
+				loadedAll = false;
 				displayContacts("");
+				loadedAll = true;
 			}
 		};
 		xhr.send(jsonPayload);
@@ -293,6 +293,7 @@ function addContact()
 	
 }
 
+// Capitalizes a first or last name.
 function formatName(input)
 {
 	return input.charAt(0).toUpperCase() + input.slice(1);
@@ -306,6 +307,7 @@ function formatPhoneNumber(input)
 	return input;
 }
 
+// Validates the add/update forms.
 function validateContactForm(formId, phoneId, emailId)
 {
 	let fnameErr = lnameErr = phoneErr = emailErr = false;
@@ -343,6 +345,7 @@ function validateContactForm(formId, phoneId, emailId)
 	return true;
 }
 
+// Close a modal for adding or updating contacts.
 function closeModalForm(modalId, formId)
 {
 	let form = document.getElementById(formId);
@@ -353,12 +356,6 @@ function closeModalForm(modalId, formId)
 
 function searchContacts()
 {
-	// for (const c of contacts)
-	// 	console.log(c);
-	// Hide the popover.
-	// const srchPopover = bootstrap.Popover.getOrCreateInstance("#searchBtn");
-	// srchPopover.hide();
-
 	// Clear the "no results found" text.
 	document.getElementById("noResultsTxt").style.display = "none";
 
@@ -378,20 +375,13 @@ function searchContacts()
 	let matchFound = false;
 	for (let i = 0; i < contacts.length; i++)
 	{
-		// console.log("iteration " + i);
 		let fName = contacts[i].getElementsByTagName("td")[1].innerText.toLowerCase();
 		let lName = contacts[i].getElementsByTagName("td")[2].innerText.toLowerCase();
-
-		// console.log("-- checking first: " + fName);
-		// console.log("\t-- included? " + terms.includes(fName));
-		// console.log("-- checking last: " + lName);
-		// console.log("\t-- included? " + terms.includes(lName));
 
 		// Hide all by default and keep track of matches.
 		contacts[i].style.display = "none";
 		if (fName.includes(terms[0]) && lName.includes(terms[1]))
 		{
-			// console.log("\t-- match!");
 			matches.add(contacts[i]);
 			matchFound = true
 		}
@@ -405,7 +395,6 @@ function searchContacts()
 	}
 	else
 	{
-		// srchPopover.show();
 		document.getElementById("noResultsTxt").style.display = "";
 	}
 }
