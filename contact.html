@@ -154,13 +154,13 @@
 							<div class="mb-3">
 								<label for="editFname" class="form-label">First name</label>
 								<input id="editFname" type="text" placeholder="First name" class="form-control" 
-								oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);" required>
+								oninput="this.value = formatName(this.value);" required>
 								<div class="invalid-feedback">Required.</div>
 							</div>
 							<div class="mb-3">
 								<label for="editLname" class="form-label">Last name</label>
 								<input id="editLname" type="text" placeholder="Last name" class="form-control" 
-								oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);">
+								oninput="this.value = formatName(this.value);">
 							</div>
 							<div class="mb-3">
 								<label for="editPhNum" class="form-label">Phone number</label>

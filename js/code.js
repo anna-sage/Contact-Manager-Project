@@ -148,7 +148,6 @@ function displayContacts(srch)
 				let text = "";
 				for (let i = 0; i < jsonObject.results.length; i++)
 				{
-					console.log("search returned " + jsonObject.results[i].FirstName);
 					text += "<tr id=\'row" + i + "\'>";
 	
 					// Profile picture.
@@ -156,15 +155,15 @@ function displayContacts(srch)
 					text += "<img src=\'images/planeticon1.png\' alt=\'Default profile picture\' class=\'icons float-start\'></td>";
 	
 					// Contact information.
-					text += "<td>" + jsonObject.results[i].FirstName + "</td>";
-					text += "<td>" + jsonObject.results[i].LastName + "</td>";
-					text += "<td>" + jsonObject.results[i].Phone + "</td>";
-					text += "<td>" + jsonObject.results[i].Email + "</td>";
+					text += "<td id=\'fName" + i + "\'>" + jsonObject.results[i].FirstName + "</td>";
+					text += "<td id=\'lName" + i + "\'>" + jsonObject.results[i].LastName + "</td>";
+					text += "<td id=\'phone" + i + "\'>" + jsonObject.results[i].Phone + "</td>";
+					text += "<td id=\'email" + i + "\'>" + jsonObject.results[i].Email + "</td>";
 
 					// Edit and delete buttons.
 					text += "<td class=\'contactIconArea\'>";
 					text += "<button class=\'contactBtns\'>";
-					text += "<span class=\'material-symbols-outlined\'>edit</span>";
+					text += "<span class=\'material-symbols-outlined\' data-bs-toggle=\'modal\' data-bs-target=\'#editModal\' onclick=\'editContact(" +  i + ")\'>edit</span>";
 					text += "</button></td>";
 
 					text += "<td class=\'contactIconArea\'>";
@@ -295,10 +294,10 @@ function addContact()
 
 function editContact(contactIndex)
 {
-	let currFname = document.getElementById("fName_" + contactIndex).value;
-	let currLname = document.getElementById("lName_" + contactIndex).value;
-	let currPhNum = document.getElementById("phone_" + contactIndex).value;
-	let currEmail = document.getElementById("email_" + contactIndex).value;
+	let currFname = document.getElementById("fName" + contactIndex).value;
+	let currLname = document.getElementById("lName" + contactIndex).value;
+	let currPhNum = document.getElementById("phone" + contactIndex).value;
+	let currEmail = document.getElementById("email" + contactIndex).value;
 
 	document.getElementById(editFname).setAttribute("value", currFname);
 	document.getElementById(editLname).setAttribute("value", currLname);
