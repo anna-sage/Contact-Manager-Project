@@ -64,6 +64,13 @@ body
     border: 1px solid rgb(75, 12, 102);
 }
 
+#searchAddBar button:active
+{
+    background-color: #6b1e94;
+    color: white;
+    border: 1px solid rgb(75, 12, 102);
+}
+
 #noResultsTxt
 {
     margin-top: 100px;
@@ -101,10 +108,16 @@ body
     width: 50px;
 }
 
-.contactBtns:hover
+.contactBtns:active
 {
     color: white;
     background-color: rgb(75, 12, 102);
+}
+
+.contactBtns:hover
+{
+    color:white;
+    background-color: #6b1e94;
 }
 
 /* todo below not applying */
