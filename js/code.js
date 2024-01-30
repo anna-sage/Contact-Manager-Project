@@ -67,61 +67,123 @@ function doRegister()
     lastName = document.getElementById("lastName").value;
     
     let login = document.getElementById("registerName").value;
-    let password = document.getElementById("registerPassword").value;
-    let hash = md5( password );
+
+	//makes sure password is valid
+	if(!validPassword(document.getElementById("registerPassword").value))
+	{
+    	document.getElementById("registerResult").innerHTML = "Password is invalid";
+	}
+
+	else
+	{
+		document.getElementById("validatePassword").style.display = "none";
+    	let password = document.getElementById("registerPassword").value;
+		let hash = md5( password );
+
+    	document.getElementById("registerResult").innerHTML = "";
+
+    	// let tmp = {firstName:firstName,lastName:lastName,login:login,password:password};
+    	let tmp = {firstName:firstName,lastName:lastName,login:login,password:hash};
+    	let jsonPayload = JSON.stringify( tmp );
     
-    document.getElementById("registerResult").innerHTML = "";
+    	let url = urlBase + '/Register.' + extension;
 
-    // let tmp = {firstName:firstName,lastName:lastName,login:login,password:password};
-    let tmp = {firstName:firstName,lastName:lastName,login:login,password:hash};
-    let jsonPayload = JSON.stringify( tmp );
-    
-    let url = urlBase + '/Register.' + extension;
+    	let xhr = new XMLHttpRequest();
+    	xhr.open("POST", url, true);
+    	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    	try
+    	{
+        	xhr.onreadystatechange = function() 
+        	{
+				if (this.readyState==4)
+				{
+            		if (this.status == 409) 
+					{
+                		document.getElementById("registerResult").innerHTML = "User with this username already exists";
+            	    	return;
+            		}
 
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-    try
-    {
-        xhr.onreadystatechange = function() 
-        {
-			if (this.readyState==4){
-            	if (this.status == 409) {
-                	document.getElementById("registerResult").innerHTML = "User with this username already exists";
-            	    return;
-            	}
-
-            	else if (this.status == 200)
-            	{
-                	let jsonObject = JSON.parse( xhr.responseText );
-              	  	userId = jsonObject.id;
-                	document.getElementById("registerResult").innerHTML = "User added";
-                	console.log("after assignment " + userId);
+            		else if (this.status == 200)
+            		{
+                		let jsonObject = JSON.parse( xhr.responseText );
+              	  		userId = jsonObject.id;
+                		document.getElementById("registerResult").innerHTML = "User added";
+                		console.log("after assignment " + userId);
         
-                	firstName = jsonObject.firstName;
-                	lastName = jsonObject.lastName;
+                		firstName = jsonObject.firstName;
+                		lastName = jsonObject.lastName;
 
-                	saveCookie();
-                	console.log("after saveCookie: " + userId);
+                		saveCookie();
+                		console.log("after saveCookie: " + userId);
     
-                	window.location.href = "contact.html";
-            	}
+                		window.location.href = "contact.html";
+            		}
 
-				//handles other possible errors
-				else{
-					document.getElementById("registerResult").innerHTML = "An unexpected error has occurred. Status code: "+this.status;
-            	    return;
+					//handles other possible errors
+					else
+					{
+						document.getElementById("registerResult").innerHTML = "An unexpected error has occurred. Status code: "+this.status;
+            	    	return;
+					}
 				}
-			}
-        };
+        	};
 
-        xhr.send(jsonPayload);
-    }
-    catch(err)
-    {
-        document.getElementById("registerResult").innerHTML = err.message;
-    }
-    console.log("after try catch block: " + userId);
+      	  xhr.send(jsonPayload);
+    	}
+    	catch(err)
+    	{
+        	document.getElementById("registerResult").innerHTML = err.message;
+    	}
+   		console.log("after try catch block: " + userId);
+	}
+}
+
+//at least 8 characters, at least one lowercase letter, at least one uppercase letter, at least one digit
+function validPassword(input)
+{
+	valid=true;
+
+	if(input.length < 8)
+	{
+		document.getElementById("8characters").style.display = "";
+		valid = false;
+	}
+	else
+	{
+		document.getElementById("8characters").style.display = "none";
+	}
+
+	if(!/[a-z]/.test(input))
+	{
+		document.getElementById("lower").style.display = "";
+		valid = false;
+	}
+	else
+	{
+		document.getElementById("lower").style.display = "none";
+	}
+
+	if(!/[A-Z]/.test(input))
+	{
+		document.getElementById("upper").style.display = "";
+		valid = false;
+	}
+	else
+	{
+		document.getElementById("upper").style.display = "none";
+	}
+
+	if(!/\d/.test(input))
+	{
+		document.getElementById("digit").style.display = "";
+		valid = false;
+	}
+	else
+	{
+		document.getElementById("digit").style.display = "none";
+	}
+		
+	return valid;
 }
 
 // Loads in the contacts associated with a particular user.
@@ -298,6 +360,72 @@ function addContact()
 	
 	// In case a user is adding their first contact.
 	document.getElementById("noResultsTxt").style.display = "none";
+}
+
+function editContact(cx)
+{
+	//Get current contact info
+	let currFname = contacts[cx].getElementsByTagName("td")[1].innerText;
+	let currLname = contacts[cx].getElementsByTagName("td")[2].innerText;
+	let currPhNum = contacts[cx].getElementsByTagName("td")[3].innerText;
+	let currEmail = contacts[cx].getElementsByTagName("td")[4].innerText;
+
+	
+	//Put contact info in fields 
+	document.getElementById('editFname').setAttribute("value", currFname);
+	document.getElementById('editLname').setAttribute("value", currLname);
+	document.getElementById('editPhNum').setAttribute("value", currPhNum);
+	document.getElementById('editEmail').setAttribute("value", currEmail);
+
+	//Update contact 
+	document.getElementById('updateButton').setAttribute("onclick", "javascript: updateSubmit(" + cid[cx] + ");");
+}
+
+function updateSubmit(contactIndex) {
+	if(validateContactForm('editForm', 'editPhNum', 'editEmail')) 
+	{
+	  updateContact(contactIndex); 
+	  closeModalForm('editModal', 'editForm');
+	}
+}
+
+function updateContact(contactIndex)
+{
+	let saveFname = document.getElementById("editFname").value;
+	let saveLname = document.getElementById("editLname").value;
+	let savephoneNum = document.getElementById("editPhNum").value;
+	let saveEmail = document.getElementById("editEmail").value;
+
+	let tmp = {
+		contactId: contactIndex,
+		firstName: saveFname,
+		lastName: saveLname,
+		phone: savephoneNum,
+		email: saveEmail
+	};
+	let jsonPayload = JSON.stringify( tmp );
+
+	let url = urlBase + '/UpdateContact.' + extension;
+	
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				displayContacts("");
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		console.log("UpdateContact API error:" + err.message);
+	}
+	
 }
 
 // Capitalizes a first or last name.
