@@ -147,14 +147,16 @@ function displayContacts(srch)
 
 				// Prepare data to be added to table rows.
 				let text = "";
+				const amtImages = 3; // Amount of available profile pics.
 				for (let i = 0; i < jsonObject.results.length; i++)
 				{
 					console.log("search returned " + jsonObject.results[i].FirstName);
 					text += "<tr id=\'row" + i + "\'>";
 	
-					// Profile picture.
+					// Generate random profile picture.
+					const imgNum = Math.floor(Math.random() * amtImages) + 1;
 					text += "<td class=\'contactIconArea\'>";
-					text += "<img src=\'images/planeticon1.png\' alt=\'Default profile picture\' class=\'icons float-start\'></td>";
+					text += "<img src=\'images/contactIcons/contactIcon" + imgNum + ".png\' alt=\'Random profile picture\' class=\'icons float-start\'></td>";
 	
 					// Contact information.
 					text += "<td>" + jsonObject.results[i].FirstName + "</td>";
