@@ -74,6 +74,13 @@ body
     transform: scale(0.9);
 }
 
+#validatePassword li
+{
+    list-style-type: "❌";
+    background-color:rgba(255, 0, 0, 0.29);
+    font-size: 20px;
+}
+
 #loginName, #loginPassword, #registerName, #registerPassword
 {
 	font-size: 30px;

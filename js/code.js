@@ -240,7 +240,7 @@ function displayContacts(srch)
 					text += "</button></td>";
 
 					text += "<td class=\'contactIconArea\'>";
-					text += "<button class=\'contactBtns\' aria-label=\'Delete\'>";
+					text += "<button class=\'contactBtns\' onclick='confirmDelete(" + jsonObject.results[i].ID + ");'>";
 					text += "<span class=\'material-symbols-outlined\'>delete</span>";
 					text += "</button></td>";
 
@@ -532,4 +532,38 @@ function searchContacts()
 	{
 		document.getElementById("noResultsTxt").style.display = "";
 	}
+}
+
+//confirmDelete function
+function confirmDelete(contactId) {
+    console.log("Received Contact ID in confirmDelete:", contactId); // check contactID
+    if (confirm("Are you sure you want to delete this contact?")) {
+        deleteContact(contactId);
+    }
+}
+
+//deleteContact function
+function deleteContact(contactId) {
+    let tmp = { contactId: contactId };
+    let jsonPayload = JSON.stringify(tmp);
+
+    console.log("Sending payload to DeleteContact:", jsonPayload); // Check what's happening
+
+    let url = urlBase + '/DeleteContact.' + extension;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    try {
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                // Refresh the contact list or handle the response
+                console.log("Contact has been deleted");
+                displayContacts("");
+            }
+        };
+        xhr.send(jsonPayload);
+    } catch(err) {
+        console.error("Error in deleteContact: " + err.message);
+    }
 }
