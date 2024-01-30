@@ -7,7 +7,7 @@ body
     background-attachment: fixed;
 }
 
-.nav-item, .navbar-brand
+.nav-item, .navbar-brand, .navbar-text
 {
     font-family: 'Comfortaa', sans-serif;
     text-align: center;
@@ -15,9 +15,15 @@ body
 }
 
 .navbar-nav .nav-item.active .nav-link,
-.navbar-nav .nav-item:hover .nav-link {
+.navbar-nav .nav-item:active #logoutButton {
     color: white;
     background-color: rgb(75, 12, 102);
+}
+
+.navbar-nav .nav-item.hover .nav-link,
+.navbar-nav .nav-item:hover #logoutButton {
+    color: white;
+    background-color: #6b1e94;
 }
 
 .material-symbols-outlined
@@ -25,15 +31,10 @@ body
     vertical-align: middle;
 }
 
-#nav 
+#logoutButton
 {
-	height: 60px;
-	text-align:center;
-}
-
-#nav-user
-{
-    margin-right: 10%;
+    border-color: rgb(75, 12, 102);
+    color: rgb(75, 12, 102);
 }
 
 #contactsTitle {
