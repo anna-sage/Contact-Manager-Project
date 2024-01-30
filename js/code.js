@@ -7,6 +7,7 @@ let lastName = "";
 
 let initLoaded = false;
 let contacts; // All contacts associated with the user.
+const cid = []; //Stores contact IDs for each contact
 
 function doLogin()
 {
@@ -149,16 +150,19 @@ function displayContacts(srch)
 				for (let i = 0; i < jsonObject.results.length; i++)
 				{
 					text += "<tr id=\'row" + i + "\'>";
+
+					//Store Contact ID in cid[]
+					cid[i] = jsonObject.results[i].ID;
 	
 					// Profile picture.
 					text += "<td class=\'contactIconArea\'>";
 					text += "<img src=\'images/planeticon1.png\' alt=\'Default profile picture\' class=\'icons float-start\'></td>";
 	
 					// Contact information.
-					text += "<td id=\'fName" + i + "\'>" + jsonObject.results[i].FirstName + "</td>";
-					text += "<td id=\'lName" + i + "\'>" + jsonObject.results[i].LastName + "</td>";
-					text += "<td id=\'phone" + i + "\'>" + jsonObject.results[i].Phone + "</td>";
-					text += "<td id=\'email" + i + "\'>" + jsonObject.results[i].Email + "</td>";
+					text += "<td>" + jsonObject.results[i].FirstName + "</td>";
+					text += "<td>" + jsonObject.results[i].LastName + "</td>";
+					text += "<td>" + jsonObject.results[i].Phone + "</td>";
+					text += "<td>" + jsonObject.results[i].Email + "</td>";
 
 					// Edit and delete buttons.
 					text += "<td class=\'contactIconArea\'>";
@@ -292,25 +296,29 @@ function addContact()
 	
 }
 
-function editContact(contactIndex)
+function editContact(cx)
 {
-	let currFname = document.getElementById("fName" + contactIndex).value;
-	let currLname = document.getElementById("lName" + contactIndex).value;
-	let currPhNum = document.getElementById("phone" + contactIndex).value;
-	let currEmail = document.getElementById("email" + contactIndex).value;
+	//Get current contact info
+	let currFname = contacts[cx].getElementsByTagName("td")[1].innerText;
+	let currLname = contacts[cx].getElementsByTagName("td")[2].innerText;
+	let currPhNum = contacts[cx].getElementsByTagName("td")[3].innerText;
+	let currEmail = contacts[cx].getElementsByTagName("td")[4].innerText;
 
-	document.getElementById(editFname).setAttribute("value", currFname);
-	document.getElementById(editLname).setAttribute("value", currLname);
-	document.getElementById(editPhNum).setAttribute("value", currPhNum);
-	document.getElementById(editEmail).setAttribute("value", currEmail);
+	
+	//Put contact info in fields 
+	document.getElementById('editFname').setAttribute("value", currFname);
+	document.getElementById('editLname').setAttribute("value", currLname);
+	document.getElementById('editPhNum').setAttribute("value", currPhNum);
+	document.getElementById('editEmail').setAttribute("value", currEmail);
 
-	document.getElementById(updateButton).setAttribute("onclick", "javascript: updateSubmit(" + contactIndex + ");");
+	//Update contact 
+	document.getElementById('updateButton').setAttribute("onclick", "javascript: updateSubmit(" + cid[cx] + ");");
 }
 
-function updateSubmit(cid) {
+function updateSubmit(contactIndex) {
 	if(validateContactForm('editForm', 'editPhNum', 'editEmail')) 
 	{
-	  updateContact(cid); 
+	  updateContact(contactIndex); 
 	  closeModalForm('editModal', 'editForm');
 	}
 }
@@ -323,7 +331,7 @@ function updateContact(contactIndex)
 	let saveEmail = document.getElementById("editEmail").value;
 
 	let tmp = {
-		contactId: cid_list[contactIndex],
+		contactId: contactIndex,
 		firstName: saveFname,
 		lastName: saveLname,
 		phone: savephoneNum,
