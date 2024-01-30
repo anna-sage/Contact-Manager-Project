@@ -114,7 +114,6 @@ function doRegister()
 				}
 			}
         };
-
         xhr.send(jsonPayload);
     }
     catch(err)
@@ -156,7 +155,7 @@ function displayContacts(srch)
 
 				// Prepare data to be added to table rows.
 				let text = "";
-				const amtImages = 3; // Amount of available profile pics.
+				const amtImages = 9; // Amount of available profile pics.
 				for (let i = 0; i < jsonObject.results.length; i++)
 				{
 					console.log("search returned " + jsonObject.results[i].FirstName);
@@ -299,6 +298,7 @@ function addContact()
 	}
 	
 	// In case a user is adding their first contact.
+	// todo - why am i doing this?
 	document.getElementById("noResultsTxt").style.display = "none";
 }
 
@@ -337,8 +337,8 @@ function validateContactForm(formId, phoneId, emailId)
 	// Format the phone number.
 	phone.value = formatPhoneNumber(phoneNum);
 
-	// Validate the email.
-	let emailRegex = /^[a-zA-Z0-9_\-.]+@[a-z]+\.[a-z]+$/;
+	// Validate the email using the world's ugliest regex.
+	let emailRegex = /^[a-zA-Z0-9!#\$%&'\*\+\-\/=\?\^_`\{|\}~.]+@[a-z]+\.[a-z]+$/;
 	if (emailRegex.test(email.value) == false)
 	{
 		email.setCustomValidity("Invalid field.");
@@ -381,7 +381,6 @@ function searchContacts()
 
 	// If searching two terms, search for matching first and last name.
 	const matches = new Set();
-	let matchFound = false;
 	for (let i = 0; i < contacts.length; i++)
 	{
 		let fName = contacts[i].getElementsByTagName("td")[1].innerText.toLowerCase();
@@ -392,7 +391,6 @@ function searchContacts()
 		if (fName.includes(terms[0]) && lName.includes(terms[1]))
 		{
 			matches.add(contacts[i]);
-			matchFound = true
 		}
 	}
 
