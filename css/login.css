@@ -6,17 +6,21 @@ body
     margin-right: 0px;
 }
 
-.nav-link, .navbar-brand
+.nav-link, .navbar-brand, .navbar-text
 {
     font-family: 'Comfortaa', sans-serif;
     text-align: center;
     color: rgb(75, 12, 102);
 }
 
-.navbar-nav .nav-item.active .nav-link,
-.navbar-nav .nav-item:hover .nav-link {
+.navbar-nav .nav-item:active .nav-link {
     color: white;
     background-color: rgb(75, 12, 102);
+}
+
+.navbar-nav .nav-item.hover .nav-link{
+    color: white;
+    background-color: #6b1e94;
 }
 
 .material-symbols-outlined
