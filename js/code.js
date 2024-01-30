@@ -300,6 +300,72 @@ function addContact()
 	document.getElementById("noResultsTxt").style.display = "none";
 }
 
+function editContact(cx)
+{
+	//Get current contact info
+	let currFname = contacts[cx].getElementsByTagName("td")[1].innerText;
+	let currLname = contacts[cx].getElementsByTagName("td")[2].innerText;
+	let currPhNum = contacts[cx].getElementsByTagName("td")[3].innerText;
+	let currEmail = contacts[cx].getElementsByTagName("td")[4].innerText;
+
+	
+	//Put contact info in fields 
+	document.getElementById('editFname').setAttribute("value", currFname);
+	document.getElementById('editLname').setAttribute("value", currLname);
+	document.getElementById('editPhNum').setAttribute("value", currPhNum);
+	document.getElementById('editEmail').setAttribute("value", currEmail);
+
+	//Update contact 
+	document.getElementById('updateButton').setAttribute("onclick", "javascript: updateSubmit(" + cid[cx] + ");");
+}
+
+function updateSubmit(contactIndex) {
+	if(validateContactForm('editForm', 'editPhNum', 'editEmail')) 
+	{
+	  updateContact(contactIndex); 
+	  closeModalForm('editModal', 'editForm');
+	}
+}
+
+function updateContact(contactIndex)
+{
+	let saveFname = document.getElementById("editFname").value;
+	let saveLname = document.getElementById("editLname").value;
+	let savephoneNum = document.getElementById("editPhNum").value;
+	let saveEmail = document.getElementById("editEmail").value;
+
+	let tmp = {
+		contactId: contactIndex,
+		firstName: saveFname,
+		lastName: saveLname,
+		phone: savephoneNum,
+		email: saveEmail
+	};
+	let jsonPayload = JSON.stringify( tmp );
+
+	let url = urlBase + '/UpdateContact.' + extension;
+	
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				displayContacts("");
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		console.log("UpdateContact API error:" + err.message);
+	}
+	
+}
+
 // Capitalizes a first or last name.
 function formatName(input)
 {
