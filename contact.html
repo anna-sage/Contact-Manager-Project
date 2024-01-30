@@ -139,6 +139,61 @@
 				  </div>
 			</div>
 
+			<!-- Edit contacts dialogue box. -->
+			<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <h5 class="modal-title" id="exampleModalLabel">New contact details</h5>
+					  <button type="button" class="close" aria-label="Close" onclick="closeModalForm('editModal', 'editForm');">
+						<span aria-hidden="true">&times;</span>
+					  </button>
+					</div>
+					<div class="modal-body">
+						<form id="editForm">
+							<div class="mb-3">
+								<label for="editFname" class="form-label">First name</label>
+								<input id="editFname" type="text" placeholder="First name" class="form-control" 
+								oninput="this.value = formatName(this.value);" required>
+								<div class="invalid-feedback">Required.</div>
+							</div>
+							<div class="mb-3">
+								<label for="editLname" class="form-label">Last name</label>
+								<input id="editLname" type="text" placeholder="Last name" class="form-control" 
+								oninput="this.value = formatName(this.value);">
+							</div>
+							<div class="mb-3">
+								<label for="editPhNum" class="form-label">Phone number</label>
+								<input id="editPhNum" type="tel" placeholder="ex. 555-555-5555" class="form-control" required>
+								<div id="editPhNum-feedback" class="invalid-feedback">Valid 10 digit phone number required.</div>
+							</div>
+							<div class="mb-3">
+								<label for="editEmail" class="form-label">Email</label>
+								<input id="editEmail" type="email" placeholder="ex. example@email.com" class="form-control"
+								oninput="this.value = this.value.toLowerCase();" required>
+								<div id="editEmail-feedback" class="invalid-feedback">Valid email address required.</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" class="btn modalClose" onclick="closeModalForm('editModal', 'editForm');">
+						Close
+					  </button>
+					  <button type="submit" class="btn modalSubmit"
+					  onclick="
+					  if(validateContactForm('editForm', 'editPhNum', 'editEmail')) 
+					  {
+						addContact(); 
+						closeModalForm('editModal', 'editForm');
+					  }">
+						  Submit
+					</button>
+					</div>
+				  </div>
+				</div>
+			  </div>
+		</div>
+
 			<!-- Container for contacts -->
 			<div id="contactsDisplay" class="container mt-3">
 				<table id="contacts" class="table table-striped table-borderless overflow-hidden my-1">

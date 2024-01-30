@@ -14,15 +14,15 @@ body
     color: rgb(75, 12, 102);
 }
 
-.navbar-nav .nav-item.active .nav-link
-{
-    color: white;
-    background-color: rgb(75, 12, 102);
-}
-
 .navbar-nav .nav-item:hover .nav-link {
     color: white;
     background-color: #6b1e94;
+}
+
+.navbar-nav .nav-item:active .nav-link
+{
+    color: white;
+    background-color: rgb(75, 12, 102);
 }
 
 .material-symbols-outlined

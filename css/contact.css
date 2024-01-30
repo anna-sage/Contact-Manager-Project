@@ -10,6 +10,7 @@ body
 .nav-item, .navbar-brand, .navbar-text
 {
     font-family: 'Comfortaa', sans-serif;
+    padding-inline: 10px;
     text-align: center;
     color: rgb(75, 12, 102);
 }
@@ -108,16 +109,16 @@ body
     width: 50px;
 }
 
-.contactBtns:active
-{
-    color: white;
-    background-color: rgb(75, 12, 102);
-}
-
 .contactBtns:hover
 {
     color:white;
     background-color: #6b1e94;
+}
+
+.contactBtns:active
+{
+    color: white;
+    background-color: rgb(75, 12, 102);
 }
 
 /* todo below not applying */

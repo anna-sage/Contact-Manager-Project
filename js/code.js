@@ -362,6 +362,7 @@ function addContact()
 	document.getElementById("noResultsTxt").style.display = "none";
 }
 
+//Copies current contact info into edit modal
 function editContact(cx)
 {
 	//Get current contact info
@@ -381,6 +382,7 @@ function editContact(cx)
 	document.getElementById('updateButton').setAttribute("onclick", "javascript: updateSubmit(" + cid[cx] + ");");
 }
 
+//Contact validation tied to button
 function updateSubmit(contactIndex) {
 	if(validateContactForm('editForm', 'editPhNum', 'editEmail')) 
 	{
@@ -389,6 +391,7 @@ function updateSubmit(contactIndex) {
 	}
 }
 
+//Update contact
 function updateContact(contactIndex)
 {
 	let saveFname = document.getElementById("editFname").value;
