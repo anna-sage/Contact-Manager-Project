@@ -179,11 +179,11 @@
 					  <button type="button" class="btn modalClose" onclick="closeModalForm('editModal', 'editForm');">
 						Close
 					  </button>
-					  <button type="submit" class="btn modalSubmit"
+					  <button id="updateButton" type="submit" class="btn modalSubmit"
 					  onclick="
 					  if(validateContactForm('editForm', 'editPhNum', 'editEmail')) 
 					  {
-						addContact(); 
+						updateContact(); 
 						closeModalForm('editModal', 'editForm');
 					  }">
 						  Submit

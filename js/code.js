@@ -7,6 +7,7 @@ let lastName = "";
 
 let loadedAll = false;
 let contacts; // All contacts associated with the user.
+const cid = []; // All contact ids.
 
 function doLogin()
 {
@@ -222,6 +223,9 @@ function displayContacts(srch)
 				{
 					console.log("search returned " + jsonObject.results[i].FirstName);
 					text += "<tr id=\'row" + i + "\'>";
+
+					//Store contactID in cid
+					cid[i] = jsonObject.results[i].ID;
 	
 					// Profile picture.
 					text += "<td class=\'contactIconArea\'>";
@@ -236,7 +240,7 @@ function displayContacts(srch)
 					// Edit and delete buttons.
 					text += "<td class=\'contactIconArea\'>";
 					text += "<button class=\'contactBtns\' aria-label=\'Edit\'>";
-					text += "<span class=\'material-symbols-outlined\'>edit</span>";
+					text += "<span class=\'material-symbols-outlined\' data-bs-toggle=\'modal\' data-bs-target=\'#editModal\' onclick=\'editContact(" +  i + ")\'>edit</span>";
 					text += "</button></td>";
 
 					text += "<td class=\'contactIconArea\'>";
