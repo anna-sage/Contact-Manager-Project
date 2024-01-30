@@ -85,27 +85,36 @@ function doRegister()
     {
         xhr.onreadystatechange = function() 
         {
-            if (this.status == 409) {
-                document.getElementById("registerResult").innerHTML = "User already exists";
-                return;
-            }
+			if (this.readyState==4){
+            	if (this.status == 409) {
+                	document.getElementById("registerResult").innerHTML = "User with this username already exists";
+            	    return;
+            	}
 
-            else if (this.readyState == 4 && this.status == 200) 
-            {
-                let jsonObject = JSON.parse( xhr.responseText );
-                userId = jsonObject.id;
-                document.getElementById("registerResult").innerHTML = "User added";
-                console.log("after assignment " + userId);
+            	else if (this.status == 200)
+            	{
+                	let jsonObject = JSON.parse( xhr.responseText );
+              	  	userId = jsonObject.id;
+                	document.getElementById("registerResult").innerHTML = "User added";
+                	console.log("after assignment " + userId);
         
-                firstName = jsonObject.firstName;
-                lastName = jsonObject.lastName;
+                	firstName = jsonObject.firstName;
+                	lastName = jsonObject.lastName;
 
-                saveCookie();
-                console.log("after saveCookie: " + userId);
+                	saveCookie();
+                	console.log("after saveCookie: " + userId);
     
-                window.location.href = "contact.html";
-            }
+                	window.location.href = "contact.html";
+            	}
+
+				//handles other possible errors
+				else{
+					document.getElementById("registerResult").innerHTML = "An unexpected error has occurred. Status code: "+this.status;
+            	    return;
+				}
+			}
         };
+
         xhr.send(jsonPayload);
     }
     catch(err)
