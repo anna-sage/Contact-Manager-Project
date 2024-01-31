@@ -448,7 +448,10 @@ function formatName(input)
 function formatPhoneNumber(input)
 {
 	input = input.replace(/\D/g, '');
-	input = input.slice(0, 3) + "-" + input.slice(3, 6) + "-" + input.slice(6);
+	if (input.length > 6)
+		input = input.slice(0, 3) + "-" + input.slice(3, 6) + "-" + input.slice(6);
+	else if (input.length > 3)
+		input = input.slice(0, 3) + "-" + input.slice(3);
 	return input;
 }
 
@@ -506,40 +509,66 @@ function searchContacts()
 
 	const srch = document.getElementById("searchText").value.toLowerCase();
 	const terms = srch.split(" ");
-	console.log("terms: " + terms);
+	console.log("terms: " + terms + "\nsize: " + terms.size);
+	let matchFound = false;
 
-	// If searching a single term, look through all columns.
-	if (terms.length == 1)
-	{
-		console.log("display returns: " + displayContacts(terms[0]));
-		return;
-	}
-
-	// If searching two terms, search for matching first and last name.
-	const matches = new Set();
 	for (let i = 0; i < contacts.length; i++)
 	{
+		contacts[i].style.display = "none"; // Hide current contact.
+
 		let fName = contacts[i].getElementsByTagName("td")[1].innerText.toLowerCase();
 		let lName = contacts[i].getElementsByTagName("td")[2].innerText.toLowerCase();
 
-		// Hide all by default and keep track of matches.
-		contacts[i].style.display = "none";
-		if (fName.includes(terms[0]) && lName.includes(terms[1]))
+		// Want to search all fields of every contact if the search term is a single string.
+		if (terms.length == 1)
 		{
-			matches.add(contacts[i]);
+			let phNum = contacts[i].getElementsByTagName("td")[3].innerText.toLowerCase();
+			let email = contacts[i].getElementsByTagName("td")[4].innerText.toLowerCase();
+
+			if (fName.includes(terms[0]) || lName.includes(terms[0]) || phNum.includes(terms[0]) || email.includes(terms[0]))
+			{
+				contacts[i].style.display = "";
+				matchFound = true;
+			}
+
+			// If the search term is all digits, add dashes to compare against phone number.
+			if (/^[\d]{1,10}$/.test(terms[0]))
+			{
+				let formattedNum = formatPhoneNumber(terms[0]);
+				if (phNum.includes(formattedNum))
+				{
+					contacts[i].style.display = "";
+					matchFound = true;
+				}
+			}
+		}
+
+		// Search for first and last name.
+		if (terms.length == 2)
+		{
+			if (fName.includes(terms[0]) && lName.includes(terms[1]))
+			{
+				contacts[i].style.display = "";
+				matchFound = true;
+			}
 		}
 	}
 
-	if (matches.size > 0)
-	{
-		// Display only the matches.
-		for (const row of matches)
-			row.style.display = "";
-	}
-	else
+	if (!matchFound)
 	{
 		document.getElementById("noResultsTxt").style.display = "";
 	}
+}
+
+// Displays all contacts and clears search text field.
+function clearSearch()
+{
+	for (let i = 0; i < contacts.length; i++)
+	{
+		contacts[i].style.display = "";
+	}
+
+	document.getElementById('searchText').value = '';
 }
 
 //confirmDelete function
