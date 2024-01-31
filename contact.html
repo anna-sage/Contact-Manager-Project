@@ -17,14 +17,14 @@
 
 	<!-- Load in the contacts associated with the user. -->
 	
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		document.addEventListener('DOMContentLoaded', function()
 		{
 			readCookie();
 			document.getElementById("navUser").innerHTML = firstName;
 			displayContacts("");
 		}, false);
-	</script>
+	</script> -->
 
 </head>
 <body>
@@ -90,8 +90,8 @@
 					  <div class="modal-content">
 						<div class="modal-header">
 						  <h5 class="modal-title" id="exampleModalLabel">New contact details</h5>
-						  <button type="button" class="close" aria-label="Close" onclick="closeModalForm('addModal', 'addForm');">
-							<span aria-hidden="true">&times;</span>
+						  <button type="button" class="btn-close" aria-label="Close" onclick="closeModalForm('addModal', 'addForm');">
+							<span aria-hidden="true" style="display: none;">&times;</span>
 						  </button>
 						</div>
 						<div class="modal-body">
@@ -120,9 +120,9 @@
 								</div>
 							</form>
 						</div>
-						<div class="modal-footer">
-						  <button type="button" class="btn modalClose" onclick="closeModalForm('addModal', 'addForm');">
-							Close
+						<div class="modal-footer d-flex justify-content-between">
+						  <button type="button" class="btn modalCancel float-start" onclick="closeModalForm('addModal', 'addForm');">
+							Cancel
 						  </button>
 						  <button type="submit" class="btn modalSubmit"
 						  onclick="
@@ -145,8 +145,8 @@
 				  <div class="modal-content">
 					<div class="modal-header">
 					  <h5 class="modal-title" id="exampleModalLabel">New contact details</h5>
-					  <button type="button" class="close" aria-label="Close" onclick="closeModalForm('editModal', 'editForm');">
-						<span aria-hidden="true">&times;</span>
+					  <button type="button" class="btn-close" aria-label="Close" onclick="closeModalForm('editModal', 'editForm');">
+						<span aria-hidden="true" style="display: none;">&times;</span>
 					  </button>
 					</div>
 					<div class="modal-body">
@@ -176,8 +176,8 @@
 						</form>
 					</div>
 					<div class="modal-footer">
-					  <button type="button" class="btn modalClose" onclick="closeModalForm('editModal', 'editForm');">
-						Close
+					  <button type="button" class="btn modalCancel" onclick="closeModalForm('editModal', 'editForm');">
+						Cancel
 					  </button>
 					  <button id="updateButton" type="submit" class="btn modalSubmit"
 					  onclick="

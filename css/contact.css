@@ -47,9 +47,9 @@ body
 #searchAddBar {
     font-family: 'DM Sans';
     display: flex;
-    /* justify-content: space-between; */
     padding-bottom: 5px;
     border-radius: 35px;
+    box-shadow: 0px 0px 30px rgb(198, 192, 192);
 }
 
 .searchAddItems
@@ -76,7 +76,6 @@ body
 {
     margin-top: 100px;
     color: white;
-    font-family: Optima, Segoe, "Segoe UI";
     text-decoration: none;
 }
 
@@ -86,6 +85,7 @@ body
     border-collapse: separate;
     border-radius: 35px;
     font-family: 'DM Sans', sans-serif;
+    box-shadow: 0px 0px 30px rgb(198, 192, 192);
 }
 
 .contactIconArea
@@ -121,14 +121,51 @@ body
     background-color: rgb(75, 12, 102);
 }
 
-/* todo below not applying */
-.modalClose
+.modal
+{
+    font-family: 'DM Sans', sans-serif;
+}
+
+.modal-footer
+{
+    justify-content: space-between;
+}
+
+.modal .modalCancel
 {
     color: #5643fd;
     border-color: #5643fd;
 }
 
-.modalClose:hover
+.modal .modalCancel:hover
+{
+    background-color: #d7d3fe;
+    color: #3b2eae;
+    border-color: #5643fd;
+}
+
+.modal .modalSubmit
+{
+    color: white;
+    background-color: #5643fd;
+}
+
+.modal .modalSubmit:hover
+{
+    color: white;
+    background-color: #3b2eae;
+    box-shadow: #d7d3fe 1px 3px;
+}
+
+
+/* todo below not applying */
+/* .modalCancel
+{
+    color: #5643fd;
+    border-color: #5643fd;
+}
+
+.modalCancel:hover
 {
     color: white;
     background-color: #5643fd;
@@ -145,4 +182,4 @@ body
     color: #5643fd;
     border-color: #5643fd;
     background-color: white;
-}
+} */
