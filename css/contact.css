@@ -10,6 +10,7 @@ body
 .nav-item, .navbar-brand, .navbar-text
 {
     font-family: 'Comfortaa', sans-serif;
+    padding-inline: 10px;
     text-align: center;
     color: rgb(75, 12, 102);
 }
@@ -64,6 +65,13 @@ body
     border: 1px solid rgb(75, 12, 102);
 }
 
+#searchAddBar button:active
+{
+    background-color: #6b1e94;
+    color: white;
+    border: 1px solid rgb(75, 12, 102);
+}
+
 #noResultsTxt
 {
     margin-top: 100px;
@@ -102,6 +110,12 @@ body
 }
 
 .contactBtns:hover
+{
+    color:white;
+    background-color: #6b1e94;
+}
+
+.contactBtns:active
 {
     color: white;
     background-color: rgb(75, 12, 102);

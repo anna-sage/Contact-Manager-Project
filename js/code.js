@@ -7,6 +7,7 @@ let lastName = "";
 
 let loadedAll = false;
 let contacts; // All contacts associated with the user.
+const cid = []; // All contact ids.
 
 function doLogin()
 {
@@ -223,6 +224,9 @@ function displayContacts(srch)
 				{
 					console.log("search returned " + jsonObject.results[i].FirstName);
 					text += "<tr id=\'row" + i + "\'>";
+
+					//Store contactID in cid
+					cid[i] = jsonObject.results[i].ID;
 	
 					// Generate random profile picture.
 					const imgNum = Math.floor(Math.random() * amtImages) + 1;
@@ -238,7 +242,7 @@ function displayContacts(srch)
 					// Edit and delete buttons.
 					text += "<td class=\'contactIconArea\'>";
 					text += "<button class=\'contactBtns\' aria-label=\'Edit\'>";
-					text += "<span class=\'material-symbols-outlined\'>edit</span>";
+					text += "<span class=\'material-symbols-outlined\' data-bs-toggle=\'modal\' data-bs-target=\'#editModal\' onclick=\'editContact(" +  i + ")\'>edit</span>";
 					text += "</button></td>";
 
 					text += "<td class=\'contactIconArea\'>";
@@ -365,6 +369,7 @@ function addContact()
 	document.getElementById("noResultsTxt").style.display = "none";
 }
 
+//Copies current contact info into edit modal
 function editContact(cx)
 {
 	//Get current contact info
@@ -384,6 +389,7 @@ function editContact(cx)
 	document.getElementById('updateButton').setAttribute("onclick", "javascript: updateSubmit(" + cid[cx] + ");");
 }
 
+//Contact validation tied to button
 function updateSubmit(contactIndex) {
 	if(validateContactForm('editForm', 'editPhNum', 'editEmail')) 
 	{
@@ -392,6 +398,7 @@ function updateSubmit(contactIndex) {
 	}
 }
 
+//Update contact
 function updateContact(contactIndex)
 {
 	let saveFname = document.getElementById("editFname").value;
