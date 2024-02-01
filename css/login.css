@@ -29,8 +29,15 @@ body
     vertical-align: middle;
 }
 
+#tabWindow
+{
+    border-radius: 30px;
+}
+
 #tabContainer
 {
+    width: 70%;
+    border-radius: 30px;
     margin-top: 5%;
 }
 
@@ -55,12 +62,15 @@ body
     color:white;
     background-color: black;
     font-size: 30px;
-    border-radius: 10px;
+    border-radius: 25px;
     border-width: 0px;
     width: 50%;
     margin-top: 8%;
     margin-left: 25%;
+    padding-top: 3px;
+    padding-bottom: 3px;
     font-family: 'DM Sans', sans-serif;
+    font-weight: bold;
     transition: 0.2s;
 }
 
@@ -86,6 +96,15 @@ body
 	font-size: 30px;
 }
 
+.form-label
+{
+    color: rgb(75, 12, 102);
+    margin-left: 10%;
+    margin-top: 4%;
+    font-size: 18px;
+    font-family: 'DM Sans', sans-serif;
+}
+
 #searchText
 {
 	font-size: 30px;
@@ -101,7 +120,6 @@ input[type="text"],input[type="password"]{
     text-align: left;
     width: 80%;
     margin-left: 10%;
-    margin-bottom: 2%;
     padding-left: 4%;
     padding-right: 4%;
     font-family: 'DM Sans', sans-serif;

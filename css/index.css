@@ -6,7 +6,7 @@ body
     margin-right: 0px;
 }
 
-.nav-link, .navbar-brand, .nav-item
+.nav-link, .navbar-brand, .navbar-text, .nav-item
 {
     font-family: 'Comfortaa', sans-serif;
     padding-inline: 10px;
