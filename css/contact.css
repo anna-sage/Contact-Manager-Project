@@ -52,22 +52,23 @@ body
     box-shadow: 0px 0px 30px rgb(198, 192, 192);
 }
 
-.searchAddItems
+#searchAddBar button
 {
     color: rgb(75, 12, 102);
-    border: 5px solid rgb(75, 12, 102);
+    border: 1px solid rgb(75, 12, 102);
 }
 
-#searchAddBar button:hover
+#searchAddBar button:hover,
+#searchAddBar button:focus
 {
-    background-color: rgb(75, 12, 102);
+    background-color: #6b1e94;
     color: white;
     border: 1px solid rgb(75, 12, 102);
 }
 
 #searchAddBar button:active
 {
-    background-color: #6b1e94;
+    background-color: rgb(75, 12, 102);
     color: white;
     border: 1px solid rgb(75, 12, 102);
 }
@@ -77,6 +78,7 @@ body
     margin-top: 100px;
     color: white;
     text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
 }
 
 #contacts
@@ -110,7 +112,8 @@ tbody td img
     width: 50px;
 }
 
-.contactBtns:hover
+.contactBtns:hover,
+.contactBtns:focus
 {
     color:white;
     background-color: #6b1e94;
@@ -157,30 +160,3 @@ tbody td img
     background-color: #3b2eae;
     box-shadow: #d7d3fe 1px 3px;
 }
-
-
-/* todo below not applying */
-/* .modalCancel
-{
-    color: #5643fd;
-    border-color: #5643fd;
-}
-
-.modalCancel:hover
-{
-    color: white;
-    background-color: #5643fd;
-}
-
-.modal .modal-body .modalSubmit
-{
-    color: white;
-    background-color: #5643fd;
-}
-
-.modal .modal-body .modalSubmit:hover
-{
-    color: #5643fd;
-    border-color: #5643fd;
-    background-color: white;
-} */

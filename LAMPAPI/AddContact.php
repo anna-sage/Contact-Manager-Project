@@ -26,9 +26,12 @@ if ($conn->connect_error) {
         $stmt = $conn->prepare("INSERT into Contacts (UserId, First_Name, Last_Name, Phone, Email) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("sssss", $userId, $firstName, $lastName, $phone, $email);
         $stmt->execute();
+        $contactId = $stmt->insert_id; // Get the ID of the just-added contact
         $stmt->close();
         $conn->close();
-        returnWithError("");
+
+        // Return the contact ID as part of the response
+        returnWithContactId($contactId);
     }
 }
 
@@ -46,6 +49,12 @@ function sendResultInfoAsJson($obj)
 function returnWithError($err)
 {
     $retValue = '{"error":"' . $err . '"}';
+    sendResultInfoAsJson($retValue);
+}
+
+function returnWithContactId($contactId)
+{
+    $retValue = '{"contactId":"' . $contactId . '","error":""}';
     sendResultInfoAsJson($retValue);
 }
 ?>
