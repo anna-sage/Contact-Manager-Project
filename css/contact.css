@@ -141,7 +141,8 @@ tbody td img
     border-color: #5643fd;
 }
 
-.modal .modalCancel:hover
+.modal .modalCancel:hover,
+.modal .modalCancel:focus
 {
     background-color: #d7d3fe;
     color: #3b2eae;
@@ -154,7 +155,8 @@ tbody td img
     background-color: #5643fd;
 }
 
-.modal .modalSubmit:hover
+.modal .modalSubmit:hover,
+.modal .modalSubmit:focus
 {
     color: white;
     background-color: #3b2eae;

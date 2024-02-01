@@ -136,7 +136,6 @@ function doRegister()
     	{
         	document.getElementById("registerResult").innerHTML = err.message;
     	}
-   		console.log("after try catch block: " + userId);
 	}
 }
 
@@ -397,7 +396,7 @@ function generateContact(fn, ln, ph, em, id)
 	text += "</button></td>";
 
 	text += "<td class=\'contactIconArea\'>";
-	text += "<button class=\'contactBtns\' onclick='confirmDelete(" + id + ");'>";
+	text += "<button class=\'contactBtns\' onclick='confirmDelete(" + id + ", " + lastContactIdx + ");'>";
 	text += "<span class=\'material-symbols-outlined\'>delete</span>";
 	text += "</button></td></tr>";
 
@@ -621,7 +620,7 @@ function confirmDelete(contactId) {
 }
 
 //deleteContact function
-function deleteContact(contactId) {
+function deleteContact(contactId, rowId) {
     let tmp = { contactId: contactId };
     let jsonPayload = JSON.stringify(tmp);
 
@@ -637,7 +636,8 @@ function deleteContact(contactId) {
             if (this.readyState == 4 && this.status == 200) {
                 // Refresh the contact list or handle the response
                 console.log("Contact has been deleted");
-                displayContacts("");
+				document.getElementById("row" + rowId).remove();
+                // displayContacts("");
             }
         };
         xhr.send(jsonPayload);
