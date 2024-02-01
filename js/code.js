@@ -411,11 +411,11 @@ function generateContact(fn, ln, ph, em, id)
 function editContact(cx)
 {
 	//Get current contact info
-	let contacts = document.getElementById("contactsBody").getElementsByTagName("tr");
-	let currFname = contacts[cx].getElementsByTagName("td")[1].innerText;
-	let currLname = contacts[cx].getElementsByTagName("td")[2].innerText;
-	let currPhNum = contacts[cx].getElementsByTagName("td")[3].innerText;
-	let currEmail = contacts[cx].getElementsByTagName("td")[4].innerText;
+	let contactRow = document.getElementById("row" + cx);
+	let currFname = contactRow.getElementsByTagName("td")[1].innerText;
+	let currLname = contactRow.getElementsByTagName("td")[2].innerText;
+	let currPhNum = contactRow.getElementsByTagName("td")[3].innerText;
+	let currEmail = contactRow.getElementsByTagName("td")[4].innerText;
 	
 	//Put contact info in fields 
 	document.getElementById('editFname').setAttribute("value", currFname);
@@ -424,7 +424,7 @@ function editContact(cx)
 	document.getElementById('editEmail').setAttribute("value", currEmail);
 
 	//Update contact 
-	document.getElementById('updateButton').setAttribute("onclick", "javascript: updateSubmit(" + cid[cx] + ");");
+	document.getElementById('updateButton').setAttribute("onclick", "javascript: updateSubmit(" + cx + ");");
 }
 
 //Contact validation tied to button
@@ -465,10 +465,11 @@ function updateContact(cx)
 			if (this.readyState == 4 && this.status == 200) 
 			{
 				//Modify contact info in table row
-				contacts[cx].getElementsByTagName("td")[1].setAttribute("innerText", saveFname);
-				contacts[cx].getElementsByTagName("td")[2].setAttribute("innerText", saveLname);
-				contacts[cx].getElementsByTagName("td")[3].setAttribute("innerText", savephoneNum);
-				contacts[cx].getElementsByTagName("td")[4].setAttribute("innerText", saveEmail);
+				let contactRow = document.getElementById("row" + cx);
+				contactRow.getElementsByTagName("td")[1].innerHTML = saveFname;
+				contactRow.getElementsByTagName("td")[2].innerHTML = saveLname;
+				contactRow.getElementsByTagName("td")[3].innerHTML = savephoneNum;
+				contactRow.getElementsByTagName("td")[4].innerHTML = saveEmail;
 			}
 		};
 		xhr.send(jsonPayload);
