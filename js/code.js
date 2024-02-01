@@ -7,7 +7,7 @@ let lastName = "";
 
 let loadedAll = false;
 const cid = []; // All contact ids.
-let lastContactIdx; // Index of current final contact.
+let lastContactIdx = -1; // Index of current final contact.
 const amtImages = 9; // Amount of available profile pics.
 
 function doLogin()
@@ -411,11 +411,11 @@ function generateContact(fn, ln, ph, em, id)
 function editContact(cx)
 {
 	//Get current contact info
-	let contacts = document.getElementById("contactsBody").getElementsByTagName("tr");
-	let currFname = contacts[cx].getElementsByTagName("td")[1].innerText;
-	let currLname = contacts[cx].getElementsByTagName("td")[2].innerText;
-	let currPhNum = contacts[cx].getElementsByTagName("td")[3].innerText;
-	let currEmail = contacts[cx].getElementsByTagName("td")[4].innerText;
+	let contactRow = document.getElementById("row" + cx);
+	let currFname = contactRow.getElementsByTagName("td")[1].innerText;
+	let currLname = contactRow.getElementsByTagName("td")[2].innerText;
+	let currPhNum = contactRow.getElementsByTagName("td")[3].innerText;
+	let currEmail = contactRow.getElementsByTagName("td")[4].innerText;
 	
 	//Put contact info in fields 
 	document.getElementById('editFname').setAttribute("value", currFname);
@@ -424,20 +424,20 @@ function editContact(cx)
 	document.getElementById('editEmail').setAttribute("value", currEmail);
 
 	//Update contact 
-	document.getElementById('updateButton').setAttribute("onclick", "javascript: updateSubmit(" + cid[cx] + ");");
+	document.getElementById('updateButton').setAttribute("onclick", "javascript: updateSubmit(" + cx + ");");
 }
 
 //Contact validation tied to button
-function updateSubmit(contactIndex) {
+function updateSubmit(cx) {
 	if(validateContactForm('editForm', 'editPhNum', 'editEmail')) 
 	{
-	  updateContact(contactIndex); 
+	  updateContact(cx); 
 	  closeModalForm('editModal', 'editForm');
 	}
 }
 
 //Update contact
-function updateContact(contactIndex)
+function updateContact(cx)
 {
 	let saveFname = document.getElementById("editFname").value;
 	let saveLname = document.getElementById("editLname").value;
@@ -445,7 +445,7 @@ function updateContact(contactIndex)
 	let saveEmail = document.getElementById("editEmail").value;
 
 	let tmp = {
-		contactId: contactIndex,
+		contactId: cid[cx],
 		firstName: saveFname,
 		lastName: saveLname,
 		phone: savephoneNum,
@@ -464,7 +464,12 @@ function updateContact(contactIndex)
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				displayContacts("");
+				//Modify contact info in table row
+				let contactRow = document.getElementById("row" + cx);
+				contactRow.getElementsByTagName("td")[1].innerHTML = saveFname;
+				contactRow.getElementsByTagName("td")[2].innerHTML = saveLname;
+				contactRow.getElementsByTagName("td")[3].innerHTML = savephoneNum;
+				contactRow.getElementsByTagName("td")[4].innerHTML = saveEmail;
 			}
 		};
 		xhr.send(jsonPayload);
