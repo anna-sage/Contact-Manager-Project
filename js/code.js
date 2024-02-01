@@ -7,7 +7,7 @@ let lastName = "";
 
 let loadedAll = false;
 const cid = []; // All contact ids.
-let lastContactIdx; // Index of current final contact.
+let lastContactIdx = -1; // Index of current final contact.
 const amtImages = 9; // Amount of available profile pics.
 
 function doLogin()
