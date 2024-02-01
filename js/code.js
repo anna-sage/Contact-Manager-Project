@@ -270,7 +270,8 @@ function displayContacts(srch)
 	}
 	catch(err) 
 	{
-		console.log(err.message);
+		// Displaying error message to the user instead of just logging to the console
+        document.getElementById("noResultsTxt").innerText = "Error loading contacts: " + err.message;
 	}
 }
 
@@ -366,7 +367,7 @@ function addContact()
 	}
 	catch(err)
 	{
-		console.log("addContact API error:" + err.message);
+		document.getElementById("noResultsTxt").innerText = "Error adding contact: " + err.message;
 	}
 	
 	// In case a user is adding their first contact.
@@ -476,7 +477,7 @@ function updateContact(cx)
 	}
 	catch(err)
 	{
-		console.log("UpdateContact API error:" + err.message);
+		document.getElementById("noResultsTxt").innerText = "Error updating contact: " + err.message;
 	}
 	
 }
