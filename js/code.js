@@ -428,16 +428,16 @@ function editContact(cx)
 }
 
 //Contact validation tied to button
-function updateSubmit(contactIndex) {
+function updateSubmit(cx) {
 	if(validateContactForm('editForm', 'editPhNum', 'editEmail')) 
 	{
-	  updateContact(contactIndex); 
+	  updateContact(cx); 
 	  closeModalForm('editModal', 'editForm');
 	}
 }
 
 //Update contact
-function updateContact(contactIndex)
+function updateContact(cx)
 {
 	let saveFname = document.getElementById("editFname").value;
 	let saveLname = document.getElementById("editLname").value;
@@ -445,7 +445,7 @@ function updateContact(contactIndex)
 	let saveEmail = document.getElementById("editEmail").value;
 
 	let tmp = {
-		contactId: contactIndex,
+		contactId: cid[cx],
 		firstName: saveFname,
 		lastName: saveLname,
 		phone: savephoneNum,
@@ -464,7 +464,11 @@ function updateContact(contactIndex)
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				displayContacts("");
+				//Modify contact info in table row
+				contacts[cx].getElementsByTagName("td")[1].setAttribute("innerText", saveFname);
+				contacts[cx].getElementsByTagName("td")[2].setAttribute("innerText", saveLname);
+				contacts[cx].getElementsByTagName("td")[3].setAttribute("innerText", savephoneNum);
+				contacts[cx].getElementsByTagName("td")[4].setAttribute("innerText", saveEmail);
 			}
 		};
 		xhr.send(jsonPayload);
