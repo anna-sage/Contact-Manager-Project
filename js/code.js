@@ -7,6 +7,8 @@ let lastName = "";
 
 let loadedAll = false;
 const cid = []; // All contact ids.
+let lastContactIdx; // Index of current final contact.
+const amtImages = 9; // Amount of available profile pics.
 
 function doLogin()
 {
@@ -218,7 +220,6 @@ function displayContacts(srch)
 
 				// Prepare data to be added to table rows.
 				let text = "";
-				const amtImages = 9; // Amount of available profile pics.
 				for (let i = 0; i < jsonObject.results.length; i++)
 				{
 					console.log("search returned " + jsonObject.results[i].FirstName);
@@ -230,7 +231,7 @@ function displayContacts(srch)
 					// Generate random profile picture.
 					const imgNum = Math.floor(Math.random() * amtImages) + 1;
 					text += "<td class=\'contactIconArea\'>";
-					text += "<img src=\'images/contactIcons/contactIcon" + imgNum + ".png\' alt=\'Random profile picture\' class=\'icons\'></td>";
+					text += "<img src=\'images/contactIcons/contactIcon" + imgNum + ".png\' alt=\'Random profile picture\' class=\'icons float-start\'></td>";
 	
 					// Contact information.
 					text += "<td>" + jsonObject.results[i].FirstName + "</td>";
@@ -250,11 +251,17 @@ function displayContacts(srch)
 					text += "</button></td>";
 
 					text += "</tr>";
+					lastContactIdx = i;
 				}
 
 				// Add the contacts to the page.
 				document.getElementById("contactsBody").innerHTML = text;
 				console.log("text is " + text);
+
+				// On initial page load or post addContact(),
+				// store all contacts associated with the user.
+				if (!loadedAll)
+					contacts = document.getElementById("contactsBody").getElementsByTagName("tr");
 
 				loadedAll = true;
 			}
@@ -345,12 +352,14 @@ function addContact()
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
+				let jsonObject = JSON.parse(xhr.responseText);
+				console.log(jsonObject);
+
 				// Create new table row with new contact information.
-				let newContact = generateContact(newFname, newLname, newphoneNum, newEmail);
-				// Contact has been added to database.
-				loadedAll = false;
-				displayContacts("");
-				loadedAll = true;
+				let text = generateContact(newFname, newLname, newphoneNum, newEmail, jsonObject.contactId);
+
+				// Insert new contact at the top.
+				document.getElementById("contactsBody").insertAdjacentHTML("afterbegin", text);
 			}
 		};
 		xhr.send(jsonPayload);
@@ -365,16 +374,48 @@ function addContact()
 	document.getElementById("noResultsTxt").style.display = "none";
 }
 
+function generateContact(fn, ln, ph, em, id)
+{
+	lastContactIdx++;
+	let text = "<tr id=\'row" + lastContactIdx + "\'>";
+	
+	// Generate random profile picture.
+	const imgNum = Math.floor(Math.random() * amtImages) + 1;
+	text += "<td class=\'contactIconArea\'>";
+	text += "<img src=\'images/contactIcons/contactIcon" + imgNum + ".png\' alt=\'Random profile picture\' class=\'icons float-start\'></td>";
+
+	// Contact information.
+	text += "<td>" + fn + "</td>";
+	text += "<td>" + ln + "</td>";
+	text += "<td>" + ph + "</td>";
+	text += "<td>" + em + "</td>";
+
+	// Edit and delete buttons.
+	text += "<td class=\'contactIconArea\'>";
+	text += "<button class=\'contactBtns\' aria-label=\'Edit\'>";
+	text += "<span class=\'material-symbols-outlined\' data-bs-toggle=\'modal\' data-bs-target=\'#editModal\' onclick=\'editContact(" +  lastContactIdx + ")\'>edit</span>";
+	text += "</button></td>";
+
+	text += "<td class=\'contactIconArea\'>";
+	text += "<button class=\'contactBtns\' onclick='confirmDelete(" + id + ");'>";
+	text += "<span class=\'material-symbols-outlined\'>delete</span>";
+	text += "</button></td></tr>";
+
+	// Update the contact ids array with the new id.
+	cid[lastContactIdx] = id; 
+
+	return text;
+}
+
 //Copies current contact info into edit modal
 function editContact(cx)
 {
 	//Get current contact info
-	let contacts = contacts = document.getElementById("contactsBody").getElementsByTagName("tr");
+	let contacts = document.getElementById("contactsBody").getElementsByTagName("tr");
 	let currFname = contacts[cx].getElementsByTagName("td")[1].innerText;
 	let currLname = contacts[cx].getElementsByTagName("td")[2].innerText;
 	let currPhNum = contacts[cx].getElementsByTagName("td")[3].innerText;
 	let currEmail = contacts[cx].getElementsByTagName("td")[4].innerText;
-
 	
 	//Put contact info in fields 
 	document.getElementById('editFname').setAttribute("value", currFname);
