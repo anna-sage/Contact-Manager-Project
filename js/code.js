@@ -109,7 +109,7 @@ function doRegister()
             		{
                 		let jsonObject = JSON.parse( xhr.responseText );
               	  		userId = jsonObject.id;
-                		document.getElementById("registerResult").innerHTML = "User added";
+                		//document.getElementById("registerResult").innerHTML = "User added";
                 		console.log("after assignment " + userId);
         
                 		firstName = jsonObject.firstName;
