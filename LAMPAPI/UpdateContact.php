@@ -14,7 +14,7 @@ if ($conn->connect_error) {
     returnWithError($conn->connect_error);
 } else {
     // Check if the contact with the given ID exists, now also check with same email or phone
-    $stmt = $conn->prepare("SELECT * FROM Contacts WHERE (Email=? OR Phone=?) AND ID=?");
+    $stmt = $conn->prepare("SELECT * FROM Contacts WHERE (Email=? OR Phone=?) AND ID<>?");
     $stmt->bind_param("sss",$email, $phone, $contactId);
     $stmt->execute();
     $result = $stmt->get_result();
