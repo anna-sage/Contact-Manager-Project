@@ -11,7 +11,7 @@ body
     font-family: 'Comfortaa', sans-serif;
     padding-inline: 10px;
     text-align: center;
-    color: rgb(75, 12, 102);
+    color: #4b0c66;
 }
 
 .navbar-nav .nav-item:hover .nav-link {
@@ -22,7 +22,7 @@ body
 .navbar-nav .nav-item:active .nav-link
 {
     color: white;
-    background-color: rgb(75, 12, 102);
+    background-color: #4b0c66;
 }
 
 .material-symbols-outlined

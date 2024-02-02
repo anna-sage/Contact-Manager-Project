@@ -12,13 +12,13 @@ body
     font-family: 'Comfortaa', sans-serif;
     padding-inline: 10px;
     text-align: center;
-    color: rgb(75, 12, 102);
+    color: #4b0c66;
 }
 
 .navbar-nav .nav-item.active .nav-link,
 .navbar-nav .nav-item:active #logoutButton {
     color: white;
-    background-color: rgb(75, 12, 102);
+    background-color: #4b0c66;
 }
 
 .navbar-nav .nav-item.hover .nav-link,
@@ -34,8 +34,8 @@ body
 
 #logoutButton
 {
-    border-color: rgb(75, 12, 102);
-    color: rgb(75, 12, 102);
+    border-color: #4b0c66;
+    color: #4b0c66;
 }
 
 #contactsTitle {
@@ -54,8 +54,8 @@ body
 
 #searchAddBar button
 {
-    color: rgb(75, 12, 102);
-    border: 1px solid rgb(75, 12, 102);
+    color: #4b0c66;
+    border: 1px solid #4b0c66;
 }
 
 #searchAddBar button:hover,
@@ -63,14 +63,14 @@ body
 {
     background-color: #6b1e94;
     color: white;
-    border: 1px solid rgb(75, 12, 102);
+    border: 1px solid #4b0c66;
 }
 
 #searchAddBar button:active
 {
-    background-color: rgb(75, 12, 102);
+    background-color: #4b0c66;
     color: white;
-    border: 1px solid rgb(75, 12, 102);
+    border: 1px solid #4b0c66;
 }
 
 #noResultsTxt
@@ -104,9 +104,9 @@ tbody td img
 
 .contactBtns
 {
-    color: rgb(75, 12, 102);
+    color: #4b0c66;
     background-color: white;
-    border: 1px solid rgb(75, 12, 102);
+    border: 1px solid #4b0c66;
     border-radius: 4cap;
     height: 50px;
     width: 50px;
@@ -122,14 +122,25 @@ tbody td img
 .contactBtns:active
 {
     color: white;
-    background-color: rgb(75, 12, 102);
+    background-color: #4b0c66;
 }
 
 .modal
 {
     font-family: 'DM Sans', sans-serif;
 }
+/*
+.modal .modal-header
+{
+    color:white;
+    background-color: #6b1e94;
+}
 
+#modal-editIcon
+{
+    color: yellow;
+}
+*/
 .modal-footer
 {
     justify-content: space-between;
