@@ -120,3 +120,19 @@ body
     margin-top: 2%;
     margin-bottom: 5%;
 }
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #060c60; /* Dark blue to match the base color */
+    color: #ffffff; /* White text for easy read*/
+    padding: 10px 0; 
+    font-family: 'DM Sans', sans-serif; 
+    text-align: center;
+}
+
+.footer span {
+    color: #ffffff; 
+}
