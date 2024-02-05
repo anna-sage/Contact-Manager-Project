@@ -353,13 +353,35 @@ function addContact()
 			if (this.readyState == 4 && this.status == 200) 
 			{
 				let jsonObject = JSON.parse(xhr.responseText);
-				console.log(jsonObject);
+				if (jsonObject.error)
+				{
+					console.log(jsonObject.error);
+
+					// Display the error message.
+					document.getElementById("addErrMsg").innerHTML = jsonObject.error;
+					document.getElementById("addErr").style.display = "";
+					console.log("should be displaying existence check msg");
+
+					// Make all the fields red and display warning icons.
+					let inputs = document.getElementsByClassName("addInput");
+					let icons = document.getElementsByClassName("addInvalidIcon");
+					for (let i = 0; i < inputs.length; i++)
+					{
+						inputs[i].style.borderColor = "#dc3545";
+						icons[i].style.display = "";
+					}
+
+					return;
+				}
 
 				// Create new table row with new contact information.
 				let text = generateContact(newFname, newLname, newphoneNum, newEmail, jsonObject.contactId);
 
 				// Insert new contact at the top.
 				document.getElementById("contactsBody").insertAdjacentHTML("afterbegin", text);
+
+				// Reset and close the form.
+				resetForm("add");
 			}
 		};
 		xhr.send(jsonPayload);
@@ -429,10 +451,10 @@ function editContact(cx)
 
 //Contact validation tied to button
 function updateSubmit(cx) {
-	if(validateContactForm('editForm', 'editPhNum', 'editEmail')) 
+	if(validateContactForm('editForm', 'editFname', 'editPhNum', 'editEmail')) 
 	{
 	  updateContact(cx); 
-	  closeModalForm('editModal', 'editForm');
+	  resetForm("edit");
 	}
 }
 
@@ -499,20 +521,33 @@ function formatPhoneNumber(input)
 }
 
 // Validates the add/update forms.
-function validateContactForm(formId, phoneId, emailId)
+function validateContactForm(formId, fnameId, phoneId, emailId)
 {
 	let fnameErr = lnameErr = phoneErr = emailErr = false;
 
 	let form = document.getElementById(formId);
+	let fname = document.getElementById(fnameId);
 	let phone = document.getElementById(phoneId);
 	let email = document.getElementById(emailId);
+
+	if (!fname.value)
+	{
+		// fname.setCustomValidity("Invalid field.");
+		fname.style.borderColor = "#dc3545";
+		document.getElementById("addFnameInvalid").style.display = "";
+		document.getElementById("addFnameFeedback").style.display = "";
+		fnameErr = true;
+	}
 
 	// Validate the phone number.
 	let phoneNum = phone.value;
 	let phRegex = /^[(]?[0-9]{3}[)]?[-\.]?[0-9]{3}[-\.]?[0-9]{4}$/;
 	if (phRegex.test(phoneNum) == false)
 	{
-		phone.setCustomValidity("Invalid field.");
+		// phone.setCustomValidity("Invalid field.");
+		phone.style.borderColor = "#dc3545";
+		document.getElementById("addPhNumInvalid").style.display = "";
+		document.getElementById("addPhNumFeedback").style.display = "";
 		phoneErr = true;
 	}
 
@@ -523,25 +558,46 @@ function validateContactForm(formId, phoneId, emailId)
 	let emailRegex = /^[a-zA-Z0-9!#\$%&'\*\+\-\/=\?\^_`\{|\}~.]+@[a-z]+\.[a-z]+$/;
 	if (emailRegex.test(email.value) == false)
 	{
-		email.setCustomValidity("Invalid field.");
+		// email.setCustomValidity("Invalid field.");
+		email.style.borderColor = "#dc3545";
+		document.getElementById("addEmailInvalid").style.display = "";
+		document.getElementById("addEmailFeedback").style.display = "";
 		emailErr = true;
 	}
 
 	if ((fnameErr || phoneErr || emailErr) == true)
 	{
-		form.classList.add("was-validated");
 		return false;
 	}
 
 	return true;
 }
 
+function resetForm(formType)
+{
+	// Revert invalid or error styling.
+	let invIcons = document.getElementsByClassName(formType + "InvalidIcon");
+	let inputs = document.getElementsByClassName(formType + "Input");
+	for (let i = 0; i < invIcons.length; i++)
+	{
+		invIcons[i].style.display = "none";
+		inputs[i].style.borderColor = "black";
+	}
+
+	let feedbacks = document.getElementsByClassName(formType + "Feedback");
+	for (let i = 0; i < feedbacks.length; i++)
+	{
+		feedbacks[i].style.display = "none";
+	}
+
+	document.getElementById(formType + "Err").style.display = "none";
+	closeModalForm(formType + "Modal", formType + "Form");
+}
+
 // Close a modal for adding or updating contacts.
 function closeModalForm(modalId, formId)
 {
 	let form = document.getElementById(formId);
-	form.classList.remove("was-validated");
-	form.reset();
 	bootstrap.Modal.getInstance(document.getElementById(modalId)).hide();
 }
 

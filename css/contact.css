@@ -129,18 +129,15 @@ tbody td img
 {
     font-family: 'DM Sans', sans-serif;
 }
-/*
-.modal .modal-header
+
+.modal .modal-body #addErr,
+.modal .modal-body .invalidIcon,
+.modal .modal-body .feedback
 {
-    color:white;
-    background-color: #6b1e94;
+    /* display: none; */
+    color: #dc3545;
 }
 
-#modal-editIcon
-{
-    color: yellow;
-}
-*/
 .modal-footer
 {
     justify-content: space-between;
