@@ -67,8 +67,12 @@
 						<button id="addBtn" type="button" 
 						class="btn rounded-pill searchAddItems" data-bs-toggle="modal" data-bs-target="#addModal">+ Add</button>
 					</div>
-					<div class="nav-item p-2">
+					<div class="nav-item p-2" id="searchContainer">
 						<div class="input-group mt-1">
+							<button id="clearBtn" type="button" class="btn rounded-left"
+								onclick="clearSearch();">
+								Clear
+							</button>
 							<input id="searchText" type="search" placeholder="Enter contact information" class="form-control searchAddItems" style="border: 1px solid black">
 							<button id="searchBtn" class="btn searchAddItems" type="submit" 
 							onclick="searchContacts();">
@@ -76,12 +80,14 @@
 							</button>
 						</div>
 					</div>
+					<!--
 					<div class="nav-item p-2 me-2 mt-1">
 						<button id="clearBtn" type="button" class="btn rounded-pill searchAddItems" 
 						onclick="clearSearch();">
 							Clear
 						</button>
 					</div>
+					!-->
 				</div>
 
 				<!-- Add contacts dialogue box. -->
@@ -176,20 +182,18 @@
 								<div id="editEmail-feedback" class="invalid-feedback">Valid email address required.</div>
 							</div>
 						</form>
+						<div id="editError" style="display:none">
+							Insert Edit Error.
+						</div>
 					</div>
 					<div class="modal-footer">
 					  <button type="button" class="btn modalCancel" onclick="closeModalForm('editModal', 'editForm');">
 						Cancel
 					  </button>
 					  <button id="updateButton" type="submit" class="btn modalSubmit"
-					  onclick="
-					  if(validateContactForm('editForm', 'editPhNum', 'editEmail')) 
-					  {
-						updateContact(); 
-						closeModalForm('editModal', 'editForm');
-					  }">
+					  onclick="">
 						  Submit
-					</button>
+					  </button>
 					</div>
 				  </div>
 				</div>

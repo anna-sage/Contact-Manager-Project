@@ -52,26 +52,83 @@ body
     box-shadow: 0px 0px 30px rgb(198, 192, 192);
 }
 
+#searchContainer
+{
+    margin-right: 2%;
+}
+
 #searchAddBar button
 {
     color: #4b0c66;
     border: 1px solid #4b0c66;
 }
 
-#searchAddBar button:hover,
-#searchAddBar button:focus
+#addBtn:hover
 {
     background-color: #6b1e94;
     color: white;
     border: 1px solid #4b0c66;
 }
 
-#searchAddBar button:active
+#addBtn:active
 {
     background-color: #4b0c66;
     color: white;
     border: 1px solid #4b0c66;
 }
+
+#clearBtn:hover
+{
+    background-color: #6b1e94;
+    color: white;
+    border: 1px solid #4b0c66;
+}
+
+#clearBtn:active
+{
+    background-color: #4b0c66;
+    color: white;
+    border: 1px solid #4b0c66;
+}
+
+#searchBtn
+{
+    background-color: #fec768;
+    color: #4b0c66;
+    border: 1px solid #4b0c66;
+}
+
+#searchBtn:hover,
+#searchBtn:focus
+{
+    background-color: #c9953b;
+    color: black;
+    border: 1px solid #4b0c66;
+}
+
+#searchBtn:active
+{
+    background-color: #c9953b;
+    color: black;
+    border: 1px solid #4b0c66;
+}
+
+/*
+.searchAddBar button:hover,
+.searchAddBar button:focus
+{
+    background-color: #6b1e94;
+    color: white;
+    border: 1px solid #4b0c66;
+}
+
+.searchAddBar button:active
+{
+    background-color: #4b0c66;
+    color: white;
+    border: 1px solid #4b0c66;
+}
+*/
 
 #noResultsTxt
 {
@@ -79,6 +136,11 @@ body
     color: white;
     text-decoration: none;
     font-family: 'DM Sans', sans-serif;
+}
+
+#contactsDisplay
+{
+    margin-bottom: 5%;
 }
 
 #contacts
@@ -129,18 +191,7 @@ tbody td img
 {
     font-family: 'DM Sans', sans-serif;
 }
-/*
-.modal .modal-header
-{
-    color:white;
-    background-color: #6b1e94;
-}
 
-#modal-editIcon
-{
-    color: yellow;
-}
-*/
 .modal-footer
 {
     justify-content: space-between;
@@ -171,3 +222,8 @@ tbody td img
     background-color: #3b2eae;
     box-shadow: #d7d3fe 1px 3px;
 }
+
+#editModal #editError
+{
+    font-family: 'DM Sans', sans-serif;
+} 

@@ -433,7 +433,6 @@ function updateSubmit(cx) {
 	if(validateContactForm('editForm', 'editPhNum', 'editEmail')) 
 	{
 	  updateContact(cx); 
-	  closeModalForm('editModal', 'editForm');
 	}
 }
 
@@ -465,12 +464,14 @@ function updateContact(cx)
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				//Modify contact info in table row
+				//Modify contact info in table row and close edit modal 
 				let contactRow = document.getElementById("row" + cx);
 				contactRow.getElementsByTagName("td")[1].innerHTML = saveFname;
 				contactRow.getElementsByTagName("td")[2].innerHTML = saveLname;
 				contactRow.getElementsByTagName("td")[3].innerHTML = savephoneNum;
 				contactRow.getElementsByTagName("td")[4].innerHTML = saveEmail;
+				document.getElementById("editError").setAttribute("style", "display:none")
+				closeModalForm('editModal', 'editForm');
 			}
 		};
 		xhr.send(jsonPayload);
@@ -478,6 +479,9 @@ function updateContact(cx)
 	catch(err)
 	{
 		document.getElementById("noResultsTxt").innerText = "Error updating contact: " + err.message;
+		//include error in edit modal for now?
+		document.getElementById("editError").innerText = "Error updating contact: " + err.message;
+		document.getElementById("editError").setAttribute("style", "display:block")
 	}
 	
 }
@@ -616,6 +620,7 @@ function clearSearch()
 	}
 
 	document.getElementById('searchText').value = '';
+	document.getElementById("noResultsTxt").style.display = "none";
 }
 
 //confirmDelete function
