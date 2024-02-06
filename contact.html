@@ -15,8 +15,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- Load in the contacts associated with the user. -->
-	
+	<!-- Load in the contacts associated with the user and reset forms. -->
 	<script type="text/javascript">
 		document.addEventListener('DOMContentLoaded', function()
 		{
@@ -146,10 +145,9 @@
 						  </button>
 						  <button type="submit" class="btn modalSubmit"
 						  onclick="
-						  if(validateContactForm('addForm','addFname', 'addPhNum', 'addEmail')) 
+						  if(validateContactForm('add','addFname', 'addPhNum', 'addEmail')) 
 						  {
 							addContact(); 
-							// closeModalForm('addModal', 'addForm');
 						  }">
 						  	Submit
 						</button>
@@ -178,7 +176,7 @@
 									warning
 								</span>
 								<label for="editFname" class="form-label">First name</label>
-								<input id="editFname" type="text" placeholder="First name" class="form-control" 
+								<input id="editFname" type="text" placeholder="First name" class="form-control editInput" 
 								oninput="this.value = formatName(this.value);" required>
 								<div id="editFnameFeedback" class="editFeedback feedback">Required.</div>
 							</div>
@@ -187,7 +185,7 @@
 									warning
 								</span>
 								<label for="editLname" class="form-label">Last name</label>
-								<input id="editLname" type="text" placeholder="Last name" class="form-control" 
+								<input id="editLname" type="text" placeholder="Last name" class="form-control editInput" 
 								oninput="this.value = formatName(this.value);">
 							</div>
 							<div class="mb-3">
@@ -195,7 +193,7 @@
 									warning
 								</span>
 								<label for="editPhNum" class="form-label">Phone number</label>
-								<input id="editPhNum" type="tel" placeholder="ex. 555-555-5555" class="form-control" required>
+								<input id="editPhNum" type="tel" placeholder="ex. 555-555-5555" class="form-control editInput" required>
 								<div id="editPhNumFeedback" class="editFeedback feedback">Valid 10 digit phone number required.</div>
 							</div>
 							<div class="mb-3">
@@ -203,7 +201,7 @@
 									warning
 								</span>
 								<label for="editEmail" class="form-label">Email</label>
-								<input id="editEmail" type="email" placeholder="ex. example@email.com" class="form-control"
+								<input id="editEmail" type="email" placeholder="ex. example@email.com" class="form-control editInput"
 								oninput="this.value = this.value.toLowerCase();" required>
 								<div id="editEmailFeedback" class="editFeedback feedback">Valid email address required.</div>
 							</div>
@@ -221,10 +219,9 @@
 					  </button>
 					  <button id="updateButton" type="submit" class="btn modalSubmit"
 					  onclick="
-					  if(validateContactForm('editForm', 'editFname', 'editPhNum', 'editEmail')) 
+					  if(validateContactForm('edit', 'editFname', 'editPhNum', 'editEmail')) 
 					  {
 						updateContact(); 
-						closeModalForm('editModal', 'editForm');
 					  }">
 						  Submit
 					</button>
