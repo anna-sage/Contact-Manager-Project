@@ -200,6 +200,8 @@ function validPassword(input)
 // Loads in the contacts associated with a particular user.
 function displayContacts(srch)
 {
+	clearError();
+
 	let tmp = {
         search: srch,
         userId: userId
@@ -223,7 +225,7 @@ function displayContacts(srch)
 
 					// Display no contacts found message.
 					document.getElementById("contactsBody").innerHTML = "";
-					document.getElementById("noResultsTxt").style.display = "";
+					document.getElementById("noContactsTxt").style.display = "";
                     return;
                 }
 
@@ -261,6 +263,11 @@ function displayContacts(srch)
 
 					text += "</tr>";
 					lastContactIdx = i;
+				}
+
+				if(jsonObject.results.length==0)
+				{
+					document.getElementById("noContactsTxt").style.display = "";
 				}
 
 				// Add the contacts to the page.
@@ -370,18 +377,19 @@ function addContact()
 
 				// Insert new contact at the top.
 				document.getElementById("contactsBody").insertAdjacentHTML("afterbegin", text);
+
+				// In case a user is adding their first contact.
+				clearError();
 			}
 		};
+		
 		xhr.send(jsonPayload);
+		
 	}
 	catch(err)
 	{
 		document.getElementById("noResultsTxt").innerText = "Error adding contact: " + err.message;
 	}
-	
-	// In case a user is adding their first contact.
-	// todo - why am i doing this?
-	document.getElementById("noResultsTxt").style.display = "none";
 }
 
 function generateContact(fn, ln, ph, em, id)
@@ -562,7 +570,7 @@ function closeModalForm(modalId, formId)
 function searchContacts()
 {
 	// Clear the "no results found" text.
-	document.getElementById("noResultsTxt").style.display = "none";
+	clearError();
 
 	const srch = document.getElementById("searchText").value.toLowerCase();
 	const terms = srch.split(" ");
@@ -613,7 +621,7 @@ function searchContacts()
 		}
 	}
 
-	if (!matchFound)
+	if(!matchFound)
 	{
 		document.getElementById("noResultsTxt").style.display = "";
 	}
@@ -622,6 +630,7 @@ function searchContacts()
 // Displays all contacts and clears search text field.
 function clearSearch()
 {
+	clearError();
 	let contacts = document.getElementById("contactsBody").getElementsByTagName("tr");
 	for (let i = 0; i < contacts.length; i++)
 	{
@@ -629,7 +638,11 @@ function clearSearch()
 	}
 
 	document.getElementById('searchText').value = '';
-	document.getElementById("noResultsTxt").style.display = "none";
+
+	if(contacts.length==0)
+	{
+		document.getElementById("noContactsTxt").style.display = "";
+	}
 }
 
 //confirmDelete function
@@ -641,7 +654,8 @@ function confirmDelete(contactId) {
 }
 
 //deleteContact function
-function deleteContact(contactId) {
+function deleteContact(contactId) 
+{
     let tmp = { contactId: contactId };
     let jsonPayload = JSON.stringify(tmp);
 
@@ -664,4 +678,11 @@ function deleteContact(contactId) {
     } catch(err) {
         console.error("Error in deleteContact: " + err.message);
     }
+}
+
+function clearError()
+{
+	document.getElementById("noResultsTxt").innerText = "No contacts found";
+	document.getElementById("noResultsTxt").style.display = "none";
+	document.getElementById("noContactsTxt").style.display = "none";
 }

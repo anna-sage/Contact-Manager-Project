@@ -130,7 +130,7 @@ body
 }
 */
 
-#noResultsTxt
+#noResultsTxt, #noContactsTxt
 {
     margin-top: 100px;
     color: white;
