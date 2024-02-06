@@ -249,7 +249,7 @@ function displayContacts(srch)
 					text += "</button></td>";
 
 					text += "<td class=\'contactIconArea\'>";
-					text += "<button class=\'contactBtns\' onclick='confirmDelete(" + jsonObject.results[i].ID + ");'>";
+					text += "<button class=\'contactBtns\' onclick='confirmDelete(" + jsonObject.results[i].ID + ", " + i + ");'>";
 					text += "<span class=\'material-symbols-outlined\'>delete</span>";
 					text += "</button></td>";
 
@@ -699,15 +699,15 @@ function clearSearch()
 }
 
 //confirmDelete function
-function confirmDelete(contactId) {
+function confirmDelete(contactId, rowId) {
     console.log("Received Contact ID in confirmDelete:", contactId); // check contactID
     if (confirm("Are you sure you want to delete this contact?")) {
-        deleteContact(contactId);
+        deleteContact(contactId, rowId);
     }
 }
 
 //deleteContact function
-function deleteContact(contactId) 
+function deleteContact(contactId, rowId) 
 {
     let tmp = { contactId: contactId };
     let jsonPayload = JSON.stringify(tmp);
