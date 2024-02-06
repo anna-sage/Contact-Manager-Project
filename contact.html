@@ -15,14 +15,15 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- Load in the contacts associated with the user. -->
-	
+	<!-- Load in the contacts associated with the user and reset forms. -->
 	<script type="text/javascript">
 		document.addEventListener('DOMContentLoaded', function()
 		{
 			readCookie();
 			document.getElementById("navUser").innerHTML = firstName;
 			displayContacts("");
+			resetForm("add");
+			resetForm("edit");
 		}, false);
 	</script>
 
@@ -96,46 +97,63 @@
 					  <div class="modal-content">
 						<div class="modal-header">
 						  <h5 class="modal-title" id="exampleModalLabel">New contact details</h5>
-						  <button type="button" class="btn-close" aria-label="Close" onclick="closeModalForm('addModal', 'addForm');">
+						  <button type="button" class="btn-close" aria-label="Close" onclick="resetForm('add');">
 							<span aria-hidden="true" style="display: none;">&times;</span>
 						  </button>
 						</div>
 						<div class="modal-body">
 							<form id="addForm">
 								<div class="mb-3">
+									<span id="addFnameInvalid" class="material-symbols-outlined addInvalidIcon invalidIcon">
+										warning
+									</span>
 									<label for="addFname" class="form-label">First name</label>
-									<input id="addFname" type="text" placeholder="First name" class="form-control" 
+									<input id="addFname" type="text" placeholder="First name" class="form-control addInput" 
 									oninput="this.value = formatName(this.value);" required>
-									<div class="invalid-feedback">Required.</div>
+									<div id="addFnameFeedback" class="addFeedback feedback">Required.</div>
 								</div>
 								<div class="mb-3">
+									<span id="addLnameInvalid" class="material-symbols-outlined addInvalidIcon invalidIcon">
+										warning
+									</span>
 									<label for="addLname" class="form-label">Last name</label>
-									<input id="addLname" type="text" placeholder="Last name" class="form-control" 
+									<input id="addLname" type="text" placeholder="Last name" class="form-control addInput" 
 									oninput="this.value = formatName(this.value);">
 								</div>
 								<div class="mb-3">
+									<span id="addPhNumInvalid" class="material-symbols-outlined addInvalidIcon invalidIcon">
+										warning
+									</span>
 									<label for="addPhNum" class="form-label">Phone number</label>
-									<input id="addPhNum" type="tel" placeholder="ex. 555-555-5555" class="form-control" required>
-									<div id="addPhNum-feedback" class="invalid-feedback">Valid 10 digit phone number required.</div>
+									<input id="addPhNum" type="tel" placeholder="ex. 555-555-5555" class="form-control addInput" required>
+									<div id="addPhNumFeedback" class="addFeedback feedback">Valid 10 digit phone number required.</div>
 								</div>
 								<div class="mb-3">
+									<span id="addEmailInvalid" class="material-symbols-outlined addInvalidIcon invalidIcon">
+										warning
+									</span>
 									<label for="addEmail" class="form-label">Email</label>
-									<input id="addEmail" type="email" placeholder="ex. example@email.com" class="form-control"
+									<input id="addEmail" type="email" placeholder="ex. example@email.com" class="form-control addInput"
 									oninput="this.value = this.value.toLowerCase();" required>
-									<div id="addEmail-feedback" class="invalid-feedback">Valid email address required.</div>
+									<div id="addEmailFeedback" class="addFeedback feedback">Valid email address required.</div>
 								</div>
 							</form>
+							<div id="addErr" class="mb-3" style="display: none;">
+								<span class="material-symbols-outlined">
+									warning
+								</span>
+								<span id="addErrMsg"></span>
+							</div>
 						</div>
 						<div class="modal-footer d-flex justify-content-between">
-						  <button type="button" class="btn modalCancel float-start" onclick="closeModalForm('addModal', 'addForm');">
+						  <button type="button" class="btn modalCancel float-start" onclick="resetForm('add');">
 							Cancel
 						  </button>
 						  <button type="submit" class="btn modalSubmit"
 						  onclick="
-						  if(validateContactForm('addForm', 'addPhNum', 'addEmail')) 
+						  if(validateContactForm('add','addFname', 'addPhNum', 'addEmail')) 
 						  {
 							addContact(); 
-							closeModalForm('addModal', 'addForm');
 						  }">
 						  	Submit
 						</button>
@@ -160,30 +178,45 @@
 					<div class="modal-body">
 						<form id="editForm">
 							<div class="mb-3">
+								<span id="editFnameInvalid" class="material-symbols-outlined editInvalidIcon invalidIcon">
+									warning
+								</span>
 								<label for="editFname" class="form-label">First name</label>
-								<input id="editFname" type="text" placeholder="First name" class="form-control" 
+								<input id="editFname" type="text" placeholder="First name" class="form-control editInput" 
 								oninput="this.value = formatName(this.value);" required>
-								<div class="invalid-feedback">Required.</div>
+								<div id="editFnameFeedback" class="editFeedback feedback">Required.</div>
 							</div>
 							<div class="mb-3">
+								<span id="editLnameInvalid" class="material-symbols-outlined editInvalidIcon invalidIcon">
+									warning
+								</span>
 								<label for="editLname" class="form-label">Last name</label>
-								<input id="editLname" type="text" placeholder="Last name" class="form-control" 
+								<input id="editLname" type="text" placeholder="Last name" class="form-control editInput" 
 								oninput="this.value = formatName(this.value);">
 							</div>
 							<div class="mb-3">
+								<span id="editPhNumInvalid" class="material-symbols-outlined editInvalidIcon invalidIcon">
+									warning
+								</span>
 								<label for="editPhNum" class="form-label">Phone number</label>
-								<input id="editPhNum" type="tel" placeholder="ex. 555-555-5555" class="form-control" required>
-								<div id="editPhNum-feedback" class="invalid-feedback">Valid 10 digit phone number required.</div>
+								<input id="editPhNum" type="tel" placeholder="ex. 555-555-5555" class="form-control editInput" required>
+								<div id="editPhNumFeedback" class="editFeedback feedback">Valid 10 digit phone number required.</div>
 							</div>
 							<div class="mb-3">
+								<span id="editEmailInvalid" class="material-symbols-outlined editInvalidIcon invalidIcon">
+									warning
+								</span>
 								<label for="editEmail" class="form-label">Email</label>
-								<input id="editEmail" type="email" placeholder="ex. example@email.com" class="form-control"
+								<input id="editEmail" type="email" placeholder="ex. example@email.com" class="form-control editInput"
 								oninput="this.value = this.value.toLowerCase();" required>
-								<div id="editEmail-feedback" class="invalid-feedback">Valid email address required.</div>
+								<div id="editEmailFeedback" class="editFeedback feedback">Valid email address required.</div>
 							</div>
 						</form>
-						<div id="editError" style="display:none">
-							Insert Edit Error.
+						<div id="editErr" class="mb-3" style="display: none;">
+							<span class="material-symbols-outlined">
+								warning
+							</span>
+							<span id="editErrMsg"></span>
 						</div>
 					</div>
 					<div class="modal-footer">

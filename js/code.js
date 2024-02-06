@@ -39,7 +39,6 @@ function doLogin()
 			{
 				let jsonObject = JSON.parse( xhr.responseText );
 				userId = jsonObject.id;
-				console.log("after assignment " + userId);
 		
 				if( userId < 1 )
 				{		
@@ -109,14 +108,11 @@ function doRegister()
             		{
                 		let jsonObject = JSON.parse( xhr.responseText );
               	  		userId = jsonObject.id;
-                		//document.getElementById("registerResult").innerHTML = "User added";
-                		console.log("after assignment " + userId);
         
                 		firstName = jsonObject.firstName;
                 		lastName = jsonObject.lastName;
 
                 		saveCookie();
-                		console.log("after saveCookie: " + userId);
     
                 		window.location.href = "contact.html";
             		}
@@ -207,8 +203,6 @@ function displayContacts(srch)
     };
 
     let jsonPayload = JSON.stringify(tmp);
-
-	console.log("load json payload: " + jsonPayload);
 	
     let url = urlBase + '/SearchContact.' + extension;
     let xhr = new XMLHttpRequest();
@@ -232,7 +226,6 @@ function displayContacts(srch)
 				let text = "";
 				for (let i = 0; i < jsonObject.results.length; i++)
 				{
-					console.log("search returned " + jsonObject.results[i].FirstName);
 					text += "<tr id=\'row" + i + "\'>";
 
 					//Store contactID in cid
@@ -271,7 +264,6 @@ function displayContacts(srch)
 
 				// Add the contacts to the page.
 				document.getElementById("contactsBody").innerHTML = text;
-				console.log("text is " + text);
 
 				// On initial page load or post addContact(),
 				// store all contacts associated with the user.
@@ -369,7 +361,25 @@ function addContact()
 			if (this.readyState == 4 && this.status == 200) 
 			{
 				let jsonObject = JSON.parse(xhr.responseText);
-				console.log(jsonObject);
+				if (jsonObject.error)
+				{
+					console.log(jsonObject.error);
+
+					// Display the error message.
+					document.getElementById("addErrMsg").innerHTML = jsonObject.error;
+					document.getElementById("addErr").style.display = "";
+
+					// Make all the fields red and display warning icons.
+					let inputs = document.getElementsByClassName("addInput");
+					let icons = document.getElementsByClassName("addInvalidIcon");
+					for (let i = 0; i < inputs.length; i++)
+					{
+						inputs[i].style.borderColor = "#dc3545";
+						icons[i].style.display = "";
+					}
+
+					return;
+				}
 
 				// Create new table row with new contact information.
 				let text = generateContact(newFname, newLname, newphoneNum, newEmail, jsonObject.contactId);
@@ -379,6 +389,9 @@ function addContact()
 
 				// In case a user is adding their first contact.
 				clearError();
+
+				// Reset fields and validation warnings
+				resetForm("add");
 			}
 		};
 		
@@ -446,9 +459,10 @@ function editContact(cx)
 
 //Contact validation tied to button
 function updateSubmit(cx) {
-	if(validateContactForm('editForm', 'editPhNum', 'editEmail')) 
+	if(validateContactForm('edit', 'editFname', 'editPhNum', 'editEmail')) 
 	{
 	  updateContact(cx); 
+	  resetForm("edit");
 	}
 }
 
@@ -520,20 +534,33 @@ function formatPhoneNumber(input)
 }
 
 // Validates the add/update forms.
-function validateContactForm(formId, phoneId, emailId)
+function validateContactForm(formType, fnameId, phoneId, emailId)
 {
 	let fnameErr = lnameErr = phoneErr = emailErr = false;
 
-	let form = document.getElementById(formId);
+	// Get inputs.
+	let fname = document.getElementById(fnameId);
 	let phone = document.getElementById(phoneId);
 	let email = document.getElementById(emailId);
+
+
+	if (!fname.value)
+	{
+		fname.style.borderColor = "#dc3545";
+		document.getElementById(formType + "FnameInvalid").style.display = "";
+		document.getElementById(formType + "FnameFeedback").style.display = "";
+		fnameErr = true;
+	}
 
 	// Validate the phone number.
 	let phoneNum = phone.value;
 	let phRegex = /^[(]?[0-9]{3}[)]?[-\.]?[0-9]{3}[-\.]?[0-9]{4}$/;
 	if (phRegex.test(phoneNum) == false)
 	{
-		phone.setCustomValidity("Invalid field.");
+		// phone.setCustomValidity("Invalid field.");
+		phone.style.borderColor = "#dc3545";
+		document.getElementById(formType + "PhNumInvalid").style.display = "";
+		document.getElementById(formType + "PhNumFeedback").style.display = "";
 		phoneErr = true;
 	}
 
@@ -544,26 +571,54 @@ function validateContactForm(formId, phoneId, emailId)
 	let emailRegex = /^[a-zA-Z0-9!#\$%&'\*\+\-\/=\?\^_`\{|\}~.]+@[a-z]+\.[a-z]+$/;
 	if (emailRegex.test(email.value) == false)
 	{
-		email.setCustomValidity("Invalid field.");
+		// email.setCustomValidity("Invalid field.");
+		email.style.borderColor = "#dc3545";
+		document.getElementById(formType + "EmailInvalid").style.display = "";
+		document.getElementById(formType + "EmailFeedback").style.display = "";
 		emailErr = true;
 	}
 
 	if ((fnameErr || phoneErr || emailErr) == true)
 	{
-		form.classList.add("was-validated");
 		return false;
 	}
 
 	return true;
 }
 
+function resetForm(formType)
+{
+	// Revert invalid or error styling.
+	let invIcons = document.getElementsByClassName(formType + "InvalidIcon");
+	let inputs = document.getElementsByClassName(formType + "Input");
+	for (let i = 0; i < invIcons.length; i++)
+	{
+		invIcons[i].style.display = "none";
+		inputs[i].style.borderColor = "black";
+	}
+
+	let feedbacks = document.getElementsByClassName(formType + "Feedback");
+	for (let i = 0; i < feedbacks.length; i++)
+	{
+		feedbacks[i].style.display = "none";
+	}
+
+	document.getElementById(formType + "Err").style.display = "none";
+	
+	// Reset input fields and close the modal.
+	document.getElementById(formType + "Form").reset();
+	closeModalForm(formType + "Modal", formType + "Form");
+}
+
 // Close a modal for adding or updating contacts.
 function closeModalForm(modalId, formId)
 {
-	let form = document.getElementById(formId);
-	form.classList.remove("was-validated");
-	form.reset();
-	bootstrap.Modal.getInstance(document.getElementById(modalId)).hide();
+	// If the modal is open, hide it.
+	let modal = bootstrap.Modal.getInstance(document.getElementById(modalId));
+	if (modal)
+	{
+		modal.hide();
+	}
 }
 
 function searchContacts()
@@ -573,7 +628,6 @@ function searchContacts()
 
 	const srch = document.getElementById("searchText").value.toLowerCase();
 	const terms = srch.split(" ");
-	console.log("terms: " + terms + "\nsize: " + terms.size);
 
 	let contacts = document.getElementById("contactsBody").getElementsByTagName("tr");
 	let matchFound = false;

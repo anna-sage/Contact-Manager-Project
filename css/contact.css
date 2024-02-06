@@ -192,6 +192,14 @@ tbody td img
     font-family: 'DM Sans', sans-serif;
 }
 
+.modal .modal-body #addErr,
+.modal .modal-body .invalidIcon,
+.modal .modal-body .feedback
+{
+    /* display: none; */
+    color: #dc3545;
+}
+
 .modal-footer
 {
     justify-content: space-between;
