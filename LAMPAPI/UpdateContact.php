@@ -14,14 +14,14 @@ if ($conn->connect_error) {
     returnWithError($conn->connect_error);
 } else {
     // Check if the contact with the given ID exists, now also check with same email or phone
-    $stmt = $conn->prepare("SELECT * FROM Contacts WHERE (Email=? OR Phone=?) AND ID<>?");
-    $stmt->bind_param("sss",$email, $phone, $contactId);
+    $stmt = $conn->prepare("SELECT * FROM Contacts WHERE (Email=? OR Phone=? OR (First_Name=? AND Last_Name=?)) AND ID<>?");
+    $stmt->bind_param("sssss",$email, $phone, $firstName, $lastName,$contactId);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if($result->num_rows > 0) {
         // when a duplicate is found, return error message
-        returnWithError("Sorry! Another contact has this email or phone already.");
+        returnWithError("Sorry! Another contact exitst already with this name, email, or phone.");
     } else {
         // when no duplicates are found, update
         $stmt = $conn->prepare("UPDATE Contacts SET First_Name=?, Last_Name=?, Phone=?,Email=? WHERE ID=?");

@@ -85,6 +85,7 @@ body
 
 .card
 {
+    position: relative;
 	margin-left: 2%;
     margin-right: 2%;
     margin-bottom: 12%;
@@ -95,6 +96,7 @@ body
     transform: scale(1.1);
     transition: 0.2s;
     box-shadow: 5px -5px 10px rgba(255, 255, 255, 0.4);
+    padding-bottom: -12%;
 }
 
 .card:hover .card-text
@@ -111,13 +113,17 @@ body
 
 .card-text
 {
-    display:none
+    /*
+    position: absolute;
+    */
+    display: none;
 }
 
-#desc 
+#desc
 {
     width: 100%;
     margin-top: 2%;
+    padding-bottom: 2%;
     margin-bottom: 5%;
 }
 

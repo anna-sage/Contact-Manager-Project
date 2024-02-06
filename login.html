@@ -79,14 +79,16 @@
 						<input type="text" id="registerName" placeholder="Username" /><br />
 					<label for="registerPassword" class="form-label">PASSWORD</label>
 						<input type="password" id="registerPassword" placeholder="Password"/><br />
-					<ul id="validatePassword">
-						<li id="8characters" style="display: none;">at least 8 characters</li>
-						<li id="digit" style="display: none;">at least 1 digit</li>
- 	 					<li id="lower" style="display: none;">at least 1 lower case letter</li>
-  						<li id="upper" style="display: none;">at least 1 upper case letter</li>
-					</ul>
+					<span id="registerResult" style="color:#f00"></span>
+                    <div id="passwordRequirements" style="display: none;">
+                    <ul id="validatePassword">
+                        <li id="8characters" style="display: none;">at least 8 characters</li>
+                        <li id="digit" style="display: none;">at least 1 digit</li>
+                          <li id="lower" style="display: none;">at least 1 lower case letter</li>
+                          <li id="upper" style="display: none;">at least 1 upper case letter</li>
+                    </ul>
+                </div>
 					<button type="button" id="registerButton" class="buttons" onclick="doRegister();"> REGISTER </button>
-					<span id="registerResult"></span>
 				</form>
 			</div>
 
