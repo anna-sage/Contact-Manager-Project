@@ -184,7 +184,16 @@ function validPassword(input)
 	{
 		document.getElementById("digit").style.display = "none";
 	}
-		
+	
+	if(!valid)
+	{
+		document.getElementById("passwordRequirements").style.display = "";
+	}
+	else
+	{
+		document.getElementById("passwordRequirements").style.display = "none";
+	}
+
 	return valid;
 }
 

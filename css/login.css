@@ -84,10 +84,17 @@ body
     transform: scale(0.9);
 }
 
+#passwordRequirements
+{
+    padding: 10px;
+    border: 2px solid #F00;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+}
+
 #validatePassword li
 {
     list-style-type: "❌";
-    background-color:rgba(255, 0, 0, 0.29);
     font-size: 20px;
 }
 
