@@ -226,35 +226,16 @@ function displayContacts(srch)
 				let text = "";
 				for (let i = 0; i < jsonObject.results.length; i++)
 				{
-					text += "<tr id=\'row" + i + "\'>";
+					let fn = jsonObject.results[i].FirstName;
+					let ln = jsonObject.results[i].LastName;
+					let ph = jsonObject.results[i].Phone;
+					let em = jsonObject.results[i].Email;
 
 					//Store contactID in cid
 					cid[i] = jsonObject.results[i].ID;
-	
-					// Generate random profile picture.
-					const imgNum = Math.floor(Math.random() * amtImages) + 1;
-					text += "<td class=\'contactIconArea\'>";
-					text += "<img src=\'images/contactIcons/contactIcon" + imgNum + ".png\' alt=\'Random profile picture\' class=\'icons float-start\'></td>";
-	
-					// Contact information.
-					text += "<td>" + jsonObject.results[i].FirstName + "</td>";
-					text += "<td>" + jsonObject.results[i].LastName + "</td>";
-					text += "<td>" + jsonObject.results[i].Phone + "</td>";
-					text += "<td>" + jsonObject.results[i].Email + "</td>";
 
-					// Edit and delete buttons.
-					text += "<td class=\'contactIconArea\'>";
-					text += "<button class=\'contactBtns\' aria-label=\'Edit\'>";
-					text += "<span class=\'material-symbols-outlined\' data-bs-toggle=\'modal\' data-bs-target=\'#editModal\' onclick=\'editContact(" +  i + ")\'>edit</span>";
-					text += "</button></td>";
-
-					text += "<td class=\'contactIconArea\'>";
-					text += "<button class=\'contactBtns\' onclick='confirmDelete(" + jsonObject.results[i].ID + ", " + i + ");'>";
-					text += "<span class=\'material-symbols-outlined\'>delete</span>";
-					text += "</button></td>";
-
-					text += "</tr>";
-					lastContactIdx = i;
+					// Generate the text to insert into the document.
+					text += generateContact(fn, ln, ph, em, cid[i]);
 				}
 
 				if(jsonObject.results.length==0)
