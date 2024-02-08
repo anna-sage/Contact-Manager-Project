@@ -12,6 +12,7 @@
     padding-inline: 10px;
     text-align: center;
     color: #4b0c66;
+    transition: color 0.3s ease-in-out; /*should create a smoother color change*/
 }
 
 .navbar-nav .nav-item:hover .nav-link {
@@ -75,7 +76,7 @@
     }
   
     50% {
-      transform: translate(0%, -3%);
+      transform: translate(0%, -2%);
     }
   
     100% {
@@ -90,10 +91,12 @@
     margin-right: 2%;
     margin-bottom: 12%;
     box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.4);
+    border-radius:8px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .card:hover{
-    transform: scale(1.1);
+    transform: scale(1.05);
     transition: 0.2s;
     box-shadow: 5px -5px 10px rgba(255, 255, 255, 0.4);
     padding-bottom: -12%;
@@ -152,28 +155,16 @@
     background-size: 1000px 100px;
 }
 
-.wave#wave1 {
-    z-index: 1000;
-    opacity: 1;
+/* more simplicity for footer, it was too much */ 
+.wave#wave1, .wave#wave2, .wave#wave3, .wave#wave4 {
     animation: animateWaves 4s linear infinite;
 }
 
-.wave#wave2 {
-    z-index: 999;
-    opacity: 0.5;
-    animation: animateWaves 4s linear infinite reverse;
-}
-
-.wave#wave3 {
-    z-index: 998;
-    opacity: 0.2;
-    animation: animateWaves 3s linear infinite;
-}
-
-.wave#wave4 {
-    z-index: 997;
-    opacity: 0.7;
-    animation: animateWaves 3s linear infinite reverse;
+/*should make the footer responsive*/
+@media (max-width: 768px) {
+    .footer {
+        padding: 20px;
+    }
 }
 
 @keyframes animateWaves {

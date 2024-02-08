@@ -38,107 +38,46 @@
     color: #4b0c66;
 }
 
-#contactsTitle {
-    text-align: center;
-    font-family: 'Trispace', sans-serif;
-    letter-spacing: 5px;
-}
-
-#searchAddBar {
-    font-family: 'DM Sans';
+.uiNavBar {
     display: flex;
     padding-bottom: 5px;
     border-radius: 35px;
     box-shadow: 0px 0px 30px rgb(198, 192, 192);
 }
 
+.uiNavBar .btn {
+    color: #4b0c66;
+    border: 1px solid #4b0c66;
+    font-family: 'Comfortaa';
+}
+
+.uiNavBar .btn:hover 
+{
+    color: white;
+    background-color: #6b1e94;
+    border-color: #6b1e94;
+}
+
+.uiNavBar .btn:focus 
+{
+    color: white;
+    background-color: #6b1e94;
+    outline: 4px solid #ae6bd2;
+    outline-color: #ae6bd2;
+    outline-offset: 2px;
+}
+
+.uiNavBar .uiBtn .btn:active 
+{
+    color: white;
+    background-color: #4b0c66;
+    border: transparent;
+}
+
 #searchContainer
 {
     margin-right: 2%;
 }
-
-#addBtn
-{
-    margin-left: 2%;
-}
-
-#searchAddBar button
-{
-    color: #4b0c66;
-    border: 1px solid #4b0c66;
-}
-
-#addBtn:hover
-{
-    background-color: #6b1e94;
-    color: white;
-    border: 1px solid #4b0c66;
-}
-
-#addBtn:active
-{
-    background-color: #4b0c66;
-    color: white;
-    border: 1px solid #4b0c66;
-}
-
-#searchAddBar #clearBtn
-{
-    border-right: 0px;
-}
-
-#clearBtn:hover
-{
-    background-color: #6b1e94;
-    color: white;
-    border: 1px solid #4b0c66;
-}
-
-#clearBtn:active
-{
-    background-color: #4b0c66;
-    color: white;
-    border: 1px solid #4b0c66;
-}
-
-#searchBtn
-{
-    /* background-color: #fec768; */
-    color: #4b0c66;
-    border: 1px solid #4b0c66;
-}
-
-#searchBtn:hover
-{
-    /* background-color: #c9953b; */
-    background-color: #6b1e94;
-    color: white;
-    border: 1px solid #4b0c66;
-}
-
-#searchBtn:active
-{
-    /* background-color: #c9953b; */
-    color: black;
-    border: 1px solid #4b0c66;
-}
-
-/*
-.searchAddBar button:hover,
-.searchAddBar button:focus
-{
-    background-color: #6b1e94;
-    color: white;
-    border: 1px solid #4b0c66;
-}
-
-.searchAddBar button:active
-{
-    background-color: #4b0c66;
-    color: white;
-    border: 1px solid #4b0c66;
-}
-*/
 
 #noResultsTxt, #noContactsTxt
 {
@@ -174,35 +113,13 @@ tbody td img
     width: 50px;
 }
 
-.contactBtns
-{
-    color: #4b0c66;
-    background-color: white;
-    border: 1px solid #4b0c66;
-    border-radius: 4cap;
-    height: 50px;
-    width: 50px;
-}
-
-.contactBtns:hover,
-.contactBtns:focus
-{
-    color:white;
-    background-color: #6b1e94;
-}
-
-.contactBtns:active
-{
-    color: white;
-    background-color: #4b0c66;
-}
-
 .modal
 {
     font-family: 'DM Sans', sans-serif;
 }
 
 .modal .modal-body #addErr,
+.modal .modal-body #editErr,
 .modal .modal-body .invalidIcon,
 .modal .modal-body .feedback
 {
@@ -240,8 +157,3 @@ tbody td img
     background-color: #3b2eae;
     box-shadow: #d7d3fe 1px 3px;
 }
-
-#editModal #editError
-{
-    font-family: 'DM Sans', sans-serif;
-} 

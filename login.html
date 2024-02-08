@@ -48,7 +48,7 @@
 
 	<!--Login/Register Tab Container-->
 	<div id="tabContainer" class="container rounded">
-		<ul class="nav nav-tabs nav-justified" id="typeToggle" role="tablist">
+		<ul class="nav nav-tabs nav-justified rounded-top" id="typeToggle" role="tablist">
 			<li class="nav-item" role="presentation" style="padding-inline: 0px">
 		  		<button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#loginDiv" type="button" role="tab" aria-controls="home" aria-selected="true">Login</button>
 			</li>
@@ -58,7 +58,7 @@
 	  	</ul>
 		<!--Login Window-->
 	  	<div class="tab-content" id="tabWindow">
-			<div class="tab-pane fade show active" id="loginDiv" role="tabpanel" aria-labelledby="login-tab" style="padding-bottom: 20%">
+			<div class="tab-pane fade show active rounded-bottom" id="loginDiv" role="tabpanel" aria-labelledby="login-tab" style="padding-bottom: 20%">
 				<form style="max-width: 480px;margin:auto">
 					<span id="inner-title">Please sign in</span>
 					<label for="loginName" class="form-label">USERNAME</label>
@@ -70,7 +70,7 @@
 				</form>
 			</div>
 			<!--Register Window-->
-			<div class="tab-pane fade" id="registerDiv" role="tabpanel" aria-labelledby="register-tab">
+			<div class="tab-pane fade rounded-bottom" id="registerDiv" role="tabpanel" aria-labelledby="register-tab">
 				<form style="max-width: 480px;margin:auto">
 					<span id="inner-title">Enter details to create an account</span>
 					<label for="firstName" class="form-label">FIRST NAME</label>
@@ -81,6 +81,7 @@
 						<input type="text" id="registerName" placeholder="Username" /><br />
 					<label for="registerPassword" class="form-label">PASSWORD</label>
 						<input type="password" id="registerPassword" placeholder="Password"/><br />
+						<input type="password" id="confirmPassword" placeholder="Re-Enter Password"/><br />
 					<span id="registerResult" style="color:#f00"></span>
                     <div id="passwordRequirements" style="display: none;">
                     <ul id="validatePassword">
@@ -88,6 +89,7 @@
                         <li id="digit" style="display: none;">at least 1 digit</li>
                           <li id="lower" style="display: none;">at least 1 lower case letter</li>
                           <li id="upper" style="display: none;">at least 1 upper case letter</li>
+						  <li id="matchInput" style="display: none;">passwords do not match</li>
                     </ul>
                 </div>
 					<button type="button" id="registerButton" class="buttons" onclick="doRegister();"> REGISTER </button>
