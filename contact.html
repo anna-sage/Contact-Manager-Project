@@ -2,21 +2,25 @@
 <html>
 <head>
 	<title>Cosmos</title>
+
+	<!-- Bootstrap Imports -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 	<script type="text/javascript" src="js/code.js"></script>
+	<link href="css/styles.css" rel="stylesheet">
 	<link href="css/contact.css" rel="stylesheet">
+
+	<!-- Fonts/Icon Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=DM+Sans" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-
-	<!-- Bootstrap -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Load in the contacts associated with the user and reset forms. -->
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		document.addEventListener('DOMContentLoaded', function()
 		{
 			readCookie();
@@ -25,7 +29,7 @@
 			resetForm("add");
 			resetForm("edit");
 		}, false);
-	</script>
+	</script> -->
 
 </head>
 <body>
@@ -66,7 +70,7 @@
 				<div id="searchAddBar" class="nav d-flex bg-light">
 					<div class="nav-item p-2 flex-grow-1 ms-2 mt-1" style="text-align: start;">
 						<button id="addBtn" type="button" 
-						class="btn rounded-pill searchAddItems" data-bs-toggle="modal" data-bs-target="#addModal">+ Add</button>
+						class="btn" data-bs-toggle="modal" data-bs-target="#addModal">+ Add</button>
 					</div>
 					<div class="nav-item p-2" id="searchContainer">
 						<div class="input-group mt-1">
@@ -74,8 +78,8 @@
 								onclick="clearSearch();">
 								Clear
 							</button>
-							<input id="searchText" type="search" placeholder="Enter contact information" class="form-control searchAddItems" style="border: 1px solid black">
-							<button id="searchBtn" class="btn searchAddItems" type="submit" 
+							<input id="searchText" type="search" placeholder="Enter contact information" class="form-control" style="border: 1px solid #4b0c66;">
+							<button id="searchBtn" class="btn" type="submit" 
 							onclick="searchContacts();">
 								Search
 							</button>
@@ -264,6 +268,18 @@
 
 		</div>
 	</main>
+
+	<!--Footer Section-->
+	<footer class="footer mt-auto py-3 text-white">
+		<div class="waves">
+			<div class="wave" id="wave1"></div>
+			<div class="wave" id="wave2"></div>
+			<div class="wave" id="wave3"></div>
+			<div class="wave" id="wave4"></div>
+		</div>
+		<span>About us</span>
+		<span>&copy; 2024 Cosmos. All rights reserved.</span>
+	</footer>
 
 </body>
 </html>

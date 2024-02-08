@@ -1,11 +1,11 @@
-body 
+/* body 
 {
     background: radial-gradient(circle at top, #060c60 , #8c6c9d);
     height: 100%;
     margin: 0;
     background-repeat: no-repeat;
     background-attachment: fixed;
-}
+} */
 
 .nav-item, .navbar-brand, .navbar-text
 {
@@ -57,6 +57,11 @@ body
     margin-right: 2%;
 }
 
+#addBtn
+{
+    margin-left: 2%;
+}
+
 #searchAddBar button
 {
     color: #4b0c66;
@@ -77,6 +82,11 @@ body
     border: 1px solid #4b0c66;
 }
 
+#searchAddBar #clearBtn
+{
+    border-right: 0px;
+}
+
 #clearBtn:hover
 {
     background-color: #6b1e94;
@@ -93,22 +103,22 @@ body
 
 #searchBtn
 {
-    background-color: #fec768;
+    /* background-color: #fec768; */
     color: #4b0c66;
     border: 1px solid #4b0c66;
 }
 
-#searchBtn:hover,
-#searchBtn:focus
+#searchBtn:hover
 {
-    background-color: #c9953b;
-    color: black;
+    /* background-color: #c9953b; */
+    background-color: #6b1e94;
+    color: white;
     border: 1px solid #4b0c66;
 }
 
 #searchBtn:active
 {
-    background-color: #c9953b;
+    /* background-color: #c9953b; */
     color: black;
     border: 1px solid #4b0c66;
 }
@@ -211,8 +221,7 @@ tbody td img
     border-color: #5643fd;
 }
 
-.modal .modalCancel:hover,
-.modal .modalCancel:focus
+.modal .modalCancel:hover
 {
     background-color: #d7d3fe;
     color: #3b2eae;
@@ -225,7 +234,6 @@ tbody td img
     background-color: #5643fd;
 }
 
-.modal .modalSubmit:hover,
 .modal .modalSubmit:focus
 {
     color: white;

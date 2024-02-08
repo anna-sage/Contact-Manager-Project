@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -10,6 +11,7 @@
 
 	<script type="text/javascript" src="js/md5.js"></script>
 	<script type="text/javascript" src="js/code.js"></script>
+	<link href="css/styles.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">	
 
 	<!--Fonts/Icon Stylesheets-->
@@ -32,7 +34,7 @@
 			</ul>
 			<ul class="navbar-nav ms-auto">
 				<li class="nav-item">
-					<a class="nav-link navbar-text" href="index.html">Info</a>
+					<a class="nav-link btn navbar-text" href="index.html">Info</a>
 			  	</li>
 				<li class="nav-item">
 					<a class="nav-link btn" href="login.html"><span class="material-symbols-outlined">person</span></i> Login/Register</a>
@@ -117,14 +119,61 @@
 	</div>
 
 	<!--Footer Section-->
-	<footer class="footer mt-auto py-3 bg-dark text-white">
-		<div class="waves">
+	<footer class="footer mt-auto py-3 text-white">
+		<!-- <div class="waves">
 			<div class="wave" id="wave1"></div>
 			<div class="wave" id="wave2"></div>
 			<div class="wave" id="wave3"></div>
 			<div class="wave" id="wave4"></div>
-		</div>
+		</div> -->
+		<button data-bs-toggle="modal" data-bs-target="#aboutModal"><u>About us</u></button>
 		<span>&copy; 2024 Cosmos. All rights reserved.</span>
+
+		<!-- About us modal-->
+		<div class="modal fade" id="aboutModal" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-xl">
+			  <div class="modal-content">
+				<div class="modal-header text-center mt-3">
+				  <h1 class="modal-title fs-5 w-100" id="exampleModalLabel">Meet the developers!</h1>
+				  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body pb-5">
+				  <div class="container">
+					<div class="row justify-content-evenly mt-2 mb-5">
+						<div class="devProfile col-3 rounded-pill mx-3 bg-light">
+							<img class="my-3 ms-2" src="images/contactIcons/contactIcon3.png">
+							<span class="align-middle ms-2">
+								Anna MacInnis
+							</span>
+						</div>
+						<div class="devProfile col-3 rounded-pill mx-3 bg-light">
+							<img class="my-3 ms-2" src="images/contactIcons/contactIcon2.png">
+							<span class="ms-2">Andy Van</span>
+						</div>
+						<div class="devProfile col-3 rounded-pill mx-3 bg-light">
+							<img class="rounded-circle my-3 ms-2" src="images/contactIcons/contactIcon1.png">
+							<span class="ms-2">Katerina Garkova</span>
+						</div>
+					</div>
+					<div class="row justify-content-evenly my-5">
+						<div class="devProfile col-3 rounded-pill mx-3 bg-light">
+							<img class="my-3 ms-2" src="images/contactIcons/contactIcon4.png">
+							<span class="ms-2">Benjamin Belizaire</span>
+						</div>
+						<div class="devProfile col-3 rounded-pill mx-3 bg-light">
+							<img class="my-3 ms-2" src="images/contactIcons/contactIcon6.png">
+							<span class="ms-2">Marvin Orozco</span>
+						</div>
+					</div>
+				  </div>
+				</div>
+				<!-- <div class="modal-footer">
+				  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				  <button type="button" class="btn btn-primary">Save changes</button>
+				</div> -->
+			  </div>
+			</div>
+		  </div>		  
 	</footer>
 </body>
 </html>

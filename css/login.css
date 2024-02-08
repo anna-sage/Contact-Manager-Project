@@ -1,10 +1,10 @@
-body 
+/* body 
 {
     background: radial-gradient(circle at top, #060c60 , #8c6c9d);
     margin-top: 0px;
     margin-left: 0px;
     margin-right: 0px;
-}
+} */
 
 .nav-link, .navbar-brand, .navbar-text, .nav-item
 {
@@ -39,6 +39,7 @@ body
     width: 70%;
     border-radius: 30px;
     margin-top: 5%;
+    margin-bottom: 5%;
 }
 
 #typeToggle

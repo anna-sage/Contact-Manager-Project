@@ -245,13 +245,6 @@ function displayContacts(srch)
 
 				// Add the contacts to the page.
 				document.getElementById("contactsBody").innerHTML = text;
-
-				// On initial page load or post addContact(),
-				// store all contacts associated with the user.
-				if (!loadedAll)
-					contacts = document.getElementById("contactsBody").getElementsByTagName("tr");
-
-				loadedAll = true;
 			}
 		};
 		xhr.send(jsonPayload);

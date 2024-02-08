@@ -1,10 +1,10 @@
-body 
+/* body 
 {
     background: radial-gradient(circle at top, #060c60 , #8c6c9d);
     margin-top: 0px;
     margin-left: 0px;
     margin-right: 0px;
-}
+} */
 
 .nav-link, .navbar-brand, .navbar-text, .nav-item
 {
@@ -128,7 +128,7 @@ body
 }
 
 /* footer section area */
-
+/* 
 .footer {
     position: relative;
     width: 100%;
@@ -140,7 +140,7 @@ body
     align-items: center;
     flex-direction: column;
     color: #ffffff; 
-}
+} */
 
 .wave {
     position: absolute;
