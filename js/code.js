@@ -70,7 +70,7 @@ function doRegister()
     let login = document.getElementById("registerName").value;
 
 	//makes sure password is valid
-	if(!validPassword(document.getElementById("registerPassword").value))
+	if(!validPassword(document.getElementById("registerPassword").value, validPassword(document.getElementById("confirmPassword").value)))
 	{
     	document.getElementById("registerResult").innerHTML = "Password is invalid";
 	}
@@ -136,7 +136,7 @@ function doRegister()
 }
 
 //at least 8 characters, at least one lowercase letter, at least one uppercase letter, at least one digit
-function validPassword(input)
+function validPassword(input, matchInput)
 {
 	valid=true;
 
@@ -178,6 +178,16 @@ function validPassword(input)
 	else
 	{
 		document.getElementById("digit").style.display = "none";
+	}
+
+	if(input==matchInput)
+	{
+		document.getElementById("matchInput").style.display = "";
+		valid = false;
+	}
+	else
+	{
+		document.getElementById("matchInput").style.display = "none";
 	}
 	
 	if(!valid)

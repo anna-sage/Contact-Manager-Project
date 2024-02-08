@@ -103,6 +103,12 @@ body
 	font-size: 30px;
 }
 
+#confirmPassword
+{
+    font-size: 30px;
+    margin-top: 4%;
+}
+
 .form-label
 {
     color: #4b0c66;
