@@ -38,19 +38,37 @@ body
     color: #4b0c66;
 }
 
-#contactsTitle {
-    text-align: center;
-    font-family: 'Trispace', sans-serif;
-    letter-spacing: 5px;
-}
-
-#searchAddBar {
-    font-family: 'DM Sans';
+.uiNavBar {
     display: flex;
     padding-bottom: 5px;
     border-radius: 35px;
     box-shadow: 0px 0px 30px rgb(198, 192, 192);
 }
+
+.uiNavBar .btn {
+    color: #4b0c66;
+    font-family: 'Comfortaa';
+}
+
+/* .uiNavBar .btn:hover {
+    color: white;
+    background-color: #6b1e94;
+} */
+
+.uiNavBar .btn:hover {
+    color: white;
+    background-color: #6b1e94;
+    outline-color: #ae6bd2;
+    outline-offset: 4px;
+}
+
+/* #searchAddBar {
+    font-family: 'DM Sans';
+    display: flex;
+    padding-bottom: 5px;
+    border-radius: 35px;
+    box-shadow: 0px 0px 30px rgb(198, 192, 192);
+} */
 
 #searchContainer
 {
@@ -59,7 +77,11 @@ body
 
 #searchAddBar button
 {
-    color: #4b0c66;
+    /* color: #4b0c66; */
+    border: 1px solid #4b0c66;
+}
+
+#accessUIDiv .btn {
     border: 1px solid #4b0c66;
 }
 
@@ -162,29 +184,6 @@ tbody td img
 {
     height: 50px;
     width: 50px;
-}
-
-.contactBtns
-{
-    color: #4b0c66;
-    background-color: white;
-    border: 1px solid #4b0c66;
-    border-radius: 4cap;
-    height: 50px;
-    width: 50px;
-}
-
-.contactBtns:hover,
-.contactBtns:focus
-{
-    color:white;
-    background-color: #6b1e94;
-}
-
-.contactBtns:active
-{
-    color: white;
-    background-color: #4b0c66;
 }
 
 .modal

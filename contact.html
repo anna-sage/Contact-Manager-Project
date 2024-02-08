@@ -16,7 +16,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Load in the contacts associated with the user and reset forms. -->
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		document.addEventListener('DOMContentLoaded', function()
 		{
 			readCookie();
@@ -25,7 +25,7 @@
 			resetForm("add");
 			resetForm("edit");
 		}, false);
-	</script>
+	</script> -->
 
 </head>
 <body>
@@ -61,9 +61,9 @@
 	<main>
 		<div id="accessUIDiv" class="justify-content-center" style="background-color: transparent;">
 			<div class="container justify-content-center" style="margin-top: 1cm;">
-				<!-- <h1 id="contactsTitle" class="container text-light">Contacts</h1> -->
 
-				<div id="searchAddBar" class="nav d-flex bg-light">
+				<!-- Search add bar -->
+				<div id="searchAddBar" class="uiNavBar nav d-flex bg-light">
 					<div class="nav-item p-2 flex-grow-1 ms-2 mt-1" style="text-align: start;">
 						<button id="addBtn" type="button" 
 						class="btn rounded-pill searchAddItems" data-bs-toggle="modal" data-bs-target="#addModal">+ Add</button>
@@ -81,22 +81,221 @@
 							</button>
 						</div>
 					</div>
-					<!--
-					<div class="nav-item p-2 me-2 mt-1">
-						<button id="clearBtn" type="button" class="btn rounded-pill searchAddItems" 
-						onclick="clearSearch();">
-							Clear
-						</button>
-					</div>
-					!-->
 				</div>
 
-				<!-- Add contacts dialogue box. -->
+				<!-- Add contact modal -->
 				<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">New contact details</h5>
+								<button type="button" class="btn-close" aria-label="Close" aria-hidden="true" onclick="resetForm('add');">
+									<!-- <span aria-hidden="true" style="display: none;">&times;</span> -->
+								</button>
+							</div>
+							<div class="modal-body">
+								<form id="addForm">
+									<div class="mb-3">
+										<span id="addFnameInvalid" class="material-symbols-outlined addInvalidIcon invalidIcon">
+											warning
+										</span>
+										<label for="addFname" class="form-label">First name</label>
+										<input id="addFname" type="text" placeholder="First name" class="form-control addInput" 
+										oninput="this.value = formatName(this.value);" required>
+										<div id="addFnameFeedback" class="addFeedback feedback">Required.</div>
+									</div>
+									<div class="mb-3">
+										<span id="addLnameInvalid" class="material-symbols-outlined addInvalidIcon invalidIcon">
+											warning
+										</span>
+										<label for="addLname" class="form-label">Last name</label>
+										<input id="addLname" type="text" placeholder="Last name" class="form-control addInput" 
+										oninput="this.value = formatName(this.value);">
+									</div>
+									<div class="mb-3">
+										<span id="addPhNumInvalid" class="material-symbols-outlined addInvalidIcon invalidIcon">
+											warning
+										</span>
+										<label for="addPhNum" class="form-label">Phone number</label>
+										<input id="addPhNum" type="tel" placeholder="ex. 555-555-5555" class="form-control addInput" required>
+										<div id="addPhNumFeedback" class="addFeedback feedback">Valid 10 digit phone number required.</div>
+									</div>
+									<div class="mb-3">
+										<span id="addEmailInvalid" class="material-symbols-outlined addInvalidIcon invalidIcon">
+											warning
+										</span>
+										<label for="addEmail" class="form-label">Email</label>
+										<input id="addEmail" type="email" placeholder="ex. example@email.com" class="form-control addInput"
+										oninput="this.value = this.value.toLowerCase();" required>
+										<div id="addEmailFeedback" class="addFeedback feedback">Valid email address required.</div>
+									</div>
+								</form>
+								<div id="addErr" class="mb-3" style="display: none;">
+									<span class="material-symbols-outlined">warning</span>
+									<span id="addErrMsg"></span>
+								</div>
+							</div>
+							<div class="modal-footer d-flex justify-content-between">
+								<button type="button" class="btn modalCancel float-start" onclick="resetForm('add');">
+									Cancel
+								</button>
+								<!-- todo clean this up -->
+								<button type="submit" class="btn modalSubmit"
+								  	onclick="if(validateContactForm('add','addFname', 'addPhNum', 'addEmail')) {addContact(); }">
+									Submit
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Edit contact modal -->
+				<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="editModalTitle">
+									<span class="material-symbols-outlined" id="modal-editIcon">edit</span>
+									Edit contact details
+								</h5>
+								<button type="button" class="btn-close" aria-label="Close" aria-hidden="true" onclick="closeModalForm('editModal', 'editForm');">
+									<!-- <span aria-hidden="true" style="display: none;">&times;</span> -->
+								</button>
+							</div>
+							<div class="modal-body">
+								<form id="editForm">
+									<div class="mb-3">
+										<span id="editFnameInvalid" class="material-symbols-outlined editInvalidIcon invalidIcon">
+											warning
+										</span>
+										<label for="editFname" class="form-label">First name</label>
+										<input id="editFname" type="text" placeholder="First name" class="form-control editInput" 
+										oninput="this.value = formatName(this.value);" required>
+										<div id="editFnameFeedback" class="editFeedback feedback">Required.</div>
+									</div>
+									<div class="mb-3">
+										<span id="editLnameInvalid" class="material-symbols-outlined editInvalidIcon invalidIcon">
+											warning
+										</span>
+										<label for="editLname" class="form-label">Last name</label>
+										<input id="editLname" type="text" placeholder="Last name" class="form-control editInput" 
+										oninput="this.value = formatName(this.value);">
+									</div>
+									<div class="mb-3">
+										<span id="editPhNumInvalid" class="material-symbols-outlined editInvalidIcon invalidIcon">
+											warning
+										</span>
+										<label for="editPhNum" class="form-label">Phone number</label>
+										<input id="editPhNum" type="tel" placeholder="ex. 555-555-5555" class="form-control editInput" required>
+										<div id="editPhNumFeedback" class="editFeedback feedback">Valid 10 digit phone number required.</div>
+									</div>
+									<div class="mb-3">
+										<span id="editEmailInvalid" class="material-symbols-outlined editInvalidIcon invalidIcon">
+											warning
+										</span>
+										<label for="editEmail" class="form-label">Email</label>
+										<input id="editEmail" type="email" placeholder="ex. example@email.com" class="form-control editInput"
+										oninput="this.value = this.value.toLowerCase();" required>
+										<div id="editEmailFeedback" class="editFeedback feedback">Valid email address required.</div>
+									</div>
+								</form>
+								<div id="editErr" class="mb-3" style="display: none;">
+									<span class="material-symbols-outlined">warning</span>
+									<span id="editErrMsg"></span>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn modalCancel float-start" onclick="resetForm('edit');">
+									Cancel
+								</button>
+								<button id="updateButton" type="submit" class="btn modalSubmit" onclick="">
+									Update
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Container for contacts -->
+				<div id="contactsDisplay" class="container mt-3">
+					<table id="contacts" class="table table-striped table-borderless overflow-hidden my-1">
+						<thead>
+							<tr>
+								<th></th>
+								<th>First&nbspName</th>
+								<th>Last&nbspName</th>
+								<th>Phone</th>
+								<th>Email</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody id="contactsBody" class="container align-middle">
+						</tbody>
+					</table>
+					<div id="noResultsContainer">
+						<h3 id="noResultsTxt" class="text-center" style="display: none;">
+							No contacts found
+						</h3>
+					</div>
+					<div id="noContactsContainer">
+						<h3 id="noContactsTxt" class="text-center" style="display: none;">
+							No contacts to display
+						</h3>
+					</div>
+				</div>
+
+				<!-- Pagination navigation -->
+				<div id="paginationDiv" class="uiNavBar nav d-flex justify-content-between rounded-pill bg-light">
+					<div class="nav-item my-2">
+						<button id="prevBtn" type="button" class="btn nav-item rounded-pill mx-3 mt-1">
+							<span class="material-symbols-outlined">arrow_back_ios</span>
+							prev
+						</button>
+					</div>
+					<div class="nav-item my-2">
+						<button id="prevBtn" type="button" class="btn nav-item rounded-pill mx-3 mt-1">
+							next
+							<span class="material-symbols-outlined">arrow_forward_ios</span>
+						</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+
+		<!-- <div id="accessUIDiv" class="justify-content-center" style="background-color: transparent;">
+			<div class="container justify-content-center" style="margin-top: 1cm;">
+				<!-- <h1 id="contactsTitle" class="container text-light">Contacts</h1> -->
+
+				<!-- <div id="searchAddBar" class="uiNavBar nav d-flex bg-light">
+					<div class="nav-item p-2 flex-grow-1 ms-2 mt-1" style="text-align: start;">
+						<button id="addBtn" type="button" 
+						class="btn rounded-pill searchAddItems" data-bs-toggle="modal" data-bs-target="#addModal">+ Add</button>
+					</div>
+					<div class="nav-item p-2" id="searchContainer">
+						<div class="input-group mt-1">
+							<button id="clearBtn" type="button" class="btn rounded-left"
+								onclick="clearSearch();">
+								Clear
+							</button>
+							<input id="searchText" type="search" placeholder="Enter contact information" class="form-control searchAddItems" style="border: 1px solid black">
+							<button id="searchBtn" class="btn searchAddItems" type="submit" 
+							onclick="searchContacts();">
+								Search
+							</button>
+						</div>
+					</div>
+				</div> -->
+
+				<!-- Add contacts dialogue box. -->
+				<!-- <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog" role="document">
 					  <div class="modal-content">
 						<div class="modal-header">
-						  <h5 class="modal-title" id="exampleModalLabel">New contact details</h5>
+						  <h5 class="modal-title">New contact details</h5>
 						  <button type="button" class="btn-close" aria-label="Close" onclick="resetForm('add');">
 							<span aria-hidden="true" style="display: none;">&times;</span>
 						  </button>
@@ -161,10 +360,10 @@
 					  </div>
 					</div>
 				  </div>
-			</div>
+			</div> -->
 
 			<!-- Edit contacts dialogue box. -->
-			<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<!-- <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document">
 				  <div class="modal-content">
 					<div class="modal-header">
@@ -230,10 +429,10 @@
 					</div>
 				  </div>
 				</div>
-			  </div>
+			  </div> -->
 		</div>
 
-			<!-- Container for contacts -->
+			<!-- Container for contacts
 			<div id="contactsDisplay" class="container mt-3">
 				<table id="contacts" class="table table-striped table-borderless overflow-hidden my-1">
 					<thead>
@@ -260,9 +459,15 @@
 						No contacts to display
 					</h3>
 				</div>
-			</div>
+			</div> -->
 
-		</div>
+			<!-- Pagination navigation
+			<div id="paginationDiv" class="uiNavBar nav d-flex rounded-pill bg-light">
+				<button id="prevBtn" type="button" class="btn nav-item rounded-pill">prev</button>
+				<button id="prevBtn" type="button" class="btn nav-item rounded-pill">next</button>
+			</div> -->
+
+		</div> -->
 	</main>
 
 </body>
