@@ -71,7 +71,7 @@ function doRegister()
     let login = document.getElementById("registerName").value;
 
 	//makes sure password is valid
-	if(!validPassword(document.getElementById("registerPassword").value, validPassword(document.getElementById("confirmPassword").value)))
+	if(!validPassword(document.getElementById("registerPassword").value, document.getElementById("confirmPassword").value))
 	{
     	document.getElementById("registerResult").innerHTML = "Password is invalid";
 	}
@@ -181,7 +181,7 @@ function validPassword(input, matchInput)
 		document.getElementById("digit").style.display = "none";
 	}
 
-	if(input==matchInput)
+	if(input!=matchInput)
 	{
 		document.getElementById("matchInput").style.display = "";
 		valid = false;
