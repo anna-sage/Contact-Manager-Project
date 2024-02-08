@@ -80,16 +80,17 @@
 					<label for="registerName" class="form-label">USERNAME</label>
 						<input type="text" id="registerName" placeholder="Username" /><br />
 					<label for="registerPassword" class="form-label">PASSWORD</label>
-						<input type="password" id="registerPassword" placeholder="Password"/><br />
+						<input type="password" id="registerPassword" placeholder="Password"/>
+						<input type="checkbox" onclick="showPassword()"><br />
 						<input type="password" id="confirmPassword" placeholder="Re-Enter Password"/><br />
 					<span id="registerResult" style="color:#f00"></span>
                     <div id="passwordRequirements" style="display: none;">
                     <ul id="validatePassword">
-                        <li id="8characters" style="display: none;">at least 8 characters</li>
-                        <li id="digit" style="display: none;">at least 1 digit</li>
-                          <li id="lower" style="display: none;">at least 1 lower case letter</li>
-                          <li id="upper" style="display: none;">at least 1 upper case letter</li>
-						  <li id="matchInput" style="display: none;">passwords do not match</li>
+                    	<li id="8characters" style="display: none;">at least 8 characters</li>
+                    	<li id="digit" style="display: none;">at least 1 digit</li>
+                    	<li id="lower" style="display: none;">at least 1 lower case letter</li>
+                    	<li id="upper" style="display: none;">at least 1 upper case letter</li>
+						<li id="matchInput" style="display: none;">passwords do not match</li>
                     </ul>
                 </div>
 					<button type="button" id="registerButton" class="buttons" onclick="doRegister();"> REGISTER </button>

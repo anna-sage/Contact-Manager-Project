@@ -203,6 +203,17 @@ function validPassword(input, matchInput)
 	return valid;
 }
 
+function showPassword() {
+	let temp = document.getElementById("registerPassword");
+	 
+	if (temp.type === "password") {
+		temp.type = "text";
+	}
+	else {
+		temp.type = "password";
+	}
+}
+
 // Loads in the contacts associated with a particular user.
 function displayContacts(srch)
 {
