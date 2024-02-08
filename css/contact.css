@@ -193,6 +193,7 @@ tbody td img
 }
 
 .modal .modal-body #addErr,
+.modal .modal-body #editErr,
 .modal .modal-body .invalidIcon,
 .modal .modal-body .feedback
 {
@@ -232,8 +233,3 @@ tbody td img
     background-color: #3b2eae;
     box-shadow: #d7d3fe 1px 3px;
 }
-
-#editModal #editError
-{
-    font-family: 'DM Sans', sans-serif;
-} 

@@ -443,7 +443,6 @@ function updateSubmit(cx) {
 	if(validateContactForm('edit', 'editFname', 'editPhNum', 'editEmail')) 
 	{
 	  updateContact(cx); 
-	  resetForm("edit");
 	}
 }
 
@@ -475,14 +474,34 @@ function updateContact(cx)
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				//Modify contact info in table row and close edit modal 
+				let jsonObject = JSON.parse(xhr.responseText);
+				if (jsonObject.error)
+				{
+					console.log(jsonObject.error);
+
+					// Display the error message.
+					document.getElementById("editErrMsg").innerHTML = jsonObject.error;
+					document.getElementById("editErr").style.display = "";
+
+					// Make all the fields red and display warning icons.
+					let inputs = document.getElementsByClassName("editInput");
+					let icons = document.getElementsByClassName("editInvalidIcon");
+					for (let i = 0; i < inputs.length; i++)
+					{
+						inputs[i].style.borderColor = "#dc3545";
+						icons[i].style.display = "";
+					}
+
+					return;
+				}
+
+				//Modify contact info in table row and closes edit modal if valid
 				let contactRow = document.getElementById("row" + cx);
 				contactRow.getElementsByTagName("td")[1].innerHTML = saveFname;
 				contactRow.getElementsByTagName("td")[2].innerHTML = saveLname;
 				contactRow.getElementsByTagName("td")[3].innerHTML = savephoneNum;
 				contactRow.getElementsByTagName("td")[4].innerHTML = saveEmail;
-				document.getElementById("editError").setAttribute("style", "display:none")
-				closeModalForm('editModal', 'editForm');
+				resetForm("edit");
 			}
 		};
 		xhr.send(jsonPayload);
@@ -490,9 +509,6 @@ function updateContact(cx)
 	catch(err)
 	{
 		document.getElementById("noResultsTxt").innerText = "Error updating contact: " + err.message;
-		//include error in edit modal for now?
-		document.getElementById("editError").innerText = "Error updating contact: " + err.message;
-		document.getElementById("editError").setAttribute("style", "display:block")
 	}
 	
 }
