@@ -5,7 +5,8 @@ let userId = 0;
 let firstName = "";
 let lastName = "";
 
-let loadedAll = false;
+let loadedAll = false; // todo i think we don't need this
+const contactsPerPage = 10;
 const cid = []; // All contact ids.
 let lastContactIdx = -1; // Index of current final contact.
 const amtImages = 9; // Amount of available profile pics.
