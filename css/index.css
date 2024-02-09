@@ -45,23 +45,29 @@
 #title 
 {
     font-size: 100px;
+    font-weight: bold;
     width: 100%;
     margin-top: 2%;
     margin-bottom: 2%;
     text-align: center;
     font-family: 'DM Sans', sans-serif;
-    color: #ffffff;
+    color: #E0E0FF;
+    text-shadow: 2px 2px 8px #000000;
+    animation: colorShift 5s ease-in-out infinite, float 8s ease-in-out infinite;
 }
 
 #subtitle 
 {
     font-size: 30px;
+    font-weight: bold;
     width: 100%;
     text-align: center;
     font-style: italic;
     font-weight: bolder;
     font-family: 'Comfortaa', sans-serif;
-    color: #ffffff;
+    color: #E0E0FF;
+    text-shadow: 2px 2px 8px #000000;
+    animation: colorShift 5s ease-in-out infinite, float 8s ease-in-out infinite;
 }
 
 #logo
@@ -158,4 +164,21 @@ input:focus, button:focus, a:hover, input:hover, button:hover {
     color: #ffffff; 
 } */
 
+/* animation for text */ 
+@keyframes colorShift {
+    0%, 100% {
+        color: #ffffff;
+    }
+    50% {
+        color: #FFEA00; 
+    }
+}
 
+@keyframes float {
+    0%, 100% {
+        transform: translatey(0px);
+    }
+    50% {
+        transform: translatey(-20px);
+    }
+}
