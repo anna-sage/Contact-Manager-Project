@@ -26,6 +26,11 @@
     background-color: #4b0c66;
 }
 
+.navbar-custom.scrolled {
+    background-color: #060c60; 
+    transition: background-color 200ms linear;
+  }
+
 .material-symbols-outlined
 {
     vertical-align: middle;
@@ -100,6 +105,8 @@
     transition: 0.2s;
     box-shadow: 5px -5px 10px rgba(255, 255, 255, 0.4);
     padding-bottom: -12%;
+    opacity: 0.9; /*gives or should give a border color change */
+    border-color: #6b1e94;
 }
 
 .card:hover .card-text
@@ -120,6 +127,12 @@
     position: absolute;
     */
     display: none;
+}
+
+input:focus, button:focus, a:hover, input:hover, button:hover {
+    outline: none;
+    border-color: #6b1e94;
+    box-shadow: 0 0 0 2px rgba(107, 30, 148, 0.2);
 }
 
 #desc
@@ -145,43 +158,4 @@
     color: #ffffff; 
 } */
 
-.wave {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background: url("https://i.ibb.co/wQZVxxk/wave.png");
-    background-size: 1000px 100px;
-}
 
-/* more simplicity for footer, it was too much */ 
-.wave#wave1, .wave#wave2, .wave#wave3, .wave#wave4 {
-    animation: animateWaves 4s linear infinite;
-}
-
-/*should make the footer responsive*/
-@media (max-width: 768px) {
-    .footer {
-        padding: 20px;
-    }
-}
-
-@keyframes animateWaves {
-    0% {
-        background-position-x: 0;
-    }
-    100% {
-        background-position-x: 1000px;
-    }
-}
-
-
-@keyframes animate {
-    0% {
-        background-position-x: 0;
-    }
-    100% {
-        background-position-x: -1000px;
-    }
-}
