@@ -8,6 +8,8 @@ body
     margin-right: 0px;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    animation: GradientShift 10s ease infinite;
+    background-size: 200% 200%;
 }
 
 .footer {
@@ -64,4 +66,13 @@ body
 .devProfile span
 {
     margin-left: 6%;
+}
+
+@keyframes GradientShift {
+    0%, 100% {
+        background-position: 50% 0%;
+    }
+    50% {
+        background-position: 50% 100%;
+    }
 }
