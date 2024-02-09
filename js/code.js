@@ -7,6 +7,7 @@ let lastName = "";
 
 let loadedAll = false; // todo i think we don't need this
 const contactsPerPage = 10;
+let pgNum = 1; // Current page number.
 const cid = []; // All contact ids.
 let lastContactIdx = -1; // Index of current final contact.
 const amtImages = 9; // Amount of available profile pics.
@@ -225,13 +226,14 @@ function showPassword() {
 }
 
 // Loads in the contacts associated with a particular user.
-function displayContacts(srch)
+function loadContacts(pg)
 {
 	clearError();
 
 	let tmp = {
-        search: srch,
-        userId: userId
+        search: "",
+        userId: userId,
+		page: pg
     };
 
     let jsonPayload = JSON.stringify(tmp);
@@ -254,7 +256,17 @@ function displayContacts(srch)
                     return;
                 }
 
+				if(jsonObject.results.length==0)
+				{
+					document.getElementById("noContactsTxt").style.display = "";
+					return;
+				}
+
 				// Prepare data to be added to table rows.
+				let tbodyPage = document.createElement("tbody");
+				tbodyPage.id = "page" + pg;
+				tbodyPage.className = "contactsBody";
+
 				let text = "";
 				for (let i = 0; i < jsonObject.results.length; i++)
 				{
@@ -270,13 +282,8 @@ function displayContacts(srch)
 					text += generateContact(fn, ln, ph, em, cid[i]);
 				}
 
-				if(jsonObject.results.length==0)
-				{
-					document.getElementById("noContactsTxt").style.display = "";
-				}
-
-				// Add the contacts to the page.
-				document.getElementById("contactsBody").innerHTML = text;
+				tbodyPage.innerHTML = text;
+				document.getElementById("contacts").appendChild(tbodyPage);
 			}
 		};
 		xhr.send(jsonPayload);
@@ -391,7 +398,38 @@ function addContact()
 				let text = generateContact(newFname, newLname, newphoneNum, newEmail, jsonObject.contactId);
 
 				// Insert new contact at the top.
-				document.getElementById("contactsBody").insertAdjacentHTML("afterbegin", text);
+				document.getElementById("page" + pgNum).insertAdjacentHTML("afterbegin", text);
+
+				// Do we need to add the contact at the end to the next page?
+				let pgIncr = pgNum;
+				let curPage = document.getElementById("page" + pgIncr);
+				let curContacts = curPage.getElementsByClassName("contact");
+				console.log(curPage + " " + curContacts);
+
+				let curChild = curPage.lastChild;
+				console.log("the last child is" + curChild);
+				curPage.removeChild(curPage.lastChild);
+
+				// Go add the removed element to the top of the next page.
+				pgIncr++;
+
+				// while (curContacts.length > contactsPerPage)
+				// {
+				// 	let curChild = curPage.lastChild;
+				// 	console.log("the last child is" + curChild);
+				// 	curPage.removeChild(curPage.lastChild);
+
+				// 	// Go add the removed element to the top of the next page.
+				// 	pgIncr++;
+				// 	break;
+				// }
+
+				do
+				{
+					// Get all the contacts on the current page.
+					curContacts = document.getElementsByClassName("contact");
+				} 
+				while (curContacts.length > 10)
 
 				// In case a user is adding their first contact.
 				clearError();
@@ -413,7 +451,7 @@ function addContact()
 function generateContact(fn, ln, ph, em, id)
 {
 	lastContactIdx++;
-	let text = "<tr id=\'row" + lastContactIdx + "\'>";
+	let text = "<tr id=\'row" + lastContactIdx + "\' class=\'contact\'>";
 	
 	// Generate random profile picture.
 	const imgNum = Math.floor(Math.random() * amtImages) + 1;
@@ -651,7 +689,7 @@ function searchContacts()
 	const srch = document.getElementById("searchText").value.toLowerCase();
 	const terms = srch.split(" ");
 
-	let contacts = document.getElementById("contactsBody").getElementsByTagName("tr");
+	let contacts = document.getElementById("page" + pgNum).getElementsByTagName("tr");
 	let matchFound = false;
 
 	for (let i = 0; i < contacts.length; i++)
@@ -706,7 +744,7 @@ function searchContacts()
 function clearSearch()
 {
 	clearError();
-	let contacts = document.getElementById("contactsBody").getElementsByTagName("tr");
+	let contacts = document.getElementById("page" + pgNum).getElementsByTagName("tr");
 	for (let i = 0; i < contacts.length; i++)
 	{
 		contacts[i].style.display = "";
