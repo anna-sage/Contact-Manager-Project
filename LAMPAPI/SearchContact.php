@@ -69,7 +69,7 @@ function returnWithError($err)
 function returnWithInfo($searchResults, $totalResults)
 {
     //Modification done here to also deal with immplemenation of pagination 
-    $retValue = '{"results":[' . $searchResults . '], "totalResults":' . $totalResults . ',"error":"None, Next Page!"}';
+    $retValue = '{"results":[' . $searchResults . '], "totalResults":' . $totalResults . ',"error":""}';
     sendResultInfoAsJson($retValue);
 }
 ?>
