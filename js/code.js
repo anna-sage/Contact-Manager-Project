@@ -11,6 +11,16 @@ const cid = []; // All contact ids.
 let lastContactIdx = -1; // Index of current final contact.
 const amtImages = 9; // Amount of available profile pics.
 
+//some navbar stuff for scrolling 
+window.onscroll = function() {
+    const navbar = document.getElementById('nav');
+    if(window.scrollY > 100) { 
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+};
+
 function doLogin()
 {
 	userId = 0;
