@@ -2,6 +2,11 @@
 
 $inData = getRequestInfo();
 
+// Pagination Process
+$perPage = 10; // we want 10 contacts for each page
+$page = isset($inData['page']) ? $inData['page'] : 1;
+$offset = ($page -1) * $perPage;
+
 $searchResults = "";
 $searchCount = 0;
 
@@ -14,8 +19,12 @@ if ($conn->connect_error) {
     if (isset($inData["userId"])) {
         // Search for contacts of a specific user if userId is provided
         $userId = $inData["userId"];
-        $stmt = $conn->prepare("SELECT * FROM Contacts WHERE (First_Name LIKE ? OR Last_Name LIKE ? OR Phone LIKE ? OR Email LIKE ?) AND UserID = ? ORDER BY First_Name");
-        $stmt->bind_param("sssss", $searchTerm, $searchTerm, $searchTerm, $searchTerm, $userId);
+
+        //updated this piece of code below to handle pagination 
+        $stmt = $conn->prepare("SELECT * FROM Contacts WHERE (First_Name LIKE ? OR Last_Name LIKE ? OR Phone LIKE ? OR Email LIKE ?) AND UserID = ? ORDER BY First_Name LIMIT ? OFFSET ?");
+
+        //update code below to deal with LIMIT AND OFFSET
+        $stmt->bind_param("sssssss", $searchTerm, $searchTerm, $searchTerm, $searchTerm, $userId, $perPage, $offset);
     } 
 
     $stmt->execute();
@@ -33,7 +42,7 @@ if ($conn->connect_error) {
     if ($searchCount == 0) {
         returnWithError("No Records Found");
     } else {
-        returnWithInfo($searchResults);
+        returnWithInfo($searchResults, $searchCount);
     }
 
     $stmt->close();
@@ -57,9 +66,10 @@ function returnWithError($err)
     sendResultInfoAsJson($retValue);
 }
 
-function returnWithInfo($searchResults)
+function returnWithInfo($searchResults, $totalResults)
 {
-    $retValue = '{"results":[' . $searchResults . '],"error":""}';
+    //Modification done here to also deal with immplemenation of pagination 
+    $retValue = '{"results":[' . $searchResults . '], "totalResults":' . $totalResults . ',"error":"None, Next Page!"}';
     sendResultInfoAsJson($retValue);
 }
 ?>
