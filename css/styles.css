@@ -1,4 +1,7 @@
 /* Site-wide styles. */
+html {
+    scroll-behavior: smooth;
+}
 
 body 
 {
