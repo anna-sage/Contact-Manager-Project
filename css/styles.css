@@ -40,15 +40,14 @@ body
     color: white;
     background: radial-gradient(circle at top, #060c60 , #8c6c9d);
     border: 2px solid white;
-    /* font-family: 'DM Sans', sans-serif; */
-    font-family: 'Comfortaa', sans-serif;
-
+    font-family: 'DM Sans', sans-serif;
 }
 
 .footer .modal-header
 {
     color: white;
     border-bottom: 0px;
+    font-family: 'Comfortaa', sans-serif;
 }
 
 .footer .modal-header button
@@ -62,7 +61,7 @@ body
     color: #060c60;
 }
 
-/* .container
+.devProfile span
 {
-    border-radius: 35px;
-} */
+    margin-left: 6%;
+}

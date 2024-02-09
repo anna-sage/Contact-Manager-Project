@@ -45,10 +45,12 @@
     box-shadow: 0px 0px 30px rgb(198, 192, 192);
 }
 
-.uiNavBar .btn {
+.btn 
+{
     color: #4b0c66;
-    border: 1px solid #4b0c66;
+    border: 1.5px solid #4b0c66;
     font-family: 'Comfortaa';
+    font-weight: 550;
 }
 
 .uiNavBar .btn:hover 
@@ -74,10 +76,10 @@
     border: transparent;
 }
 
-#searchContainer
+/* #searchContainer, #nextBtn
 {
     margin-right: 2%;
-}
+} */
 
 #noResultsTxt, #noContactsTxt
 {
@@ -89,6 +91,7 @@
 
 #contactsDisplay
 {
+    display: flex;
     margin-bottom: 5%;
 }
 
@@ -113,8 +116,9 @@ tbody td img
     width: 50px;
 }
 
-.modal
+.modal .modal-content
 {
+    background-color: white;
     font-family: 'DM Sans', sans-serif;
 }
 
