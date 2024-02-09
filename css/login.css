@@ -154,7 +154,7 @@ input[type="checkbox"] {
   input[type="checkbox"]:checked::before {
     transform: scale(1);
   }
-  //end silly
+  /* end silly */
 
 .form-label
 {
