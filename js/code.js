@@ -536,7 +536,8 @@ function updateContact(cx)
 		firstName: saveFname,
 		lastName: saveLname,
 		phone: savephoneNum,
-		email: saveEmail
+		email: saveEmail,
+		userId: userId
 	};
 	let jsonPayload = JSON.stringify( tmp );
 
