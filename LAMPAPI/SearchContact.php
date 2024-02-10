@@ -3,7 +3,7 @@
 $inData = getRequestInfo();
 
 // Pagination Process
-$perPage = $_POST['size']; // instert desired amount of contacts per page
+$perPage = 10; // we want 10 contacts for each page
 $page = isset($inData['page']) ? $inData['page'] : 1;
 $offset = ($page -1) * $perPage;
 
