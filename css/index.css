@@ -120,6 +120,10 @@
     display:block;
 }
 
+.card-img-top:hover {
+    filter: brightness(120%);
+}
+
 .card-title
 {
     font-family: 'DM Sans', sans-serif;
