@@ -583,10 +583,12 @@ function generateContact(fn, ln, ph, em, id)
 
 	// Contact information.
 	const contactData = [fn, ln, ph, em];
+	const contactDataIdTemplates = ["fname", "lname", "phone", "email"]
 	for (let i = 0; i < contactData.length; i++)
 	{
 		const tdCell = document.createElement("td");
-		tdCell.className = "align-middle";
+		tdCell.className = "align-middle ";
+		tdCell.id = contactDataIdTemplates[i] + lastContactIdx;
 		tdCell.innerHTML = contactData[i];
 		trow.appendChild(tdCell);
 	}
@@ -651,11 +653,16 @@ function updateSubmit(cx) {
 function editContact(cx)
 {
 	//Get current contact info
-	let contactRow = document.getElementById("row" + cx);
-	let currFname = contactRow.getElementsByTagName("td")[1].innerText;
-	let currLname = contactRow.getElementsByTagName("td")[2].innerText;
-	let currPhNum = contactRow.getElementsByTagName("td")[3].innerText;
-	let currEmail = contactRow.getElementsByTagName("td")[4].innerText;
+	// const contactRow = document.getElementById("row" + cx);
+	const currFname = document.getElementById("fname" + cx).innerText;
+	const currLname = document.getElementById("lname" + cx).innerText;
+	const currPhNum = document.getElementById("phone" + cx).innerText;
+	const currEmail = document.getElementById("email" + cx).innerText;
+	// todo test.
+	// let currFname = contactRow.getElementsByTagName("td")[1].innerText;
+	// let currLname = contactRow.getElementsByTagName("td")[2].innerText;
+	// let currPhNum = contactRow.getElementsByTagName("td")[3].innerText;
+	// let currEmail = contactRow.getElementsByTagName("td")[4].innerText;
 	
 	//Put contact info in fields 
 	document.getElementById('editFname').setAttribute("value", currFname);
@@ -671,7 +678,10 @@ function editContact(cx)
 function confirmDelete(contactId, rowId) 
 {
     console.log("Received Contact ID in confirmDelete:", contactId); // check contactID
-    if (confirm("Are you sure you want to delete this contact?")) 
+	// Get the first and last names of the contact to delete.
+	let names = document.getElementById("fname" + rowId).innerText;
+	names += " " + document.getElementById("lname" + rowId).innerText;
+    if (confirm("Are you sure you want to delete " + names + "'s contact?"))
 	{
         deleteContact(contactId, rowId);
     }
