@@ -5,13 +5,14 @@ let userId = 0;
 let firstName = "";
 let lastName = "";
 
-let loadedAll = false; // todo i think we don't need this
 const contactsPerPage = 10;
 let pgNum = 1; // Current page number.
 
 const cid = []; // All contact ids.
 const added = []; // All contacts added this session.
 let lastContactIdx = -1; // Index of current final contact.
+const moveToNextPage = []; // Contacts to load into the next page.
+let srch = "";
 const amtImages = 9; // Amount of available profile pics.
 
 //some navbar stuff for scrolling 
@@ -153,6 +154,186 @@ function doRegister()
 
 // CRUD operations.
 
+// Adds a new contact to the top of the current page.
+function addContact()
+{
+	let newFname = document.getElementById("addFname").value;
+	let newLname = document.getElementById("addLname").value;
+	let newphoneNum = document.getElementById("addPhNum").value;
+	let newEmail = document.getElementById("addEmail").value;
+
+	let tmp = {
+		firstName: newFname,
+		lastName: newLname,
+		phone: newphoneNum,
+		email: newEmail,
+		userId: userId
+	};
+	let jsonPayload = JSON.stringify( tmp );
+
+	let url = urlBase + '/AddContact.' + extension;
+	
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				let jsonObject = JSON.parse(xhr.responseText);
+				if (jsonObject.error)
+				{
+					console.log(jsonObject.error);
+
+					// Display the error message.
+					document.getElementById("addErrMsg").innerHTML = jsonObject.error;
+					document.getElementById("addErr").style.display = "";
+
+					// Make all the fields red and display warning icons.
+					let inputs = document.getElementsByClassName("addInput");
+					let icons = document.getElementsByClassName("addInvalidIcon");
+					for (let i = 0; i < inputs.length; i++)
+					{
+						inputs[i].style.borderColor = "#dc3545";
+						icons[i].style.display = "";
+					}
+
+					return;
+				}
+
+				// Create new table row with new contact information.
+				let text = generateContact(newFname, newLname, newphoneNum, newEmail, jsonObject.contactId);
+
+				// Insert new contact at the top.
+				document.getElementById("page" + pgNum).insertAdjacentHTML("afterbegin", text);
+
+				// Store this contact ID in the added array
+				added.push(jsonObject.contactId);
+				
+
+				// Do we need to add the contact at the end of this page to the next page?
+				let pgIncr = pgNum;
+				let curPage = document.getElementById("page" + pgIncr);
+				let curContacts = curPage.getElementsByClassName("contact");
+				const allPages = document.getElementsByClassName("contactsBody");
+				console.log(curPage + " " + curContacts);
+
+				while (curContacts.length > contactsPerPage)
+				{
+					let curChild = curPage.lastChild;
+					curPage.removeChild(curPage.lastChild);
+
+					// Go add the removed element to the top of the next page.
+					// Or to a holder array to be loaded in on next page toggle.
+					pgIncr++;
+					if (pgIncr <= allPages.length)
+					{
+						curPage = document.getElementById("page" + pgIncr);
+						curPage.insertBefore(curChild, curPage.firstChild);
+						curContacts = curPage.getElementsByClassName("contact");					}
+					else
+					{
+						moveToNextPage.push(curChild);
+					}
+				}
+
+				// In case a user is adding their first contact.
+				clearError();
+
+				// Reset fields and validation warnings
+				resetForm("add");
+			}
+		};
+		
+		xhr.send(jsonPayload);
+		
+	}
+	catch(err)
+	{
+		document.getElementById("noResultsTxt").innerText = "Error adding contact: " + err.message;
+	}
+}
+
+// Displays contacts matching the search term.
+function searchContacts()
+{
+	clearError(); // todo what is this doing?
+
+	// Hide all currently displayed contacts.
+	nukeAllPages();
+	// todo consolidate this?
+
+	// Update the global search term and reload contacts.
+	srch = document.getElementById("searchText").value.toLowerCase();
+	loadContacts(pgNum, pgNum - 1);
+}
+
+// // Searches all contacts for a match.
+// function searchContacts()
+// {
+// 	// Clear the "no results found" text.
+// 	clearError();
+
+// 	// todo what happens if i dont clear out all pages first?
+
+// 	const srch = document.getElementById("searchText").value.toLowerCase();
+
+// 	// const terms = srch.split(" ");
+
+// 	// let contacts = document.getElementById("page" + pgNum).getElementsByTagName("tr");
+// 	// let matchFound = false;
+
+// 	// for (let i = 0; i < contacts.length; i++)
+// 	// {
+// 	// 	contacts[i].style.display = "none"; // Hide current contact.
+
+// 	// 	let fName = contacts[i].getElementsByTagName("td")[1].innerText.toLowerCase();
+// 	// 	let lName = contacts[i].getElementsByTagName("td")[2].innerText.toLowerCase();
+
+
+// 	// 	// Want to search all fields of every contact if the search term is a single string.
+// 	// 	if (terms.length == 1)
+// 	// 	{
+// 	// 		let phNum = contacts[i].getElementsByTagName("td")[3].innerText.toLowerCase();
+// 	// 		let email = contacts[i].getElementsByTagName("td")[4].innerText.toLowerCase();
+
+// 	// 		if (fName.includes(terms[0]) || lName.includes(terms[0]) || phNum.includes(terms[0]) || email.includes(terms[0]))
+// 	// 		{
+// 	// 			contacts[i].style.display = "";
+// 	// 			matchFound = true;
+// 	// 		}
+
+// 	// 		// If the search term is all digits, add dashes to compare against phone number.
+// 	// 		if (/^[\d]{1,10}$/.test(terms[0]))
+// 	// 		{
+// 	// 			let formattedNum = formatPhoneNumber(terms[0]);
+// 	// 			if (phNum.includes(formattedNum))
+// 	// 			{
+// 	// 				contacts[i].style.display = "";
+// 	// 				matchFound = true;
+// 	// 			}
+// 	// 		}
+// 	// 	}
+
+// 	// 	// Search for first and last name.
+// 	// 	if (terms.length == 2)
+// 	// 	{
+// 	// 		if (fName.includes(terms[0]) && lName.includes(terms[1]))
+// 	// 		{
+// 	// 			contacts[i].style.display = "";
+// 	// 			matchFound = true;
+// 	// 		}
+// 	// 	}
+// 	// }
+
+// 	// if(!matchFound)
+// 	// {
+// 	// 	document.getElementById("noResultsTxt").style.display = "";
+// 	// }
+// }
+
 //at least 8 characters, at least one lowercase letter, at least one uppercase letter, at least one digit
 function validPassword(input, matchInput)
 {
@@ -236,10 +417,14 @@ function loadContacts(pg, oldPg)
 {
 	clearError();
 
+	// Only request remaining contacts besides ones shifted from the previous page.
+	let requestAmt = contactsPerPage - moveToNextPage.length;
+
 	let tmp = {
-        search: "",
+        search: srch,
         userId: userId,
 		page: pg
+		// size: requestAmt
     };
 
     let jsonPayload = JSON.stringify(tmp);
@@ -253,12 +438,10 @@ function loadContacts(pg, oldPg)
 		xhr.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
                 let jsonObject = JSON.parse(xhr.responseText);
+				// todo : display special message if the user has no contacts at all
+
                 if (jsonObject.error) {
                     console.log(jsonObject.error);
-
-					// Display no contacts found message.
-					// document.getElementById("contactsBody").innerHTML = "";
-					// document.getElementById("noContactsTxt").style.display = "";
                     return false;
                 }
 
@@ -272,6 +455,12 @@ function loadContacts(pg, oldPg)
 				let tbodyPage = document.createElement("tbody");
 				tbodyPage.id = "page" + pg;
 				tbodyPage.className = "contactsBody";
+
+				// Display contacts shoved off the previous page by an add operation.
+				for (let i = 0; i < moveToNextPage.length; i++)
+				{
+					tbodyPage.appendChild(moveToNextPage[i]);
+				}
 
 				let text = "";
 				for (let i = 0; i < jsonObject.results.length; i++)
@@ -291,6 +480,7 @@ function loadContacts(pg, oldPg)
 					cid[i] = jsonObject.results[i].ID;
 
 					// Generate the text to insert into the document.
+					let curContact = generateContact(fn, ln, ph, em, cid[i]);
 					text += generateContact(fn, ln, ph, em, cid[i]);
 				}
 
@@ -367,101 +557,6 @@ function doLogout()
 	window.location.href = "index.html";
 }
 
-// todo I think my changes worked.
-function addContact()
-{
-	let newFname = document.getElementById("addFname").value;
-	let newLname = document.getElementById("addLname").value;
-	let newphoneNum = document.getElementById("addPhNum").value;
-	let newEmail = document.getElementById("addEmail").value;
-
-	let tmp = {
-		firstName: newFname,
-		lastName: newLname,
-		phone: newphoneNum,
-		email: newEmail,
-		userId: userId
-	};
-	let jsonPayload = JSON.stringify( tmp );
-
-	let url = urlBase + '/AddContact.' + extension;
-	
-	let xhr = new XMLHttpRequest();
-	xhr.open("POST", url, true);
-	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-	try
-	{
-		xhr.onreadystatechange = function() 
-		{
-			if (this.readyState == 4 && this.status == 200) 
-			{
-				let jsonObject = JSON.parse(xhr.responseText);
-				if (jsonObject.error)
-				{
-					console.log(jsonObject.error);
-
-					// Display the error message.
-					document.getElementById("addErrMsg").innerHTML = jsonObject.error;
-					document.getElementById("addErr").style.display = "";
-
-					// Make all the fields red and display warning icons.
-					let inputs = document.getElementsByClassName("addInput");
-					let icons = document.getElementsByClassName("addInvalidIcon");
-					for (let i = 0; i < inputs.length; i++)
-					{
-						inputs[i].style.borderColor = "#dc3545";
-						icons[i].style.display = "";
-					}
-
-					return;
-				}
-
-				// Create new table row with new contact information.
-				let text = generateContact(newFname, newLname, newphoneNum, newEmail, jsonObject.contactId);
-
-				// Insert new contact at the top.
-				document.getElementById("page" + pgNum).insertAdjacentHTML("afterbegin", text);
-
-				// Store this contact ID in the added array
-				added.push(jsonObject.contactId);
-				
-
-				// Do we need to add the contact at the end of this page to the next page?
-				let pgIncr = pgNum;
-				let curPage = document.getElementById("page" + pgIncr);
-				let curContacts = curPage.getElementsByClassName("contact");
-				console.log(curPage + " " + curContacts);
-
-				while (curContacts.length > contactsPerPage)
-				{
-					let curChild = curPage.lastChild;
-					console.log("the last child is" + curChild);
-					curPage.removeChild(curPage.lastChild);
-
-					// Go add the removed element to the top of the next page.
-					pgIncr++;
-					curPage = document.getElementById("page" + pgIncr);
-					curPage.insertBefore(curChild, curPage.firstChild);
-					curContacts = curPage.getElementsByClassName("contact");
-				}
-
-				// In case a user is adding their first contact.
-				clearError();
-
-				// Reset fields and validation warnings
-				resetForm("add");
-			}
-		};
-		
-		xhr.send(jsonPayload);
-		
-	}
-	catch(err)
-	{
-		document.getElementById("noResultsTxt").innerText = "Error adding contact: " + err.message;
-	}
-}
-
 function generateContact(fn, ln, ph, em, id)
 {
 	lastContactIdx++;
@@ -469,23 +564,23 @@ function generateContact(fn, ln, ph, em, id)
 	
 	// Generate random profile picture.
 	const imgNum = Math.floor(Math.random() * amtImages) + 1;
-	text += "<td class=\'contactIconArea\'>";
+	text += "<td class=\'align-middle contactIconArea\'>";
 	text += "<img src=\'images/contactIcons/contactIcon" + imgNum + ".png\' alt=\'Random profile picture\' class=\'icons float-start\'></td>";
 
 	// Contact information.
-	text += "<td>" + fn + "</td>";
-	text += "<td>" + ln + "</td>";
-	text += "<td>" + ph + "</td>";
-	text += "<td>" + em + "</td>";
+	text += "<td class=\'align-middle\'>" + fn + "</td>";
+	text += "<td class=\'align-middle\'>" + ln + "</td>";
+	text += "<td class=\'align-middle\'>" + ph + "</td>";
+	text += "<td class=\'align-middle\'>" + em + "</td>";
 
 	// Edit and delete buttons.
-	text += "<td class=\'contactIconArea\'>";
-	text += "<button class=\'contactBtns\' aria-label=\'Edit\'>";
+	text += "<td class=\'align-middle contactIconArea\'>";
+	text += "<button class=\'btn contactBtns\' aria-label=\'Edit\'>";
 	text += "<span class=\'material-symbols-outlined\' data-bs-toggle=\'modal\' data-bs-target=\'#editModal\' onclick=\'editContact(" +  lastContactIdx + ")\'>edit</span>";
 	text += "</button></td>";
 
-	text += "<td class=\'contactIconArea\'>";
-	text += "<button class=\'contactBtns\' onclick='confirmDelete(" + id + ", " + lastContactIdx + ");'>";
+	text += "<td class=\'align-middle contactIconArea\'>";
+	text += "<button class=\'btn contactBtns\' onclick='confirmDelete(" + id + ", " + lastContactIdx + ");'>";
 	text += "<span class=\'material-symbols-outlined\'>delete</span>";
 	text += "</button></td></tr>";
 
@@ -696,81 +791,32 @@ function closeModalForm(modalId, formId)
 	}
 }
 
-function searchContacts()
-{
-	// Clear the "no results found" text.
-	clearError();
-
-	const srch = document.getElementById("searchText").value.toLowerCase();
-	const terms = srch.split(" ");
-
-	let contacts = document.getElementById("page" + pgNum).getElementsByTagName("tr");
-	let matchFound = false;
-
-	for (let i = 0; i < contacts.length; i++)
-	{
-		contacts[i].style.display = "none"; // Hide current contact.
-
-		let fName = contacts[i].getElementsByTagName("td")[1].innerText.toLowerCase();
-		let lName = contacts[i].getElementsByTagName("td")[2].innerText.toLowerCase();
-
-		// Want to search all fields of every contact if the search term is a single string.
-		if (terms.length == 1)
-		{
-			let phNum = contacts[i].getElementsByTagName("td")[3].innerText.toLowerCase();
-			let email = contacts[i].getElementsByTagName("td")[4].innerText.toLowerCase();
-
-			if (fName.includes(terms[0]) || lName.includes(terms[0]) || phNum.includes(terms[0]) || email.includes(terms[0]))
-			{
-				contacts[i].style.display = "";
-				matchFound = true;
-			}
-
-			// If the search term is all digits, add dashes to compare against phone number.
-			if (/^[\d]{1,10}$/.test(terms[0]))
-			{
-				let formattedNum = formatPhoneNumber(terms[0]);
-				if (phNum.includes(formattedNum))
-				{
-					contacts[i].style.display = "";
-					matchFound = true;
-				}
-			}
-		}
-
-		// Search for first and last name.
-		if (terms.length == 2)
-		{
-			if (fName.includes(terms[0]) && lName.includes(terms[1]))
-			{
-				contacts[i].style.display = "";
-				matchFound = true;
-			}
-		}
-	}
-
-	if(!matchFound)
-	{
-		document.getElementById("noResultsTxt").style.display = "";
-	}
-}
-
 // Displays all contacts and clears search text field.
 function clearSearch()
 {
-	clearError();
-	let contacts = document.getElementById("page" + pgNum).getElementsByTagName("tr");
-	for (let i = 0; i < contacts.length; i++)
+	clearError(); // todo again what is this doing?
+	document.getElementById("searchText").innerHTML = "";
+
+	// Reset the search term and reload contacts.
+	srch = "";
+	nukeAllPages();
+	loadContacts(pgNum, pgNum - 1);
+}
+
+function nukeAllPages()
+{
+	let pagesDisplayed = document.getElementsByClassName("contactsBody");
+	for (let i = 0; i < pagesDisplayed.length; i++)
 	{
-		contacts[i].style.display = "";
+		pagesDisplayed[i].remove();
 	}
 
-	document.getElementById('searchText').value = '';
-
-	if(contacts.length==0)
-	{
-		document.getElementById("noContactsTxt").style.display = "";
-	}
+	// Reset necessary globals.
+	pgNum = 1;
+	cid.length = 0;
+	added.length = 0;
+	lastContactIdx = -1;
+	moveToNextPage.length = 0;
 }
 
 //confirmDelete function
@@ -797,10 +843,16 @@ function deleteContact(contactId, rowId)
     try {
         xhr.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                // Refresh the contact list or handle the response
                 console.log("Contact has been deleted");
 				document.getElementById("row" + rowId).remove();
-                // displayContacts("");
+
+				// Take the contact from the top of the next page
+				// and append it at the end of this page.
+				let allPages = document.getElementsByClassName("contactsBody");
+				if (pgNum < allPages.length)
+				{
+					console.log(allPages[allPages.length - 1]);
+				}
             }
         };
         xhr.send(jsonPayload);
