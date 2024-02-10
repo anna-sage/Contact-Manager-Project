@@ -20,7 +20,7 @@ if ($conn->connect_error) {
 
     if ($result->num_rows > 0) {
         // A contact with the same information already exists
-        returnWithError("Contact already exists for this user");
+        returnWithError("Sorry! Another contact exists already with this name, email, and phone.");
     } else {
         // Insert the new contact
         $stmt = $conn->prepare("INSERT into Contacts (UserId, First_Name, Last_Name, Phone, Email) VALUES (?, ?, ?, ?, ?)");
