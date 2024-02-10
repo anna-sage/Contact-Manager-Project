@@ -58,7 +58,8 @@ function doLogin()
 		
 				if( userId < 1 )
 				{		
-					document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
+					document.getElementById("loginResult").innerHTML = "Username/Password combination incorrect";
+					document.getElementById("loginResultDiv").style.display = "";
 					return;
 				}
 		
@@ -67,6 +68,8 @@ function doLogin()
 
 				saveCookie();
 	
+				// Hide the error message.
+				document.getElementById("loginResultDiv").style.display = "none";
 				window.location.href = "contact.html";
 			}
 		};
@@ -164,68 +167,80 @@ function doLogout()
 //at least 8 characters, at least one lowercase letter, at least one uppercase letter, at least one digit
 function validPassword(input, matchInput)
 {
-	valid=true;
+	let valid=true;
+	const green = "#4ed075";
 
 	if(input.length < 8)
 	{
-		document.getElementById("8characters").style.display = "";
+		togglePassReq(false, "char8Warning", "char8Check", "char8Txt");
 		valid = false;
 	}
 	else
 	{
-		document.getElementById("8characters").style.display = "none";
+		togglePassReq(true, "char8Warning", "char8Check", "char8Txt");
 	}
 
 	if(!/[a-z]/.test(input))
 	{
-		document.getElementById("lower").style.display = "";
+		togglePassReq(false, "lowerWarning", "lowerCheck", "lowerTxt");
 		valid = false;
 	}
 	else
 	{
-		document.getElementById("lower").style.display = "none";
+		togglePassReq(true, "lowerWarning", "lowerCheck", "lowerTxt");
 	}
 
 	if(!/[A-Z]/.test(input))
 	{
-		document.getElementById("upper").style.display = "";
+		togglePassReq(false, "upperWarning", "upperCheck", "upperTxt");
 		valid = false;
 	}
 	else
 	{
-		document.getElementById("upper").style.display = "none";
+		togglePassReq(true, "upperWarning", "upperCheck", "upperTxt");
 	}
 
 	if(!/\d/.test(input))
 	{
-		document.getElementById("digit").style.display = "";
+		togglePassReq(false, "digitWarning", "digitCheck", "digitTxt");
 		valid = false;
 	}
 	else
 	{
-		document.getElementById("digit").style.display = "none";
+		togglePassReq(true, "digitWarning", "digitCheck", "digitTxt");
 	}
 
-	if(input!=matchInput)
+	if (!matchesPassword(input, matchInput))
 	{
-		document.getElementById("matchInput").style.display = "";
 		valid = false;
-	}
-	else
-	{
-		document.getElementById("matchInput").style.display = "none";
-	}
-	
-	if(!valid)
-	{
-		document.getElementById("passwordRequirements").style.display = "";
-	}
-	else
-	{
-		document.getElementById("passwordRequirements").style.display = "none";
 	}
 
 	return valid;
+}
+
+// Checks if two passwords match.
+function matchesPassword(input, matchInput)
+{
+	if (input != matchInput)
+	{
+		togglePassReq(false, "matchInputWarning", "matchInputCheck", "matchInputTxt");
+		return false;
+	}
+	else
+	{
+		togglePassReq(true, "matchInputWarning", "matchInputCheck", "matchInputTxt");
+		return true;
+	}
+}
+
+// Toggles display of password requirement depending on validity.
+function togglePassReq(valid, warningIconId, checkIconId, txtId)
+{
+	const red = "#dc3545";
+	const green = "#4ed075";
+	document.getElementById(warningIconId).style.display = valid ? "none" : "";
+	document.getElementById(checkIconId).style.display = valid ? "" : "none";
+	document.getElementById(txtId).style.color = valid ? green : red;
 }
 
 function showPassword() 
@@ -653,16 +668,10 @@ function updateSubmit(cx) {
 function editContact(cx)
 {
 	//Get current contact info
-	// const contactRow = document.getElementById("row" + cx);
 	const currFname = document.getElementById("fname" + cx).innerText;
 	const currLname = document.getElementById("lname" + cx).innerText;
 	const currPhNum = document.getElementById("phone" + cx).innerText;
 	const currEmail = document.getElementById("email" + cx).innerText;
-	// todo test.
-	// let currFname = contactRow.getElementsByTagName("td")[1].innerText;
-	// let currLname = contactRow.getElementsByTagName("td")[2].innerText;
-	// let currPhNum = contactRow.getElementsByTagName("td")[3].innerText;
-	// let currEmail = contactRow.getElementsByTagName("td")[4].innerText;
 	
 	//Put contact info in fields 
 	document.getElementById('editFname').setAttribute("value", currFname);

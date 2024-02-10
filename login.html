@@ -83,15 +83,18 @@
 			</ul>
 			<!--Login Window-->
 			<div class="tab-content" id="tabWindow">
-				<div class="tab-pane fade show active rounded-bottom" id="loginDiv" role="tabpanel" aria-labelledby="login-tab" style="padding-bottom: 20%">
+				<div class="tab-pane fade show active rounded-bottom" id="loginDiv" role="tabpanel" aria-labelledby="login-tab">
 					<form style="max-width: 480px;margin:auto">
 						<span id="inner-title">Please sign in</span>
 						<label for="loginName" class="form-label">USERNAME</label>
 							<input type="text" id="loginName" placeholder="Username" /><br />
 						<label for="loginPassword" class="form-label">PASSWORD</label>
 							<input type="password" id="loginPassword" placeholder="Password"/><br />
+						<div id="loginResultDiv" class="container mt-2" style="display: none;">
+							<span id="loginWarningIcon" class="material-symbols-outlined">warning</span>
+							<span id="loginResult" class="">Username/password combination invalid.</span>
+						</div>
 						<button type="button" id="loginButton" class="buttons" onclick="doLogin();"> LOGIN </button>
-						<span id="loginResult"></span>
 					</form>
 				</div>
 				<!--Register Window-->
@@ -105,17 +108,41 @@
 						<label for="registerName" class="form-label">USERNAME</label>
 							<input type="text" id="registerName" placeholder="Username" /><br />
 						<label for="registerPassword" class="form-label">PASSWORD</label>
-							<input type="password" id="registerPassword" placeholder="Password"/>
+							<input type="password" id="registerPassword" placeholder="Password" 
+								oninput="validPassword(this.value, document.getElementById('confirmPassword').value);"/>
 							<input type="checkbox" onclick="showPassword()"><br />
-							<input type="password" id="confirmPassword" placeholder="Re-Enter Password"/><br />
+						<label for="confirmPassword" class="form-label">CONFIRM PASSWORD</label>
+							<input type="password" id="confirmPassword" placeholder="Re-Enter Password" 
+								oninput="matchesPassword(this.value, document.getElementById('registerPassword').value);"/><br />
 						<span id="registerResult" style="color:#f00"></span>
-						<div id="passwordRequirements" style="display: none;">
+						<div id="passwordRequirements">
+							<h3>Password Requirements</h3>
 						<ul id="validatePassword">
-							<li id="8characters" style="display: none;">at least 8 characters</li>
-							<li id="digit" style="display: none;">at least 1 digit</li>
-							<li id="lower" style="display: none;">at least 1 lower case letter</li>
-							<li id="upper" style="display: none;">at least 1 upper case letter</li>
-							<li id="matchInput" style="display: none;">passwords do not match</li>
+							<li id="char8">
+								<span id="char8Warning" class="warningIcon material-symbols-outlined">warning</span>
+								<span id="char8Check" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
+								<span id="char8Txt">at least 8 characters</span>
+							</li>
+							<li id="digit">
+								<span id="digitWarning" class="warningIcon material-symbols-outlined">warning</span>
+								<span id="digitCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
+								<span id="digitTxt">at least 1 digit</span>
+							</li>
+							<li id="lower">
+								<span id="lowerWarning" class="warningIcon material-symbols-outlined">warning</span>
+								<span id="lowerCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
+								<span id="lowerTxt">at least 1 lower case letter</span>
+							</li>
+							<li id="upper">
+								<span id="upperWarning" class="warningIcon material-symbols-outlined">warning</span>
+								<span id="upperCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
+								<span id="upperTxt">at least 1 upper case letter</span>
+							</li>
+							<li id="matchInput">
+								<span id="matchInputWarning" class="warningIcon material-symbols-outlined">warning</span>
+								<span id="matchInputCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
+								<span id="matchInputTxt">passwords must match</span>
+							</li>
 						</ul>
 					</div>
 						<button type="button" id="registerButton" class="buttons" onclick="doRegister();"> REGISTER </button>
@@ -185,9 +212,10 @@
 							<div class="row justify-content-center">
 								<div class="col-10">
 									<p>
-										We are students enrolled in University of Central Florida's Computer Science 
-										BS program. This small CRUD application was created as part of the 
-										Processes in Object Oriented Software Development course.
+										We are students enrolled in the University of Central Florida's 
+										Computer Science BS program. This small CRUD application was 
+										created as part of the Processes in Object Oriented Software 
+										Development course.
 									</p>
 								</div>
 							</div>
