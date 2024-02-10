@@ -8,7 +8,9 @@ let lastName = "";
 let loadedAll = false; // todo i think we don't need this
 const contactsPerPage = 10;
 let pgNum = 1; // Current page number.
+
 const cid = []; // All contact ids.
+const added = []; // All contacts added this session.
 let lastContactIdx = -1; // Index of current final contact.
 const amtImages = 9; // Amount of available profile pics.
 
@@ -21,6 +23,8 @@ window.onscroll = function() {
         navbar.classList.remove('scrolled');
     }
 };
+
+// Login and Register functions.
 
 function doLogin()
 {
@@ -147,6 +151,8 @@ function doRegister()
 	}
 }
 
+// CRUD operations.
+
 //at least 8 characters, at least one lowercase letter, at least one uppercase letter, at least one digit
 function validPassword(input, matchInput)
 {
@@ -226,7 +232,7 @@ function showPassword() {
 }
 
 // Loads in the contacts associated with a particular user.
-function loadContacts(pg)
+function loadContacts(pg, oldPg)
 {
 	clearError();
 
@@ -251,15 +257,15 @@ function loadContacts(pg)
                     console.log(jsonObject.error);
 
 					// Display no contacts found message.
-					document.getElementById("contactsBody").innerHTML = "";
-					document.getElementById("noContactsTxt").style.display = "";
-                    return;
+					// document.getElementById("contactsBody").innerHTML = "";
+					// document.getElementById("noContactsTxt").style.display = "";
+                    return false;
                 }
 
 				if(jsonObject.results.length==0)
 				{
 					document.getElementById("noContactsTxt").style.display = "";
-					return;
+					return false;
 				}
 
 				// Prepare data to be added to table rows.
@@ -270,6 +276,12 @@ function loadContacts(pg)
 				let text = "";
 				for (let i = 0; i < jsonObject.results.length; i++)
 				{
+					if (added.includes(jsonObject.results[i].ID))
+					{
+						// Contact is already displayed from adding, don't load it.
+						continue;
+					}
+
 					let fn = jsonObject.results[i].FirstName;
 					let ln = jsonObject.results[i].LastName;
 					let ph = jsonObject.results[i].Phone;
@@ -283,7 +295,15 @@ function loadContacts(pg)
 				}
 
 				tbodyPage.innerHTML = text;
+				pgNum = pg; // Update global page tracker.
+
+				// Hide the old page if it existed and display the new page.
+				if (oldPg > 0)
+				{
+					document.getElementById("page" + oldPg).style.display = "none";
+				}
 				document.getElementById("contacts").appendChild(tbodyPage);
+				return true;
 			}
 		};
 		xhr.send(jsonPayload);
@@ -292,6 +312,7 @@ function loadContacts(pg)
 	{
 		// Displaying error message to the user instead of just logging to the console
         document.getElementById("noResultsTxt").innerText = "Error loading contacts: " + err.message;
+		return false;
 	}
 }
 
@@ -346,6 +367,7 @@ function doLogout()
 	window.location.href = "index.html";
 }
 
+// todo I think my changes worked.
 function addContact()
 {
 	let newFname = document.getElementById("addFname").value;
@@ -400,36 +422,28 @@ function addContact()
 				// Insert new contact at the top.
 				document.getElementById("page" + pgNum).insertAdjacentHTML("afterbegin", text);
 
-				// Do we need to add the contact at the end to the next page?
+				// Store this contact ID in the added array
+				added.push(jsonObject.contactId);
+				
+
+				// Do we need to add the contact at the end of this page to the next page?
 				let pgIncr = pgNum;
 				let curPage = document.getElementById("page" + pgIncr);
 				let curContacts = curPage.getElementsByClassName("contact");
 				console.log(curPage + " " + curContacts);
 
-				let curChild = curPage.lastChild;
-				console.log("the last child is" + curChild);
-				curPage.removeChild(curPage.lastChild);
-
-				// Go add the removed element to the top of the next page.
-				pgIncr++;
-
-				// while (curContacts.length > contactsPerPage)
-				// {
-				// 	let curChild = curPage.lastChild;
-				// 	console.log("the last child is" + curChild);
-				// 	curPage.removeChild(curPage.lastChild);
-
-				// 	// Go add the removed element to the top of the next page.
-				// 	pgIncr++;
-				// 	break;
-				// }
-
-				do
+				while (curContacts.length > contactsPerPage)
 				{
-					// Get all the contacts on the current page.
-					curContacts = document.getElementsByClassName("contact");
-				} 
-				while (curContacts.length > 10)
+					let curChild = curPage.lastChild;
+					console.log("the last child is" + curChild);
+					curPage.removeChild(curPage.lastChild);
+
+					// Go add the removed element to the top of the next page.
+					pgIncr++;
+					curPage = document.getElementById("page" + pgIncr);
+					curPage.insertBefore(curChild, curPage.firstChild);
+					curContacts = curPage.getElementsByClassName("contact");
+				}
 
 				// In case a user is adding their first contact.
 				clearError();
@@ -800,3 +814,27 @@ function clearError()
 	document.getElementById("noResultsTxt").style.display = "none";
 	document.getElementById("noContactsTxt").style.display = "none";
 }
+
+function changePage(pageIncr)
+{
+	let pages = document.getElementsByClassName("contactsBody");
+	let oldPage = document.getElementById("page" + pgNum);
+	let newPage = pgNum + pageIncr;
+
+	// If the page to turn to has not been loaded yet.
+	if (newPage > pages.length)
+	{
+		loadContacts(newPage, pgNum);
+	}
+	else if (newPage > 0)
+	{
+		// Hide current page and update the global page tracker.
+		oldPage.style.display = "none";
+		pgNum = newPage;
+
+		// Display the next or prev page.
+		document.getElementById("page" + pgNum).style.display = "";
+	}
+}
+
+// Cookies

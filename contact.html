@@ -25,7 +25,7 @@
 		{
 			readCookie();
 			document.getElementById("navUser").innerHTML = firstName;
-			loadContacts(1);
+			loadContacts(1, 0);
 			resetForm("add");
 			resetForm("edit");
 		}, false);
@@ -252,13 +252,13 @@
 				<!-- Pagination navigation -->
 				<div id="paginationDiv" class="uiNavBar d-flex justify-content-between rounded-pill bg-light">
 					<div class="uiBtn my-2 ms-3">
-						<button id="prevBtn" type="button" class="btn mx-3 mt-1">
+						<button id="prevBtn" type="button" class="btn mx-3 mt-1" onclick="changePage(-1);">
 							<span class="material-symbols-outlined">arrow_back_ios</span>
 							prev
 						</button>
 					</div>
 					<div class="uiBtn my-2 me-3">
-						<button id="nextBtn" type="button" class="btn mx-3 mt-1">
+						<button id="nextBtn" type="button" class="btn mx-3 mt-1" onclick="changePage(1);">
 							next
 							<span class="material-symbols-outlined">arrow_forward_ios</span>
 						</button>
