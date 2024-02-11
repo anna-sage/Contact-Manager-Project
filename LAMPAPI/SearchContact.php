@@ -3,8 +3,8 @@
 $inData = getRequestInfo();
 
 // Pagination Process
-$perPage = 10; // we want 10 contacts for each page
-$page = isset($inData['page']) ? $inData['page'] : 1;
+$perPage = isset($inData['perPage']) ? (int)$inData['perPage'] : 10; // default to 10 if no amount is given for per page
+$page = isset($inData['page']) ? (int)$inData['page'] : 1; // Cast to int just to make sure that the value we get is treated as an int
 $offset = ($page -1) * $perPage;
 
 $searchResults = "";
@@ -24,7 +24,7 @@ if ($conn->connect_error) {
         $stmt = $conn->prepare("SELECT * FROM Contacts WHERE (First_Name LIKE ? OR Last_Name LIKE ? OR Phone LIKE ? OR Email LIKE ?) AND UserID = ? ORDER BY First_Name LIMIT ? OFFSET ?");
 
         //update code below to deal with LIMIT AND OFFSET
-        $stmt->bind_param("sssssss", $searchTerm, $searchTerm, $searchTerm, $searchTerm, $userId, $perPage, $offset);
+        $stmt->bind_param("sssssii", $searchTerm, $searchTerm, $searchTerm, $searchTerm, $userId, $perPage, $offset);
     } 
 
     $stmt->execute();
