@@ -119,6 +119,7 @@ function doRegister()
             		if (this.status == 409) 
 					{
                 		document.getElementById("registerResult").innerHTML = "User with this username already exists";
+						document.getElementById("registerResultDiv").style.display = "";
             	    	return;
             		}
 
@@ -131,15 +132,15 @@ function doRegister()
                 		lastName = jsonObject.lastName;
 
                 		saveCookie();
-    
+						document.getElementById("registerResultDiv").style.display = "none";
                 		window.location.href = "contact.html";
             		}
 
 					//handles other possible errors
 					else
 					{
-						document.getElementById("registerResult").innerHTML = "An unexpected error has occurred. Status code: "+this.status;
-            	    	return;
+						document.getElementById("registerResult").innerHTML = "An unexpected error has occurred. Status code: " + this.status;
+						return;
 					}
 				}
         	};

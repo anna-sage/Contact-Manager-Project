@@ -68,6 +68,12 @@
     transition: 0.2s;
 }
 
+#registerButton
+{
+    width: 60%;
+    margin-left: 20%;
+}
+
 .buttons:hover{
     background-color: #3b2eae;
     color: #FFFFFF;
@@ -81,8 +87,10 @@
 #passwordRequirements
 {
     /* color: #dc3545; */
-    margin-top: 2%;
-    margin-left: 10%;
+    margin-top: 10%;
+    margin-left: 20%;
+    margin-right: 5%;
+    margin-bottom: 5%;
     padding: 10px;
     /* border: 2px solid #dc3545; */
     /* border-radius: 15px; */
@@ -106,17 +114,6 @@
     font-size: 20px;
 }
 
-#loginName, #loginPassword, #registerName, #registerPassword
-{
-	font-size: 30px;
-}
-
-#confirmPassword
-{
-    font-size: 30px;
-    margin-top: 4%;
-}
-
 /*
     doing some silly
 */
@@ -127,29 +124,33 @@ input[type="checkbox"] {
     /* For iOS < 15 to remove gradient background */
     background-color: #fff;
     /* Not removed via appearance */
-    margin: 0;
+    margin-left: 0;
   }
 
   input[type="checkbox"] {
     appearance: none;
+    /*display: inline-block;*/
     background-color: #fff;
-    margin: 0;
+    margin-left: 10px;
     font: inherit;
     color: currentColor;
     width: 1.15em;
     height: 1.15em;
     border: 0.15em solid currentColor;
     border-radius: 0.1em;
-    transform: translateY(-0.075em);
+    transform: translateY(0.3em);
 
-    display: grid;
     place-content: center;
   }
 
   input[type="checkbox"]::before {
+    display: inline-block;
+    position: absolute;
+    left:1px;
+    bottom: 2px;
     content: "";
-    width: 0.65em;
-    height: 0.65em;
+    width: 0.75em;
+    height: 0.75em;
     transform: scale(0);
     transition: 120ms transform ease-in-out;
     box-shadow: inset 1em 1em var(--form-control-color);
@@ -175,17 +176,14 @@ input[type="checkbox"] {
     font-family: 'DM Sans', sans-serif;
 }
 
-#searchText
+#registerDiv .form-label
 {
-	font-size: 30px;
+    margin-left: 20%;
+    margin-top: 0%;
+    font-size: 15px;
 }
 
-#colorText
-{
-	font-size: 30px;
-}
-
-input[type="text"],input[type="password"]{
+#loginDiv input[type="text"],#loginDiv input[type="password"]{
     border-radius: 20px;
     text-align: left;
     width: 80%;
@@ -195,20 +193,35 @@ input[type="text"],input[type="password"]{
     font-family: 'DM Sans', sans-serif;
 }
 
-#inner-title{
+#registerDiv input[type="text"], #registerDiv input[type="password"]{
+    border-radius: 20px;
+    font-size: 0.8em;
+    text-align: left;
+    width: 60%;
+    margin-left: 20%;
+    padding-left: 4%;
+    padding-right: 4%;
+    font-family: 'DM Sans', sans-serif;
+}
+
+#registerLeft
+{
+    max-width: 500px;
+}
+
+.inner-title{
     display: inline-block;
     font-size: 0.8em;
-    width: 90%;
+    width: 80%;
     text-align: center;
-    margin-left: 5%;
+    margin-left: 10%;
     margin-bottom: 5%;
     font-family: 'DM Sans', sans-serif;
     color: #4b0c66;
 }
 
-#loginResultDiv{
-    /* display: inline-block; */
-    font-size: 20px;
+#loginResultDiv, #registerResultDiv{
+    /*display: inline-block;*/
     width: 90%;
     text-align: center;
     margin-left: 5%;

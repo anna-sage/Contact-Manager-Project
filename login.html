@@ -85,7 +85,7 @@
 			<div class="tab-content" id="tabWindow">
 				<div class="tab-pane fade show active rounded-bottom" id="loginDiv" role="tabpanel" aria-labelledby="login-tab">
 					<form style="max-width: 480px;margin:auto">
-						<span id="inner-title">Please sign in</span>
+						<span class="inner-title">Please sign in</span>
 						<label for="loginName" class="form-label">USERNAME</label>
 							<input type="text" id="loginName" placeholder="Username" /><br />
 						<label for="loginPassword" class="form-label">PASSWORD</label>
@@ -99,53 +99,65 @@
 				</div>
 				<!--Register Window-->
 				<div class="tab-pane fade rounded-bottom" id="registerDiv" role="tabpanel" aria-labelledby="register-tab">
-					<form style="max-width: 480px;margin:auto">
-						<span id="inner-title">Enter details to create an account</span>
-						<label for="firstName" class="form-label">FIRST NAME</label>
+					<form>
+						<span class="inner-title" style="margin-bottom: 3%;">Enter details to create an account</span>
+
+						<div class="row">
+
+						<div id="registerLeft" class="col-sm-6">
+						<label for="firstName" class="form-label">FIRST NAME</label><br />
 							<input type="text" id="firstName" placeholder="First name" oninput="this.value = formatName(this.value);" /><br />
-						<label for="lastName" class="form-label">LAST NAME</label>
+						<label for="lastName" class="form-label">LAST NAME</label><br />
 							<input type="text" id="lastName" placeholder="Last name" oninput="this.value = formatName(this.value);" /><br />
-						<label for="registerName" class="form-label">USERNAME</label>
+						<label for="registerName" class="form-label">USERNAME</label><br />
 							<input type="text" id="registerName" placeholder="Username" /><br />
-						<label for="registerPassword" class="form-label">PASSWORD</label>
+						<label for="registerPassword" class="form-label">PASSWORD</label><br />
 							<input type="password" id="registerPassword" placeholder="Password" 
 								oninput="validPassword(this.value, document.getElementById('confirmPassword').value);"/>
-							<input type="checkbox" onclick="showPassword()"><br />
-						<label for="confirmPassword" class="form-label">CONFIRM PASSWORD</label>
+							<input type="checkbox" onclick="showPassword()">
+						<label for="confirmPassword" class="form-label">CONFIRM PASSWORD</label><br />
 							<input type="password" id="confirmPassword" placeholder="Re-Enter Password" 
 								oninput="matchesPassword(this.value, document.getElementById('registerPassword').value);"/><br />
-						<span id="registerResult" style="color:#f00"></span>
+						</div>
+
+						<div id="registerRight" class="col-sm-6">
 						<div id="passwordRequirements">
-							<h3>Password Requirements</h3>
-						<ul id="validatePassword">
-							<li id="char8">
-								<span id="char8Warning" class="warningIcon material-symbols-outlined">warning</span>
-								<span id="char8Check" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
-								<span id="char8Txt">at least 8 characters</span>
-							</li>
-							<li id="digit">
-								<span id="digitWarning" class="warningIcon material-symbols-outlined">warning</span>
-								<span id="digitCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
-								<span id="digitTxt">at least 1 digit</span>
-							</li>
-							<li id="lower">
-								<span id="lowerWarning" class="warningIcon material-symbols-outlined">warning</span>
-								<span id="lowerCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
-								<span id="lowerTxt">at least 1 lower case letter</span>
-							</li>
-							<li id="upper">
-								<span id="upperWarning" class="warningIcon material-symbols-outlined">warning</span>
-								<span id="upperCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
-								<span id="upperTxt">at least 1 upper case letter</span>
-							</li>
-							<li id="matchInput">
-								<span id="matchInputWarning" class="warningIcon material-symbols-outlined">warning</span>
-								<span id="matchInputCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
-								<span id="matchInputTxt">passwords must match</span>
-							</li>
-						</ul>
-					</div>
+								<h3>Password Requirements</h3>
+							<ul id="validatePassword">
+								<li id="char8">
+									<span id="char8Warning" class="warningIcon material-symbols-outlined">warning</span>
+									<span id="char8Check" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
+									<span id="char8Txt">at least 8 characters</span>
+								</li>
+								<li id="digit">
+									<span id="digitWarning" class="warningIcon material-symbols-outlined">warning</span>
+									<span id="digitCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
+									<span id="digitTxt">at least 1 digit</span>
+								</li>
+								<li id="lower">
+									<span id="lowerWarning" class="warningIcon material-symbols-outlined">warning</span>
+									<span id="lowerCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
+									<span id="lowerTxt">at least 1 lower case letter</span>
+								</li>
+								<li id="upper">
+									<span id="upperWarning" class="warningIcon material-symbols-outlined">warning</span>
+									<span id="upperCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
+									<span id="upperTxt">at least 1 upper case letter</span>
+								</li>
+								<li id="matchInput">
+									<span id="matchInputWarning" class="warningIcon material-symbols-outlined">warning</span>
+									<span id="matchInputCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
+									<span id="matchInputTxt">passwords must match</span>
+								</li>
+							</ul>
+						</div>
 						<button type="button" id="registerButton" class="buttons" onclick="doRegister();"> REGISTER </button>
+						<div id="registerResultDiv" class="container mt-2" style="display: none;">
+							<span id="registerWarningIcon" class="material-symbols-outlined">warning</span>
+							<span id="registerResult" class="">Something went wrong.</span>
+						</div>
+						</div>
+						</div>
 					</form>
 				</div>
 			</div>
