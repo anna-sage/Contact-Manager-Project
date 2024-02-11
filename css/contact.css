@@ -193,3 +193,8 @@ tbody td img
     background-color: #3b2eae;
     box-shadow: #d7d3fe 1px 3px;
 }
+
+/* animation effect to add for when hovering over button */
+.btn:hover, .modal .modalCancel:hover, .modal .modalSubmit:hover {
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
