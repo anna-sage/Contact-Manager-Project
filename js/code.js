@@ -221,7 +221,7 @@ function validPassword(input, matchInput)
 // Checks if two passwords match.
 function matchesPassword(input, matchInput)
 {
-	if (input != matchInput)
+	if (input != matchInput || input.length < 1)
 	{
 		togglePassReq(false, "matchInputWarning", "matchInputCheck", "matchInputTxt");
 		return false;
@@ -237,7 +237,7 @@ function matchesPassword(input, matchInput)
 function togglePassReq(valid, warningIconId, checkIconId, txtId)
 {
 	const red = "#dc3545";
-	const green = "#4ed075";
+	const green = "#198754";
 	document.getElementById(warningIconId).style.display = valid ? "none" : "";
 	document.getElementById(checkIconId).style.display = valid ? "" : "none";
 	document.getElementById(txtId).style.color = valid ? green : red;

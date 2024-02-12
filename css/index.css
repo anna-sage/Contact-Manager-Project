@@ -50,7 +50,8 @@
     margin-top: 2%;
     margin-bottom: 2%;
     text-align: center;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Comfortaa', sans-serif;
+    /* font-family: 'DM Sans', sans-serif; */
     color: #E0E0FF;
     text-shadow: 2px 2px 8px #000000;
     animation: colorShift 5s ease-in-out infinite, float 8s ease-in-out infinite;
@@ -139,11 +140,11 @@
     display: none;
 }
 
-input:focus, button:focus, a:hover, input:hover, button:hover {
+/* input:focus, button:focus, a:hover, input:hover, button:hover {
     outline: none;
     border-color: #6b1e94;
     box-shadow: 0 0 0 2px rgba(107, 30, 148, 0.2);
-}
+} */
 
 #desc
 {
@@ -169,20 +170,20 @@ input:focus, button:focus, a:hover, input:hover, button:hover {
 } */
 
 /* animation for text */ 
-@keyframes colorShift {
+/* @keyframes colorShift {
     0%, 100% {
         color: #ffffff;
     }
     50% {
         color: #FFEA00; 
     }
-}
+} */
 
-@keyframes float {
+/* @keyframes float {
     0%, 100% {
         transform: translatey(0px);
     }
     50% {
         transform: translatey(-20px);
     }
-}
+} */

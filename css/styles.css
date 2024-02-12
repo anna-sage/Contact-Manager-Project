@@ -15,11 +15,24 @@ body
     background-size: 200% 200%;
 }
 
-nav .btn
+.btn:focus, .buttons:focus
+{
+    color: white;
+    background-color: #6b1e94;
+    outline: 4px solid #ae6bd297;
+    outline-offset: 2px;
+}
+
+.btn
 {
     color: #4b0c66;
     border: 1px solid #4b0c66;
     background-color: #ffffff;
+}
+
+.material-symbols-outlined
+{
+    vertical-align: middle;
 }
 
 .footer {
