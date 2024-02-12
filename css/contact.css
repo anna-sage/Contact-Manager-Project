@@ -1,12 +1,3 @@
-/* body 
-{
-    background: radial-gradient(circle at top, #060c60 , #8c6c9d);
-    height: 100%;
-    margin: 0;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-} */
-
 .nav-item, .navbar-brand, .navbar-text
 {
     font-family: 'Comfortaa', sans-serif;
@@ -79,12 +70,8 @@ main .btn:active
     border: transparent;
 }
 
-/* #searchContainer, #nextBtn
+#searchContainer
 {
-    margin-right: 2%;
-} */
-
-#searchContainer{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -119,17 +106,19 @@ main .btn:active
     box-shadow: 0px 0px 30px rgb(198, 192, 192);
 }
 
-#searchBtn, #clearBtn, #prevBtn, #nextBtn, #addBtn {
+
+.btn
+{
     color: white;
     background-color: #4b0c66;
     border: none;
 }
 
-#searchBtn:hover, #clearBtn:hover, #prevBtn:hover, #nextBtn:hover, #addBtn:hover {
-    background-color: #6b1e94; 
+.btn:hover 
+{
+    /* background-color: #6b1e94;  */
+    background-color: #a14bcf; 
 }
-
-
 
 .contactBtns
 {
@@ -154,6 +143,28 @@ tbody td img
     font-family: 'DM Sans', sans-serif;
 }
 
+.modal .modalCancel
+{
+    color: #4b0c66;
+    border: 1px solid #4b0c66;
+    background-color: #ffffff;
+}
+
+.modal .modalCancel:hover
+{
+    color: #4b0c66;
+    background-color: #d5cbe1;
+}
+
+.modal .modal-footer .modalCancel:focus
+{
+    color: #4b0c66;
+    background-color: #d5cbe1;
+    outline: 4px solid #ae6bd2;
+    outline-color: #ae6bd2;
+    outline-offset: 2px;
+}
+
 .modal .modal-body #addErr,
 .modal .modal-body #editErr,
 .modal .modal-body .invalidIcon,
@@ -166,32 +177,6 @@ tbody td img
 .modal-footer
 {
     justify-content: space-between;
-}
-
-.modal .modalCancel
-{
-    color: #5643fd;
-    border-color: #5643fd;
-}
-
-.modal .modalCancel:hover
-{
-    background-color: #d7d3fe;
-    color: #3b2eae;
-    border-color: #5643fd;
-}
-
-.modal .modalSubmit
-{
-    color: white;
-    background-color: #5643fd;
-}
-
-.modal .modalSubmit:focus
-{
-    color: white;
-    background-color: #3b2eae;
-    box-shadow: #d7d3fe 1px 3px;
 }
 
 /* animation effect to add for when hovering over button */

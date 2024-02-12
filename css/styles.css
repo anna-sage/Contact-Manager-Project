@@ -15,6 +15,13 @@ body
     background-size: 200% 200%;
 }
 
+nav .btn
+{
+    color: #4b0c66;
+    border: 1px solid #4b0c66;
+    background-color: #ffffff;
+}
+
 .footer {
     position: relative;
     width: 100%;
@@ -40,7 +47,7 @@ body
     color: #6f97fa;
 }
 
-.modal-content
+.footer .modal-content
 {
     color: white;
     background: radial-gradient(circle at top, #060c60 , #8c6c9d);

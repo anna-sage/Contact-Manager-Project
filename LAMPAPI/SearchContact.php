@@ -21,7 +21,7 @@ if ($conn->connect_error) {
         $userId = $inData["userId"];
 
         //updated this piece of code below to handle pagination 
-        $stmt = $conn->prepare("SELECT * FROM Contacts WHERE (First_Name LIKE ? OR Last_Name LIKE ? OR Phone LIKE ? OR Email LIKE ?) AND UserID = ? ORDER BY First_Name LIMIT ? OFFSET ?");
+        $stmt = $conn->prepare("SELECT * FROM Contacts WHERE (First_Name LIKE ? OR Last_Name LIKE ? OR Phone LIKE ? OR Email LIKE ?) AND UserID = ? LIMIT ? OFFSET ?");
 
         //update code below to deal with LIMIT AND OFFSET
         $stmt->bind_param("sssssii", $searchTerm, $searchTerm, $searchTerm, $searchTerm, $userId, $perPage, $offset);

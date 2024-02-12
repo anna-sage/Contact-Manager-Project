@@ -8,8 +8,7 @@ let lastName = "";
 const contactsPerPage = 10;
 let pgNum = 1; // Current page number.
 
-const cid = []; // All contact ids.
-const added = []; // All contacts added this session.
+const cid = []; // All contact ids displayed.
 let lastContactIdx = -1; // Index of current final contact.
 const moveToNextPage = []; // Contacts to load into the next page.
 let srch = "";
@@ -263,12 +262,13 @@ function loadContacts(pg, oldPg)
 
 	// Only request remaining contacts besides ones shifted from the previous page.
 	let requestAmt = contactsPerPage - moveToNextPage.length;
+	console.log("requesting " + contactsPerPage + " - " + moveToNextPage.length + " = " + requestAmt);
 
 	let tmp = {
         search: srch,
         userId: userId,
+		size: requestAmt,
 		page: pg
-		// size: requestAmt
     };
 
     let jsonPayload = JSON.stringify(tmp);
@@ -299,19 +299,26 @@ function loadContacts(pg, oldPg)
 				const loadingPg = generatePage(pg);
 
 				// Display contacts shoved off the previous page by an add operation.
+				if (moveToNextPage.length > 0) {console.log("Adding" + moveToNextPage.length + "shoved contacts to the page");}
 				for (let i = 0; i < moveToNextPage.length; i++)
 				{
-					loadingPg.appendChild(moveToNextPage[i]);
+					let curGuy = moveToNextPage.shift();
+					loadingPg.appendChild(curGuy);
 				}
 
+				console.log("Done adding shoved contacts");
+				console.log("now adding " + jsonObject.results.length + " contacts from API");
 				for (let i = 0; i < jsonObject.results.length; i++)
 				{
-					if (added.includes(jsonObject.results[i].ID))
+					console.log("Adding " + jsonObject.results[i].FirstName + "?");
+
+					if (cid.includes(jsonObject.results[i].ID))
 					{
-						// Contact is already displayed from adding, don't load it.
+						// Contact is already displayed, don't load it.
 						continue;
 					}
 
+					console.log("yes");
 					const fn = jsonObject.results[i].FirstName;
 					const ln = jsonObject.results[i].LastName;
 					const ph = jsonObject.results[i].Phone;
@@ -321,7 +328,7 @@ function loadContacts(pg, oldPg)
 					//Store contactID in cid
 					cid[i] = jsonObject.results[i].ID;
 
-					// Generate the text to insert into the document.
+					// Generate the table row to insert into the document.
 					loadingPg.appendChild(generateContact(fn, ln, ph, em, cid[i]));
 				}
 
@@ -418,9 +425,6 @@ function addContact()
 
 				// Insert new contact at the top.
 				pageAdding.insertBefore(newContact, pageAdding.firstChild)
-
-				// Store this contact ID in the added array
-				added.push(jsonObject.contactId);
 				
 				// Do we need to add the contact at the end of this page to the next page?
 				let pgIncr = pgNum;
@@ -652,7 +656,6 @@ function nukeAllPages()
 	// Reset necessary globals.
 	pgNum = 1;
 	cid.length = 0;
-	added.length = 0;
 	lastContactIdx = -1;
 	moveToNextPage.length = 0;
 }
