@@ -20,16 +20,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Load in the contacts associated with the user and reset forms. -->
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		document.addEventListener('DOMContentLoaded', function()
 		{
 			readCookie();
 			document.getElementById("navUser").innerHTML = firstName;
-			searchContacts("");
+			clearSearch();
 			resetForm("add");
 			resetForm("edit");
 		}, false);
-	</script>
+	</script> -->
 
 </head>
 <body>
@@ -68,12 +68,12 @@
 
 				<!-- Search add bar -->
 				<div id="searchAddBar" class="uiNavBar d-flex bg-light">
-					<div class="uiBtn p-2 flex-grow-1 ms-3 mt-1" style="text-align: start;">
+					<div class="uiBtn p-2 flex-grow-1 ms-3 my-1" style="text-align: start;">
 						<button id="addBtn" type="button" 
 						class="btn" data-bs-toggle="modal" data-bs-target="#addModal">+ Add</button>
 					</div>
-					<div class="uiBtn p-2 me-3" id="searchContainer">
-						<div class="input-group mt-1">
+					<div class="uiBtn p-2 me-3 my-1" id="searchContainer">
+						<div class="input-group">
 							<button id="clearBtn" type="button" class="btn rounded-left"
 								onclick="clearSearch();">
 								Clear
@@ -147,7 +147,7 @@
 								</div>
 							</div>
 							<div class="modal-footer d-flex justify-content-between">
-								<button type="button" class="btn modalCancel float-start" onclick="resetForm('add');">
+								<button id="addCancel" type="button" class="btn modalCancel float-start" onclick="resetForm('add');">
 									Cancel
 								</button>
 								<!-- todo clean this up -->
@@ -216,7 +216,7 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn modalCancel float-start" onclick="resetForm('edit');">
+								<button id="editCancel" type="button" class="btn modalCancel float-start" onclick="resetForm('edit');">
 									Cancel
 								</button>
 								<button id="updateButton" type="submit" class="btn modalSubmit" onclick="">
@@ -249,13 +249,13 @@
 				<!-- Pagination navigation -->
 				<div id="paginationDiv" class="uiNavBar justify-content-between rounded-pill bg-light">
 					<div class="uiBtn my-2 ms-3">
-						<button id="prevBtn" type="button" class="btn mx-3 mt-1" onclick="changePage(-1);">
+						<button id="prevBtn" type="button" class="btn mx-3 my-1" onclick="changePage(-1);">
 							<span class="material-symbols-outlined">arrow_back_ios</span>
 							prev
 						</button>
 					</div>
 					<div class="uiBtn my-2 me-3">
-						<button id="nextBtn" type="button" class="btn mx-3 mt-1" onclick="changePage(1);">
+						<button id="nextBtn" type="button" class="btn mx-3 my-1" onclick="changePage(1);">
 							next
 							<span class="material-symbols-outlined">arrow_forward_ios</span>
 						</button>
