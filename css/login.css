@@ -123,9 +123,8 @@ input[type="checkbox"] {
     margin-left: 0;
   }
 
-  input[type="checkbox"] {
+  /* input[type="checkbox"] {
     appearance: none;
-    /*display: inline-block;*/
     background-color: #fff;
     margin-left: 10px;
     font: inherit;
@@ -137,9 +136,9 @@ input[type="checkbox"] {
     transform: translateY(0.3em);
 
     place-content: center;
-  }
+  } */
 
-  input[type="checkbox"]::before {
+  /* input[type="checkbox"]::before {
     display: inline-block;
     position: absolute;
     left:1px;
@@ -155,12 +154,26 @@ input[type="checkbox"] {
 
     transform-origin: bottom left;
     clip-path: polygon(0% 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0%, 25% 0%);
-  }
-
+  } */
+/* 
   input[type="checkbox"]:checked::before {
     transform: scale(1);
-  }
+  } */
   /* end silly */
+
+/* Password visibility toggle */
+.passwordContainer
+{
+    position: relative;
+}
+
+.fa-eye
+{
+    position: absolute;
+    top: 24%;
+    right: 13%;
+    cursor: pointer;
+}
 
 .form-label
 {
@@ -205,16 +218,39 @@ input[type="checkbox"] {
     font-family: 'DM Sans', sans-serif;
 }
 
-#registerDiv input[type="text"], #registerDiv input[type="password"]{
+#registerDiv .passwordContainer
+{
+    padding-bottom: 0;
+    height: 19%;
+}
+
+#registerDiv input[type="text"], 
+#registerDiv input[type="password"]
+{
     border-radius: 20px;
-    font-size: 0.8em;
+    font-size: 0.7em;
     text-align: left;
-    width: 60%;
+    width: 100%;
     margin-left: 20%;
     padding-left: 4%;
     padding-right: 4%;
     font-family: 'DM Sans', sans-serif;
 }
+
+#registerDiv .fa-eye
+{
+    position: absolute;
+    top: 65%;
+    right: -15%;
+    font-size: 23px;
+}
+
+/* #registerDiv #registerPassword
+{
+    margin-left: 20%;
+    padding-left: 4%;
+    padding-right: 4%;
+} */
 
 #registerLeft
 {

@@ -22,7 +22,18 @@ window.onscroll = function() {
     } else {
         navbar.classList.remove('scrolled');
     }
-};
+}
+
+// Password visibility toggle.
+document.addEventListener("DOMContentLoaded", function() {
+	const loginPass = document.getElementById("loginPassword");
+	const loginEye = document.getElementById("loginEye");
+	passwordVisToggle(loginPass, loginEye);
+
+	const registerPass = document.getElementById("registerPassword");
+	const registerEye = document.getElementById("registerEye");
+	passwordVisToggle(registerPass, registerEye);
+});
 
 // Login, register, and logout functions.
 
@@ -164,6 +175,16 @@ function doLogout()
 }
 
 // Login / Register forms and validation.
+
+function passwordVisToggle(inputField, eyeIcon)
+{
+	eyeIcon.addEventListener("click", function(){
+		this.classList.toggle("fa-eye-slash");
+		const type = inputField.getAttribute("type") === "password" ? "text" : "password";
+		console.log("type is " + type);
+		inputField.setAttribute("type", type);
+	  });
+}
 
 //at least 8 characters, at least one lowercase letter, at least one uppercase letter, at least one digit
 function validPassword(input, matchInput)
@@ -426,7 +447,7 @@ function addContact()
 
 				// If this is the user's first contact, create their first page.
 				const pages = document.getElementsByClassName("contactsBody");
-				let pageAdding = (pages.length < 1) ? generatePage(pgNUm) : document.getElementById("page" + pgNum);
+				let pageAdding = (pages.length < 1) ? generatePage(pgNum) : document.getElementById("page" + pgNum);
 
 				// Insert new contact at the top.
 				pageAdding.insertBefore(newContact, pageAdding.firstChild)

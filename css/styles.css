@@ -102,6 +102,25 @@ nav .nav-item .btn:focus
     font-family: 'Comfortaa', sans-serif;
 }
 
+.footer .modal-header .btn
+{
+    padding: 2px;
+}
+
+.footer .modal-header .btn:hover
+{
+    color: rgba(255, 255, 255, 0.5);
+    outline: 1.5px solid rgba(255, 255, 255, 0.5);
+    background: transparent
+}
+
+.footer .modal-header .btn:focus
+{
+    color: white;
+    outline: 2px solid #ffffff;
+    background-color: #18155b;
+}
+
 .footer .modal-header button
 {
     color: white;

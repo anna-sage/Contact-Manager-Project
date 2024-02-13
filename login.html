@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css?family=DM+Sans" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 
 <body>
@@ -88,7 +89,10 @@
 						<label for="loginName" class="form-label">USERNAME</label>
 							<input type="text" id="loginName" placeholder="Username" /><br />
 						<label for="loginPassword" class="form-label">PASSWORD</label>
-							<input type="password" id="loginPassword" placeholder="Password"/><br />
+							<div class="passwordContainer">
+								<input type="password" id="loginPassword" placeholder="Password"/>
+								<i class="fa-solid fa-eye" id="loginEye"></i><br />
+							</div>
 						<div id="loginResultDiv" class="container mt-2" style="display: none;">
 							<span id="loginWarningIcon" class="material-symbols-outlined">warning</span>
 							<span id="loginResult" class="align-middle">Username/password combination invalid.</span>
@@ -104,19 +108,29 @@
 						<div class="row">
 
 						<div id="registerLeft" class="col-sm-6">
-						<label for="firstName" class="form-label">FIRST NAME</label><br />
-							<input type="text" id="firstName" placeholder="First name" oninput="this.value = formatName(this.value);" /><br />
-						<label for="lastName" class="form-label">LAST NAME</label><br />
-							<input type="text" id="lastName" placeholder="Last name" oninput="this.value = formatName(this.value);" /><br />
-						<label for="registerName" class="form-label">USERNAME</label><br />
-							<input type="text" id="registerName" placeholder="Username" /><br />
-						<label for="registerPassword" class="form-label">PASSWORD</label><br />
-							<input type="password" id="registerPassword" placeholder="Password" 
+							<div>
+								<label for="firstName" class="form-label">FIRST NAME</label><br />
+								<input type="text" id="firstName" placeholder="First name" oninput="this.value = formatName(this.value);" /><br />
+							</div>
+							<div>
+								<label for="lastName" class="form-label">LAST NAME</label><br />
+								<input type="text" id="lastName" placeholder="Last name" oninput="this.value = formatName(this.value);" /><br />
+							</div>
+							<div>
+								<label for="registerName" class="form-label">USERNAME</label><br />
+								<input type="text" id="registerName" placeholder="Username" /><br />
+							</div>
+							<div id="registerPasswordContainer" class="passwordContainer">
+								<label for="registerPassword" class="form-label">PASSWORD</label><br />
+								<input type="password" id="registerPassword" placeholder="Password" 
 								oninput="validPassword(this.value, document.getElementById('confirmPassword').value);"/>
-							<input type="checkbox" onclick="showPassword()">
-						<label for="confirmPassword" class="form-label">CONFIRM PASSWORD</label><br />
-							<input type="password" id="confirmPassword" placeholder="Re-Enter Password" 
+								<i class="fa-solid fa-eye" id="registerEye"></i><br />
+							</div>
+							<div>
+								<label for="confirmPassword" class="form-label">CONFIRM PASSWORD</label><br />
+								<input type="password" id="confirmPassword" placeholder="Re-Enter Password" 
 								oninput="matchesPassword(this.value, document.getElementById('registerPassword').value);"/><br />
+							</div>
 						</div>
 
 						<div id="registerRight" class="col-sm-6">
