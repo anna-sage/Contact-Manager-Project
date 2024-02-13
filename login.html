@@ -19,6 +19,27 @@
 	<link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+	<!-- Password visibility toggles -->
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			const loginPass = document.getElementById("loginPassword");
+			const loginEye = document.getElementById("loginEye");
+			if (loginPass && loginEye)
+			{
+				passwordVisToggle(loginPass, loginEye);
+			}
+
+			const registerPass = document.getElementById("registerPassword");
+			const registerEye = document.getElementById("registerEye");
+			if (registerPass && registerEye)
+			{
+				passwordVisToggle(registerPass, registerEye);
+			}
+
+			// Hide error msgs.
+		});
+	</script>
 </head>
 
 <body>
@@ -37,9 +58,6 @@
 			<ul class="navbar-nav ms-auto">
 				<li class="nav-item">
 					<a class="nav-link btn navbar-text" href="index.html">Info</a>
-			  	</li>
-				<li class="nav-item">
-					<a class="nav-link btn" href="login.html"><span class="material-symbols-outlined">person</span></i> Login/Register</a>
 			  	</li>
 			</ul>
 		  </div>
@@ -93,7 +111,7 @@
 								<input type="password" id="loginPassword" placeholder="Password"/>
 								<i class="fa-solid fa-eye" id="loginEye"></i><br />
 							</div>
-						<div id="loginResultDiv" class="container mt-2" style="display: none;">
+						<div id="loginResultDiv" class="container mt-2">
 							<span id="loginWarningIcon" class="material-symbols-outlined">warning</span>
 							<span id="loginResult" class="align-middle">Username/password combination invalid.</span>
 						</div>

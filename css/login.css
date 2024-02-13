@@ -94,6 +94,7 @@
 #loginResultDiv,
 #registerResultDiv
 {
+    display: none;
     font-size: 18px;
     color: #dc3545;
 }

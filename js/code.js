@@ -22,23 +22,6 @@ window.onscroll = function() {
     }
 }
 
-// Password visibility toggle.
-document.addEventListener("DOMContentLoaded", function() {
-	const loginPass = document.getElementById("loginPassword");
-	const loginEye = document.getElementById("loginEye");
-	if (loginPass && loginEye)
-	{
-		passwordVisToggle(loginPass, loginEye);
-	}
-
-	const registerPass = document.getElementById("registerPassword");
-	const registerEye = document.getElementById("registerEye");
-	if (registerPass && registerEye)
-	{
-		passwordVisToggle(registerPass, registerEye);
-	}
-});
-
 // Login, register, and logout functions.
 
 function doLogin()
