@@ -339,25 +339,6 @@ function addContact()
 	}
 }
 
-// Wrapper funciton for searching.
-function searchButton(srchTerm)
-{
-	nukeAllPages();
-	searchContacts(srchTerm);
-
-	const allDigits = /^[0-9]+$/;
-	const digitsDashes = /^[0-9]{3}\-[0-9]*([0-9]|\-)*$/;
-
-	if (allDigits.test(srchTerm))
-	{
-		searchContacts(formatPhoneNumber(srchTerm));
-	}
-	else if (digitsDashes.test(srchTerm))
-	{
-		searchContacts(srchTerm.replaceAll("-", ""));
-	}
-}
-
 // Loads in the contacts matching a certain search term.
 function searchContacts(srchTerm)
 {
@@ -389,22 +370,8 @@ function searchContacts(srchTerm)
                     return;
                 }
 
-				// If we're just starting out, make a new page to populate.
-				let curPg;
-				let pageOn = pgNum;
-				if (pgNum == 0)
-				{
-					curPg = generatePage(pgNum + 1);
-					pageOn = pgNum = pgNum + 1;
-				}
-				else
-				{
-					curPg = document.getElementById("page" + pgNum);
-				}
-				let switchPg = pgNum + 1; // Assume we want to switch the page.
-
-				// Make a new page with each contact from the results.
-				let contactsAdded = 0;
+				// Make a new page with the contacts from the results.
+				const newPage = generatePage(pgNum + 1);
 				for (let i = 0; i < jsonObject.results.length; i++)
 				{
 					if (!cid.includes(jsonObject.results[i].ID))
@@ -415,49 +382,19 @@ function searchContacts(srchTerm)
 						const em = jsonObject.results[i].Email;
 						cid[i] = jsonObject.results[i].ID;
 
-						const newEntry = generateContact(fn, ln, ph, em, cid[i]);
-						while (!populatePage(curPg, newEntry))
-						{
-							// We don't want to switch if our first new entry is 
-							// trying to fill up the current page.
-							if (i == 0 && pageOn == pgNum)
-							{
-								switchPage = pageOn;
-							}
-
-							const nextPg = document.getElementById("page" + (pageOn+1));
-							if (nextPg)
-							{
-								curPg = nextPg;
-							}
-							else
-							{
-								curPg = generatePage(pageOn + 1);
-							}
-							pageOn++;
-						}
-	
-						contactsAdded++;
+						newPage.appendChild(generateContact(fn, ln, ph, em, cid[i]));
 					}
 				}
 
-				// Hide the old page if it existed and was full before we started adding.
-				if (pgNum > 1 && pgNum < switchPg)
+				// Hide the old page if it existed.
+				if (pgNum > 0)
 				{
 					document.getElementById("page" + (pgNum)).style.display = "none";
 				}
-				// Hide the newly generated page if we aren't ready to display it yet.
-				else if (pgNum == switchPg && contactsAdded > 0)
-				{
-					curPg.style.display = "none";
-				}
 
-				// If we actually added contacts, 
-				if (contactsAdded > 0)
-				{
-					document.getElementById("contacts").appendChild(curPg);
-					pgNum = pageOn;
-				}
+				// Add the new page and increment the page number tracker.
+				document.getElementById("contacts").appendChild(newPage);
+				pgNum++;
 			}
 		};
 		xhr.send(jsonPayload);
@@ -628,19 +565,6 @@ function generateContact(fn, ln, ph, em, id)
 	return trow;
 }
 
-// Adds a contact to a specified page unless its full.
-function populatePage(page, contact)
-{
-	const pageCapacity = contactsPerPage - page.getElementsByClassName("contact").length;
-	if (pageCapacity > 0)
-	{
-		page.appendChild(contact);
-		return true;
-	}
-
-	return false;
-}
-
 // Clears error messages from searching or loading.
 function clearError()
 {
@@ -657,6 +581,7 @@ function nukeAllPages()
 {
 	clearError();
 	const pagesDisplayed = document.getElementsByClassName("contactsBody");
+	console.log("amount of pages to delete: " + pagesDisplayed);
 	for (let i = 0; i < pagesDisplayed.length; i++)
 	{
 		pagesDisplayed[i].remove();

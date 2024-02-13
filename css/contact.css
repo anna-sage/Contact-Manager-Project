@@ -8,35 +8,50 @@
     color: #4b0c66;
 }
 
-#accessUIDiv
+#searchAddBar
 {
     font-family: 'DM Sans', sans-serif;
 }
 
-#accessUIDiv .btn
+.uiNavBar .btn
 {
     color: white;
     background-color: #4b0c66;
     border: 1px solid #4b0c66;
 }
 
-#accessUIDiv .uiNavBar .btn
+#contactsDisplay
+{
+    width: 95%;
+    margin: 10px auto;
+}
+
+#noContactsContainer
+{
+    display: none;
+    min-height: 100px;
+}
+
+/* #searchAddBar .uiNavBar .btn
 {
     color: white;
     background-color: #4b0c66;
     border: 1px solid #4b0c66;
-}
+} */
 
-#accessUIDiv .btn:hover,
-#accessUIDiv .btn:focus,
-#accessUIDiv .uiNavBar .btn:hover,
-#accessUIDiv .uiNavBar .btn:focus
+/* #searchAddBar .btn:hover
 {
     color: white;
     background-color: #6b1e94;
     border: 1px solid #6b1e94;
     box-shadow: 1px 1px 1px 1px #4b0c666b;
-}
+} */
+
+/* #searchAddBar .btn:focus,
+#searchAddBar .uiNavBar .btn:focus
+{
+
+} */
 
 .material-symbols-outlined
 {
@@ -76,11 +91,11 @@
     font-family: 'DM Sans', sans-serif;
 }
 
-#contactsDisplay
+/* #contactsDisplay
 {
     margin: 20px auto;
     width:100%;
-}
+} */
 
 #paginationDiv {
     display: flex;
