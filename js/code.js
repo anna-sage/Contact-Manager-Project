@@ -722,36 +722,38 @@ function validateContactForm(formType, fnameId, phoneId, emailId)
 
 	if (!fname.value)
 	{
-		fname.style.borderColor = "#dc3545";
-		document.getElementById(formType + "FnameInvalid").style.display = "";
-		document.getElementById(formType + "FnameFeedback").style.display = "";
+		toggleContactsModalsValidation(false, formType, fname, "FnameInvalid", "FnameFeedback");
 		fnameErr = true;
 	}
-
-	// Validate the phone number.
-	const phoneNum = phone.value;
-	const phRegex = /^[(]?[0-9]{3}[)]?[-\.]?[0-9]{3}[-\.]?[0-9]{4}$/;
-	if (phRegex.test(phoneNum) == false)
+	else
 	{
-		// phone.setCustomValidity("Invalid field.");
-		phone.style.borderColor = "#dc3545";
-		document.getElementById(formType + "PhNumInvalid").style.display = "";
-		document.getElementById(formType + "PhNumFeedback").style.display = "";
-		phoneErr = true;
+		toggleContactsModalsValidation(true, formType, fname, "FnameInvalid", "FnameFeedback");
 	}
 
-	// Format the phone number.
-	phone.value = formatPhoneNumber(phoneNum);
+	// Format and validate the phone number.
+	let phoneNum = phone.value;
+	phoneNum = phone.value = formatPhoneNumber(phoneNum);
+	const phRegex = /^[0-9]{3}-{1}[0-9]{3}-{1}[0-9]{4}$/;
+	if (!phoneNum || phRegex.test(phoneNum) == false)
+	{
+		toggleContactsModalsValidation(false, formType, phone, "PhNumInvalid", "PhNumFeedback");
+		phoneErr = true;
+	}
+	else
+	{
+		toggleContactsModalsValidation(true, formType, phone, "PhNumInvalid", "PhNumFeedback");
+	}
 
 	// Validate the email using the world's ugliest regex.
 	const emailRegex = /^[a-zA-Z0-9!#\$%&'\*\+\-\/=\?\^_`\{|\}~.]+@[a-z]+\.[a-z]+$/;
-	if (emailRegex.test(email.value) == false)
+	if (!(email.value) || emailRegex.test(email.value) == false)
 	{
-		// email.setCustomValidity("Invalid field.");
-		email.style.borderColor = "#dc3545";
-		document.getElementById(formType + "EmailInvalid").style.display = "";
-		document.getElementById(formType + "EmailFeedback").style.display = "";
+		toggleContactsModalsValidation(false, formType, email, "EmailInvalid", "EmailFeedback");
 		emailErr = true;
+	}
+	else
+	{
+		toggleContactsModalsValidation(true, formType, email, "EmailInvalid", "EmailFeedback");
 	}
 
 	if ((fnameErr || phoneErr || emailErr) == true)
@@ -760,6 +762,14 @@ function validateContactForm(formType, fnameId, phoneId, emailId)
 	}
 
 	return true;
+}
+
+// Toggles add and update modal feedback based on form validity.
+function toggleContactsModalsValidation(valid, formType, input, icon, feedback)
+{
+	input.style.borderColor = valid ? "#000000" : "#dc3545";
+	document.getElementById(formType + icon).style.display = valid ? "none" : "";
+	document.getElementById(formType + feedback).style.display = valid ? "none" : "";
 }
 
 // Reset the add or update form.
