@@ -102,6 +102,8 @@ function doRegister()
 
     	const tmp = {firstName:firstName,lastName:lastName,login:login,password:hash};
     	const jsonPayload = JSON.stringify( tmp );
+		console.log(jsonPayload);
+
     
     	const url = urlBase + '/Register.' + extension;
 
@@ -282,17 +284,8 @@ function loadContacts(pg, oldPg)
                 let jsonObject = JSON.parse(xhr.responseText);
 				// todo : display special message if the user has no contacts at all
 
-				// todo problem here: what if requestAmt is 0?
-				if(jsonObject.results.length==0)
-				{
-					document.getElementById("noContactsTxt").style.display = "";
-					return;
-				}
-
                 if (jsonObject.error) {
-                    console.log(jsonObject.error);
-					document.getElementById("contactErrTxt").innerHTML = jsonObject.error;
-					document.getElementById("contactErrDiv").style.display = "";
+                    displayContactsErr("No contacts to display");
                     return;
                 }
 
@@ -349,9 +342,20 @@ function loadContacts(pg, oldPg)
 	catch(err) 
 	{
 		// Displaying error message to the user instead of just logging to the console
-        document.getElementById("contactErrTxt").innerText = "Error loading contacts: " + err.message;
+		displayContactsErr("Error loading contacts: " + err.message);
 		return false;
 	}
+}
+
+// Toggle contacts display error when the search/load API returns an error.
+function displayContactsErr(errMsg)
+{
+	const errDisplay = document.getElementById("noContactsTxt");
+	errDisplay.innerHTML = errMsg;
+	errDisplay.style.display = "";
+
+	document.getElementById("contactsDisplay").style.display = "none";
+	document.getElementById("paginationDiv").style.display = "none";
 }
 
 // Generates a new page as the child of the contacts table.
@@ -446,7 +450,8 @@ function addContact()
 					{
 						curPage = document.getElementById("page" + pgIncr);
 						curPage.insertBefore(curChild, curPage.firstChild);
-						curContacts = curPage.getElementsByClassName("contact");					}
+						curContacts = curPage.getElementsByClassName("contact");					
+					}
 					else
 					{
 						moveToNextPage.push(curChild);
@@ -640,8 +645,12 @@ function generateContact(fn, ln, ph, em, id)
 // Clears error messages from searching or loading.
 function clearError()
 {
-	document.getElementById("contactErrDiv").style.display = "none";
-	document.getElementById("noContactsTxt").style.display = "none";
+	const errDisplay = document.getElementById("noContactsTxt");
+	errDisplay.innerHTML = "";
+	errDisplay.style.display = "none";
+
+	document.getElementById("contactsDisplay").style.display = "";
+	document.getElementById("paginationDiv").style.display = "";
 }
 
 // Resets displayed pages to prepare for search or search clear.

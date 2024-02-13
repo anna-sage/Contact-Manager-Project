@@ -20,7 +20,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Load in the contacts associated with the user and reset forms. -->
-	<!-- <script type="text/javascript">
+	<script type="text/javascript">
 		document.addEventListener('DOMContentLoaded', function()
 		{
 			readCookie();
@@ -29,7 +29,7 @@
 			resetForm("add");
 			resetForm("edit");
 		}, false);
-	</script> -->
+	</script>
 
 </head>
 <body>
@@ -85,13 +85,6 @@
 							</button>
 						</div>
 					</div>
-				</div>
-
-				<!-- Error alert box -->
-				<div id="contactErrDiv" class="col alert alert-danger alert-dismissible fade show mx-auto" role="alert" style="display: none;">
-					<span class="material-symbols-outlined">warning</span>
-					<span id="contactErrTxt"></span>
-					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 				</div>
 
 				<!-- Message for when a user has no contacts -->
@@ -254,7 +247,7 @@
 				</div>
 
 				<!-- Pagination navigation -->
-				<div id="paginationDiv" class="uiNavBar d-flex justify-content-between rounded-pill bg-light">
+				<div id="paginationDiv" class="uiNavBar justify-content-between rounded-pill bg-light">
 					<div class="uiBtn my-2 ms-3">
 						<button id="prevBtn" type="button" class="btn mx-3 mt-1" onclick="changePage(-1);">
 							<span class="material-symbols-outlined">arrow_back_ios</span>
