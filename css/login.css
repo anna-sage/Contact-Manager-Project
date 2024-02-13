@@ -78,7 +78,7 @@
 #registerButton
 {
     width: 60%;
-    margin-left: 20%;
+    margin:auto;
 }
 
 .buttons:hover{
@@ -87,47 +87,28 @@
     opacity: 90%;
 }
 
-/* .buttons:focus
-{
-    background-color: #3b2eae;
-    color: #FFFFFF;
-    opacity: 90%;
-    outline: 2px solid #ae6bd2;
-} */
-
 .buttons:active{
     transform: scale(0.9);
 }
 
-#passwordRequirements
+#loginResultDiv,
+#registerResultDiv
 {
-    /* color: #dc3545; */
-    margin-top: 10%;
-    margin-left: 20%;
-    margin-right: 5%;
-    margin-bottom: 5%;
-    padding: 10px;
-    /* border: 2px solid #dc3545; */
-    /* border-radius: 15px; */
-    /* -moz-border-radius: 15px; */
+    font-size: 18px;
+    color: #dc3545;
 }
 
-#passwordRequirements ul
+#passwordRequirements
 {
-    color: #dc3545;
+    margin-top: 10%;
+    margin-bottom: 5%;
+    padding: 10px;
 }
 
 #passwordRequirements .checkIcon
 {
-    /* display: none; */
-    color: #4ed075;
+    color: #198754;
 }
-
-/* #validatePassword li
-{
-    list-style-type: "";
-    font-size: 20px;
-} */
 
 /*
     doing some silly
@@ -198,6 +179,22 @@ input[type="checkbox"] {
     font-size: 15px;
 }
 
+#registerDiv #registerLeft > *
+{
+    width: 75%;
+}
+
+#registerDiv #registerRight > *
+{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#registerDiv #registerRight > *:not(.buttons)
+{
+    width: 100%;
+}
+
 #loginDiv input[type="text"],#loginDiv input[type="password"]{
     border-radius: 20px;
     text-align: left;
@@ -235,7 +232,7 @@ input[type="checkbox"] {
     color: #4b0c66;
 }
 
-#loginResultDiv, #registerResultDiv{
+#loginResultDiv{
     /*display: inline-block;*/
     width: 90%;
     text-align: center;
@@ -251,6 +248,7 @@ input[type="checkbox"] {
 
 #passwordRequirements ul
 {
+    color: #dc3545;
     list-style: none;
     padding-left: 0;
     font-size: 18px;

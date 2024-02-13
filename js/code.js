@@ -95,7 +95,6 @@ function doRegister()
 
 	else
 	{
-		document.getElementById("validatePassword").style.display = "none";
     	const password = document.getElementById("registerPassword").value;
 		const hash = md5( password );
 
@@ -168,7 +167,6 @@ function doLogout()
 function validPassword(input, matchInput)
 {
 	let valid=true;
-	const green = "#4ed075";
 
 	if(input.length < 8)
 	{
@@ -284,16 +282,19 @@ function loadContacts(pg, oldPg)
                 let jsonObject = JSON.parse(xhr.responseText);
 				// todo : display special message if the user has no contacts at all
 
-                if (jsonObject.error) {
-                    console.log(jsonObject.error);
-                    return false;
-                }
-
+				// todo problem here: what if requestAmt is 0?
 				if(jsonObject.results.length==0)
 				{
 					document.getElementById("noContactsTxt").style.display = "";
-					return false;
+					return;
 				}
+
+                if (jsonObject.error) {
+                    console.log(jsonObject.error);
+					document.getElementById("contactErrTxt").innerHTML = jsonObject.error;
+					document.getElementById("contactErrDiv").style.display = "";
+                    return;
+                }
 
 				// Make the new page.
 				const loadingPg = generatePage(pg);
@@ -348,7 +349,7 @@ function loadContacts(pg, oldPg)
 	catch(err) 
 	{
 		// Displaying error message to the user instead of just logging to the console
-        document.getElementById("noResultsTxt").innerText = "Error loading contacts: " + err.message;
+        document.getElementById("contactErrTxt").innerText = "Error loading contacts: " + err.message;
 		return false;
 	}
 }
@@ -465,7 +466,7 @@ function addContact()
 	}
 	catch(err)
 	{
-		document.getElementById("noResultsTxt").innerText = "Error adding contact: " + err.message;
+		document.getElementById("contactErrTxt").innerText = "Error adding contact: " + err.message;
 	}
 }
 
@@ -546,7 +547,7 @@ function updateContact(cx)
 	}
 	catch(err)
 	{
-		document.getElementById("noResultsTxt").innerText = "Error updating contact: " + err.message;
+		document.getElementById("contactErrTxt").innerText = "Error updating contact: " + err.message;
 	}	
 }
 
@@ -639,8 +640,7 @@ function generateContact(fn, ln, ph, em, id)
 // Clears error messages from searching or loading.
 function clearError()
 {
-	document.getElementById("noResultsTxt").innerText = "No contacts found";
-	document.getElementById("noResultsTxt").style.display = "none";
+	document.getElementById("contactErrDiv").style.display = "none";
 	document.getElementById("noContactsTxt").style.display = "none";
 }
 

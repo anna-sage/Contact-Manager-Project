@@ -50,41 +50,19 @@
     width: 95%;
 }
 
-/* .btn 
-{
-    color: #4b0c66;
-    border: 1.5px solid #4b0c66;
-    font-family: 'Comfortaa';
-    font-weight: 550;
-} */
-
-/* main .btn:hover 
-{
-    color: white;
-    background-color: #6b1e94;
-    border-color: #6b1e94;
-}
-
-main .btn:focus 
-{
-    color: white;
-    background-color: #6b1e94;
-    outline: 4px solid #ae6bd2;
-    outline-offset: 2px;
-}
-
-main .btn:active 
-{
-    color: white;
-    background-color: #4b0c66;
-    border: transparent;
-} */
-
 #searchContainer
 {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.alert
+{
+    max-width: fit-content;
+    border: 1px solid white;
+    color: #dc3545;
+    background-color: white;
 }
 
 #noResultsTxt, #noContactsTxt

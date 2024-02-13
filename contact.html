@@ -87,6 +87,20 @@
 					</div>
 				</div>
 
+				<!-- Error alert box -->
+				<div id="contactErrDiv" class="col alert alert-danger alert-dismissible fade show mx-auto" role="alert" style="display: none;">
+					<span class="material-symbols-outlined">warning</span>
+					<span id="contactErrTxt"></span>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+
+				<!-- Message for when a user has no contacts -->
+				<div id="noContactsContainer">
+					<h3 id="noContactsTxt" class="text-center" style="display: none;">
+						No contacts to display
+					</h3>
+				</div>
+
 				<!-- Add contact modal -->
 				<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog" role="document">
@@ -237,16 +251,6 @@
 						<!-- <tbody id="contactsBody" class="container align-middle">
 						</tbody> -->
 					</table>
-					<div id="noResultsContainer">
-						<h3 id="noResultsTxt" class="text-center" style="display: none;">
-							No contacts found
-						</h3>
-					</div>
-					<div id="noContactsContainer">
-						<h3 id="noContactsTxt" class="text-center" style="display: none;">
-							No contacts to display
-						</h3>
-					</div>
 				</div>
 
 				<!-- Pagination navigation -->
