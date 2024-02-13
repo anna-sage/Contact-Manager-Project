@@ -44,6 +44,7 @@ nav .nav-item .btn
     color: white;
     background-color: #6b1e94;
     border-color: #6b1e94;
+    box-shadow: 1px 1px 1px 1px #4b0c666b;
 }
 
 .btn:focus, .buttons:focus,
