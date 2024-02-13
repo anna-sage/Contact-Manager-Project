@@ -7,6 +7,7 @@ let lastName = "";
 
 const contactsPerPage = 10;
 let pgNum = 0; // Current page number.
+let srch = "";
 
 const cid = []; // All contact ids displayed.
 let lastContactIdx = -1; // Index of current final contact.
@@ -342,6 +343,8 @@ function addContact()
 // Loads in the contacts matching a certain search term.
 function searchContacts(srchTerm)
 {
+	srch = srchTerm; // Update global tracker.
+
 	const tmp = {
         search: srchTerm,
         userId: userId,
@@ -579,13 +582,17 @@ function clearError()
 // Resets displayed pages to prepare for search or search clear.
 function nukeAllPages()
 {
+	srch = ""; // Reset global.
 	clearError();
-	const pagesDisplayed = document.getElementsByClassName("contactsBody");
-	console.log("amount of pages to delete: " + pagesDisplayed);
+	let pagesDisplayed = [].slice.call(document.getElementsByClassName("contactsBody"));
+	console.log("amount of pages to delete: " + pagesDisplayed.length);
 	for (let i = 0; i < pagesDisplayed.length; i++)
 	{
+		console.log("deleting page " + i);
 		pagesDisplayed[i].remove();
 	}
+
+	console.log("now there are " + document.getElementsByClassName("contactsBody").length);
 
 	// Reset necessary globals.
 	pgNum = 0;
@@ -774,7 +781,7 @@ function changePage(pageIncr)
 	// If the page to turn to has not been loaded yet.
 	if (pgNum + pageIncr > pages.length)
 	{
-		searchContacts("");
+		searchContacts(srch);
 	}
 	else if (pgNum + pageIncr > 0)
 	{

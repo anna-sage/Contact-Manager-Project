@@ -150,9 +150,9 @@
 											Cancel
 										</button>
 										<!-- todo clean this up -->
-										<button type="submit" class="btn modalSubmit"
+										<button id="addSubmit" type="submit" class="btn modalSubmit"
 											  onclick="if(validateContactForm('add','addFname', 'addPhNum', 'addEmail')) {addContact(); }">
-											Submit
+											Add
 										</button>
 									</div>
 								</div>
@@ -169,7 +169,6 @@
 											Edit contact details
 										</h5>
 										<button type="button" class="btn-close" aria-label="Close" aria-hidden="true" onclick="closeModalForm('editModal', 'editForm');">
-											<!-- <span aria-hidden="true" style="display: none;">&times;</span> -->
 										</button>
 									</div>
 									<div class="modal-body">

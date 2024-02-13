@@ -13,11 +13,23 @@
     font-family: 'DM Sans', sans-serif;
 }
 
-.uiNavBar .btn
+.uiNavBar .btn,
+.modal #addSubmit,
+.modal #updateButton
 {
     color: white;
     background-color: #4b0c66;
     border: 1px solid #4b0c66;
+}
+
+.uiNavBar .btn:hover,
+.modal #addSubmit:hover,
+.modal #updateButton:hover
+{
+    color: white;
+    background-color: #6b1e94;
+    border: 1px solid #6b1e94;
+    box-shadow: 1px 1px 1px 1px #4b0c666b;
 }
 
 #contactsDisplay
@@ -37,14 +49,6 @@
     color: white;
     background-color: #4b0c66;
     border: 1px solid #4b0c66;
-} */
-
-/* #searchAddBar .btn:hover
-{
-    color: white;
-    background-color: #6b1e94;
-    border: 1px solid #6b1e94;
-    box-shadow: 1px 1px 1px 1px #4b0c666b;
 } */
 
 /* #searchAddBar .btn:focus,
@@ -73,14 +77,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.alert
-{
-    max-width: fit-content;
-    border: 1px solid white;
-    color: #dc3545;
-    background-color: white;
 }
 
 #noResultsTxt, #noContactsTxt
@@ -133,8 +129,8 @@ tbody .contact img
 .modal .modal-footer #addCancel,
 .modal .modal-footer #editCancel
 {
-    color: #4b0c66;
-    border: 1px solid #4b0c66;
+    color: #8b37b8;
+    border: 2px solid #8b37b8;
     background-color: #ffffff;
 }
 
