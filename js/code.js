@@ -6,12 +6,10 @@ let firstName = "";
 let lastName = "";
 
 const contactsPerPage = 10;
-let pgNum = 1; // Current page number.
+let pgNum = 0; // Current page number.
 
 const cid = []; // All contact ids displayed.
 let lastContactIdx = -1; // Index of current final contact.
-const moveToNextPage = []; // Contacts to load into the next page.
-let srch = "";
 const amtImages = 9; // Amount of available profile pics.
 
 //some navbar stuff for scrolling 
@@ -28,11 +26,17 @@ window.onscroll = function() {
 document.addEventListener("DOMContentLoaded", function() {
 	const loginPass = document.getElementById("loginPassword");
 	const loginEye = document.getElementById("loginEye");
-	passwordVisToggle(loginPass, loginEye);
+	if (loginPass && loginEye)
+	{
+		passwordVisToggle(loginPass, loginEye);
+	}
 
 	const registerPass = document.getElementById("registerPassword");
 	const registerEye = document.getElementById("registerEye");
-	passwordVisToggle(registerPass, registerEye);
+	if (registerPass && registerEye)
+	{
+		passwordVisToggle(registerPass, registerEye);
+	}
 });
 
 // Login, register, and logout functions.
@@ -181,7 +185,6 @@ function passwordVisToggle(inputField, eyeIcon)
 	eyeIcon.addEventListener("click", function(){
 		this.classList.toggle("fa-eye-slash");
 		const type = inputField.getAttribute("type") === "password" ? "text" : "password";
-		console.log("type is " + type);
 		inputField.setAttribute("type", type);
 	  });
 }
@@ -264,110 +267,6 @@ function togglePassReq(valid, warningIconId, checkIconId, txtId)
 	document.getElementById(txtId).style.color = valid ? green : red;
 }
 
-function showPassword() 
-{
-	let temp = document.getElementById("registerPassword");
-	 
-	if (temp.type === "password") {
-		temp.type = "text";
-	}
-	else {
-		temp.type = "password";
-	}
-}
-
-// Loads in the contacts associated with a particular user using pagination.
-function loadContacts(pg, oldPg)
-{
-	clearError();
-
-	// Only request remaining contacts besides ones shifted from the previous page.
-	let requestAmt = contactsPerPage - moveToNextPage.length;
-	console.log("requesting " + contactsPerPage + " - " + moveToNextPage.length + " = " + requestAmt);
-
-	let tmp = {
-        search: srch,
-        userId: userId,
-		size: requestAmt,
-		page: pg
-    };
-
-    let jsonPayload = JSON.stringify(tmp);
-	
-    let url = urlBase + '/SearchContact.' + extension;
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
-	try {
-		xhr.onreadystatechange = function () {
-			if (this.readyState == 4 && this.status == 200) {
-                let jsonObject = JSON.parse(xhr.responseText);
-				// todo : display special message if the user has no contacts at all
-
-                if (jsonObject.error) {
-                    displayContactsErr("No contacts to display");
-                    return;
-                }
-
-				// Make the new page.
-				const loadingPg = generatePage(pg);
-
-				// Display contacts shoved off the previous page by an add operation.
-				if (moveToNextPage.length > 0) {console.log("Adding" + moveToNextPage.length + "shoved contacts to the page");}
-				for (let i = 0; i < moveToNextPage.length; i++)
-				{
-					let curGuy = moveToNextPage.shift();
-					loadingPg.appendChild(curGuy);
-				}
-
-				console.log("Done adding shoved contacts");
-				console.log("now adding " + jsonObject.results.length + " contacts from API");
-				for (let i = 0; i < jsonObject.results.length; i++)
-				{
-					console.log("Adding " + jsonObject.results[i].FirstName + "?");
-
-					if (cid.includes(jsonObject.results[i].ID))
-					{
-						// Contact is already displayed, don't load it.
-						continue;
-					}
-
-					console.log("yes");
-					const fn = jsonObject.results[i].FirstName;
-					const ln = jsonObject.results[i].LastName;
-					const ph = jsonObject.results[i].Phone;
-					const em = jsonObject.results[i].Email;
-
-					// todo delete below?
-					//Store contactID in cid
-					cid[i] = jsonObject.results[i].ID;
-
-					// Generate the table row to insert into the document.
-					loadingPg.appendChild(generateContact(fn, ln, ph, em, cid[i]));
-				}
-
-				pgNum = pg; // Update global page tracker.
-
-				// Hide the old page if it existed and display the new page.
-				if (oldPg > 0)
-				{
-					document.getElementById("page" + oldPg).style.display = "none";
-				}
-				document.getElementById("contacts").appendChild(loadingPg);
-				return true;
-			}
-		};
-		xhr.send(jsonPayload);
-	}
-	catch(err) 
-	{
-		// Displaying error message to the user instead of just logging to the console
-		displayContactsErr("Error loading contacts: " + err.message);
-		return false;
-	}
-}
-
 // Toggle contacts display error when the search/load API returns an error.
 function displayContactsErr(errMsg)
 {
@@ -379,27 +278,15 @@ function displayContactsErr(errMsg)
 	document.getElementById("paginationDiv").style.display = "none";
 }
 
-// Generates a new page as the child of the contacts table.
-function generatePage(pgNum)
-{
-	// Make a table body element with the correct attributes.
-	let tbodyPage = document.createElement("tbody");
-	tbodyPage.id = "page" + pgNum;
-	tbodyPage.className = "contactsBody";
-
-	document.getElementById("contacts").appendChild(tbodyPage);
-	return tbodyPage;
-}
-
 // CRUD operations.
 
 // Adds a new contact to the top of the current page.
 function addContact()
 {
-	let newFname = document.getElementById("addFname").value;
-	let newLname = document.getElementById("addLname").value;
-	let newphoneNum = document.getElementById("addPhNum").value;
-	let newEmail = document.getElementById("addEmail").value;
+	const newFname = document.getElementById("addFname").value;
+	const newLname = document.getElementById("addLname").value;
+	const newphoneNum = document.getElementById("addPhNum").value;
+	const newEmail = document.getElementById("addEmail").value;
 
 	let tmp = {
 		firstName: newFname,
@@ -421,7 +308,7 @@ function addContact()
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				let jsonObject = JSON.parse(xhr.responseText);
+				const jsonObject = JSON.parse(xhr.responseText);
 				if (jsonObject.error)
 				{
 					console.log(jsonObject.error);
@@ -431,8 +318,8 @@ function addContact()
 					document.getElementById("addErr").style.display = "";
 
 					// Make all the fields red and display warning icons.
-					let inputs = document.getElementsByClassName("addInput");
-					let icons = document.getElementsByClassName("addInvalidIcon");
+					const inputs = document.getElementsByClassName("addInput");
+					const icons = document.getElementsByClassName("addInvalidIcon");
 					for (let i = 0; i < inputs.length; i++)
 					{
 						inputs[i].style.borderColor = "#dc3545";
@@ -447,37 +334,10 @@ function addContact()
 
 				// If this is the user's first contact, create their first page.
 				const pages = document.getElementsByClassName("contactsBody");
-				let pageAdding = (pages.length < 1) ? generatePage(pgNum) : document.getElementById("page" + pgNum);
+				const pageAdding = (pages.length < 1) ? generatePage(pgNum) : document.getElementById("page" + pgNum);
 
 				// Insert new contact at the top.
 				pageAdding.insertBefore(newContact, pageAdding.firstChild)
-				
-				// Do we need to add the contact at the end of this page to the next page?
-				let pgIncr = pgNum;
-				let curPage = document.getElementById("page" + pgIncr);
-				let curContacts = curPage.getElementsByClassName("contact");
-				const allPages = document.getElementsByClassName("contactsBody");
-				console.log(curPage + " " + curContacts);
-
-				while (curContacts.length > contactsPerPage)
-				{
-					let curChild = curPage.lastChild;
-					curPage.removeChild(curPage.lastChild);
-
-					// Go add the removed element to the top of the next page.
-					// Or to a holder array to be loaded in on next page toggle.
-					pgIncr++;
-					if (pgIncr <= allPages.length)
-					{
-						curPage = document.getElementById("page" + pgIncr);
-						curPage.insertBefore(curChild, curPage.firstChild);
-						curContacts = curPage.getElementsByClassName("contact");					
-					}
-					else
-					{
-						moveToNextPage.push(curChild);
-					}
-				}
 
 				// In case a user is adding their first contact.
 				clearError();
@@ -496,29 +356,146 @@ function addContact()
 	}
 }
 
-// Displays contacts matching the search term.
-function searchContacts()
+// Wrapper funciton for searching.
+function searchButton(srchTerm)
 {
-	clearError();
-
-	// Hide all currently displayed contacts.
 	nukeAllPages();
-	// todo consolidate this?
+	searchContacts(srchTerm);
 
-	// Update the global search term and reload contacts.
-	srch = document.getElementById("searchText").value.toLowerCase();
-	loadContacts(pgNum, pgNum - 1);
+	const allDigits = /^[0-9]+$/;
+	const digitsDashes = /^[0-9]{3}\-[0-9]*([0-9]|\-)*$/;
+
+	if (allDigits.test(srchTerm))
+	{
+		searchContacts(formatPhoneNumber(srchTerm));
+	}
+	else if (digitsDashes.test(srchTerm))
+	{
+		searchContacts(srchTerm.replaceAll("-", ""));
+	}
+}
+
+// Loads in the contacts matching a certain search term.
+function searchContacts(srchTerm)
+{
+	const tmp = {
+        search: srchTerm,
+        userId: userId,
+		size: contactsPerPage,
+		page: (pgNum + 1)
+    };
+
+    const jsonPayload = JSON.stringify(tmp);
+	
+    const url = urlBase + '/SearchContact.' + extension;
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+	try {
+		xhr.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+                let jsonObject = JSON.parse(xhr.responseText);
+
+                if (jsonObject.error) {
+					if (pgNum == 0)
+					{
+						// Trying to load from the beginning and found nothing.
+						displayContactsErr("No contacts to display");
+					}
+                    return;
+                }
+
+				// If we're just starting out, make a new page to populate.
+				let curPg;
+				let pageOn = pgNum;
+				if (pgNum == 0)
+				{
+					curPg = generatePage(pgNum + 1);
+					pageOn = pgNum = pgNum + 1;
+				}
+				else
+				{
+					curPg = document.getElementById("page" + pgNum);
+				}
+				let switchPg = pgNum + 1; // Assume we want to switch the page.
+
+				// Make a new page with each contact from the results.
+				let contactsAdded = 0;
+				for (let i = 0; i < jsonObject.results.length; i++)
+				{
+					if (!cid.includes(jsonObject.results[i].ID))
+					{
+						const fn = jsonObject.results[i].FirstName;
+						const ln = jsonObject.results[i].LastName;
+						const ph = jsonObject.results[i].Phone;
+						const em = jsonObject.results[i].Email;
+						cid[i] = jsonObject.results[i].ID;
+
+						const newEntry = generateContact(fn, ln, ph, em, cid[i]);
+						while (!populatePage(curPg, newEntry))
+						{
+							// We don't want to switch if our first new entry is 
+							// trying to fill up the current page.
+							if (i == 0 && pageOn == pgNum)
+							{
+								switchPage = pageOn;
+							}
+
+							const nextPg = document.getElementById("page" + (pageOn+1));
+							if (nextPg)
+							{
+								curPg = nextPg;
+							}
+							else
+							{
+								curPg = generatePage(pageOn + 1);
+							}
+							pageOn++;
+						}
+	
+						contactsAdded++;
+					}
+				}
+
+				// Hide the old page if it existed and was full before we started adding.
+				if (pgNum > 1 && pgNum < switchPg)
+				{
+					document.getElementById("page" + (pgNum)).style.display = "none";
+				}
+				// Hide the newly generated page if we aren't ready to display it yet.
+				else if (pgNum == switchPg && contactsAdded > 0)
+				{
+					curPg.style.display = "none";
+				}
+
+				// If we actually added contacts, 
+				if (contactsAdded > 0)
+				{
+					document.getElementById("contacts").appendChild(curPg);
+					pgNum = pageOn;
+				}
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err) 
+	{
+		// Displaying error message to the user instead of just logging to the console
+		displayContactsErr("Error loading contacts: " + err.message);
+		return false;
+	}
 }
 
 // Updates the contact in the database and in the HTML table.
 function updateContact(cx)
 {
-	let saveFname = document.getElementById("editFname").value;
-	let saveLname = document.getElementById("editLname").value;
-	let savephoneNum = document.getElementById("editPhNum").value;
-	let saveEmail = document.getElementById("editEmail").value;
+	const saveFname = document.getElementById("editFname").value;
+	const saveLname = document.getElementById("editLname").value;
+	const savephoneNum = document.getElementById("editPhNum").value;
+	const saveEmail = document.getElementById("editEmail").value;
 
-	let tmp = {
+	const tmp = {
 		contactId: cid[cx],
 		firstName: saveFname,
 		lastName: saveLname,
@@ -526,9 +503,9 @@ function updateContact(cx)
 		email: saveEmail,
 		userId: userId
 	};
-	let jsonPayload = JSON.stringify( tmp );
+	const jsonPayload = JSON.stringify( tmp );
 
-	let url = urlBase + '/UpdateContact.' + extension;
+	const url = urlBase + '/UpdateContact.' + extension;
 	
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -539,7 +516,7 @@ function updateContact(cx)
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				let jsonObject = JSON.parse(xhr.responseText);
+				const jsonObject = JSON.parse(xhr.responseText);
 				if (jsonObject.error)
 				{
 					console.log(jsonObject.error);
@@ -549,8 +526,8 @@ function updateContact(cx)
 					document.getElementById("editErr").style.display = "";
 
 					// Make all the fields red and display warning icons.
-					let inputs = document.getElementsByClassName("editInput");
-					let icons = document.getElementsByClassName("editInvalidIcon");
+					const inputs = document.getElementsByClassName("editInput");
+					const icons = document.getElementsByClassName("editInvalidIcon");
 					for (let i = 0; i < inputs.length; i++)
 					{
 						inputs[i].style.borderColor = "#dc3545";
@@ -561,7 +538,7 @@ function updateContact(cx)
 				}
 
 				//Modify contact info in table row and closes edit modal if valid
-				let contactRow = document.getElementById("row" + cx);
+				const contactRow = document.getElementById("row" + cx);
 				contactRow.getElementsByTagName("td")[1].innerHTML = saveFname;
 				contactRow.getElementsByTagName("td")[2].innerHTML = saveLname;
 				contactRow.getElementsByTagName("td")[3].innerHTML = savephoneNum;
@@ -580,12 +557,12 @@ function updateContact(cx)
 // Deletes the specified contact from the database.
 function deleteContact(contactId, rowId) 
 {
-    let tmp = { contactId: contactId };
-    let jsonPayload = JSON.stringify(tmp);
+    const tmp = { contactId: contactId };
+    const jsonPayload = JSON.stringify(tmp);
 
     console.log("Sending payload to DeleteContact:", jsonPayload); // Check what's happening
 
-    let url = urlBase + '/DeleteContact.' + extension;
+    const url = urlBase + '/DeleteContact.' + extension;
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
@@ -595,23 +572,28 @@ function deleteContact(contactId, rowId)
             if (this.readyState == 4 && this.status == 200) {
                 console.log("Contact has been deleted");
 				document.getElementById("row" + rowId).remove();
-
-				// Take the contact from the top of the next page
-				// and append it at the end of this page.
-				let allPages = document.getElementsByClassName("contactsBody");
-				if (pgNum < allPages.length)
-				{
-					console.log(allPages[allPages.length - 1]);
-				}
             }
         };
         xhr.send(jsonPayload);
     } catch(err) {
+		// todo display this
         console.error("Error in deleteContact: " + err.message);
     }
 }
 
 // CRUD helper functions.
+
+// Generates a new page as the child of the contacts table.
+function generatePage(pgNum)
+{
+	// Make a table body element with the correct attributes.
+	const tbodyPage = document.createElement("tbody");
+	tbodyPage.id = "page" + pgNum;
+	tbodyPage.className = "contactsBody";
+
+	document.getElementById("contacts").appendChild(tbodyPage);
+	return tbodyPage;
+}
 
 // Returns a DOM table row containing the provided contact information.
 function generateContact(fn, ln, ph, em, id)
@@ -663,6 +645,19 @@ function generateContact(fn, ln, ph, em, id)
 	return trow;
 }
 
+// Adds a contact to a specified page unless its full.
+function populatePage(page, contact)
+{
+	const pageCapacity = contactsPerPage - page.getElementsByClassName("contact").length;
+	if (pageCapacity > 0)
+	{
+		page.appendChild(contact);
+		return true;
+	}
+
+	return false;
+}
+
 // Clears error messages from searching or loading.
 function clearError()
 {
@@ -677,17 +672,17 @@ function clearError()
 // Resets displayed pages to prepare for search or search clear.
 function nukeAllPages()
 {
-	let pagesDisplayed = document.getElementsByClassName("contactsBody");
+	clearError();
+	const pagesDisplayed = document.getElementsByClassName("contactsBody");
 	for (let i = 0; i < pagesDisplayed.length; i++)
 	{
 		pagesDisplayed[i].remove();
 	}
 
 	// Reset necessary globals.
-	pgNum = 1;
+	pgNum = 0;
 	cid.length = 0;
 	lastContactIdx = -1;
-	moveToNextPage.length = 0;
 }
 
 // Contact validation tied to modal submit button.
@@ -720,7 +715,6 @@ function editContact(cx)
 // Prompts the user to confirm contact deletion.
 function confirmDelete(contactId, rowId) 
 {
-    console.log("Received Contact ID in confirmDelete:", contactId); // check contactID
 	// Get the first and last names of the contact to delete.
 	let names = document.getElementById("fname" + rowId).innerText;
 	names += " " + document.getElementById("lname" + rowId).innerText;
@@ -738,9 +732,9 @@ function validateContactForm(formType, fnameId, phoneId, emailId)
 	let fnameErr = lnameErr = phoneErr = emailErr = false;
 
 	// Get inputs.
-	let fname = document.getElementById(fnameId);
-	let phone = document.getElementById(phoneId);
-	let email = document.getElementById(emailId);
+	const fname = document.getElementById(fnameId);
+	const phone = document.getElementById(phoneId);
+	const email = document.getElementById(emailId);
 
 
 	if (!fname.value)
@@ -752,8 +746,8 @@ function validateContactForm(formType, fnameId, phoneId, emailId)
 	}
 
 	// Validate the phone number.
-	let phoneNum = phone.value;
-	let phRegex = /^[(]?[0-9]{3}[)]?[-\.]?[0-9]{3}[-\.]?[0-9]{4}$/;
+	const phoneNum = phone.value;
+	const phRegex = /^[(]?[0-9]{3}[)]?[-\.]?[0-9]{3}[-\.]?[0-9]{4}$/;
 	if (phRegex.test(phoneNum) == false)
 	{
 		// phone.setCustomValidity("Invalid field.");
@@ -767,7 +761,7 @@ function validateContactForm(formType, fnameId, phoneId, emailId)
 	phone.value = formatPhoneNumber(phoneNum);
 
 	// Validate the email using the world's ugliest regex.
-	let emailRegex = /^[a-zA-Z0-9!#\$%&'\*\+\-\/=\?\^_`\{|\}~.]+@[a-z]+\.[a-z]+$/;
+	const emailRegex = /^[a-zA-Z0-9!#\$%&'\*\+\-\/=\?\^_`\{|\}~.]+@[a-z]+\.[a-z]+$/;
 	if (emailRegex.test(email.value) == false)
 	{
 		// email.setCustomValidity("Invalid field.");
@@ -789,8 +783,8 @@ function validateContactForm(formType, fnameId, phoneId, emailId)
 function resetForm(formType)
 {
 	// Revert invalid or error styling.
-	let invIcons = document.getElementsByClassName(formType + "InvalidIcon");
-	let inputs = document.getElementsByClassName(formType + "Input");
+	const invIcons = document.getElementsByClassName(formType + "InvalidIcon");
+	const inputs = document.getElementsByClassName(formType + "Input");
 	if (invIcons && inputs)
 	{
 		for (let i = 0; i < invIcons.length; i++)
@@ -800,7 +794,7 @@ function resetForm(formType)
 		}
 	}
 
-	let feedbacks = document.getElementsByClassName(formType + "Feedback");
+	const feedbacks = document.getElementsByClassName(formType + "Feedback");
 	if (feedbacks)
 	{
 		for (let i = 0; i < feedbacks.length; i++)
@@ -820,7 +814,7 @@ function resetForm(formType)
 function closeModalForm(modalId, formId)
 {
 	// If the modal is open, hide it.
-	let modal = bootstrap.Modal.getInstance(document.getElementById(modalId));
+	const modal = bootstrap.Modal.getInstance(document.getElementById(modalId));
 	if (modal)
 	{
 		modal.hide();
@@ -849,30 +843,28 @@ function formatPhoneNumber(input)
 // Displays all contacts and clears search text field.
 function clearSearch()
 {
-	clearError();
+	nukeAllPages();
 	document.getElementById("searchText").value = "";
-	searchContacts(); // Search with empty string.
+	searchContacts(""); // Search with empty string.
 }
 
 // Go to the next or previous page based on the increment.
 function changePage(pageIncr)
 {
-	let pages = document.getElementsByClassName("contactsBody");
-	let oldPage = document.getElementById("page" + pgNum);
-	let newPage = pgNum + pageIncr;
+	const pages = document.getElementsByClassName("contactsBody");
 
 	// If the page to turn to has not been loaded yet.
-	if (newPage > pages.length)
+	if (pgNum + pageIncr > pages.length)
 	{
-		loadContacts(newPage, pgNum);
+		searchContacts("");
 	}
-	else if (newPage > 0)
+	else if (pgNum + pageIncr > 0)
 	{
 		// Hide current page and update the global page tracker.
-		oldPage.style.display = "none";
-		pgNum = newPage;
+		document.getElementById("page" + pgNum).style.display = "none";
 
 		// Display the next or prev page.
+		pgNum += pageIncr;
 		document.getElementById("page" + pgNum).style.display = "";
 	}
 }
@@ -916,7 +908,6 @@ function readCookie()
 	}
 	else
 	{
-		// todo delete this block?
 		// document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
 	}
 }

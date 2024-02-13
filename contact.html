@@ -25,7 +25,7 @@
 		{
 			readCookie();
 			document.getElementById("navUser").innerHTML = firstName;
-			loadContacts(1, 0);
+			searchContacts("");
 			resetForm("add");
 			resetForm("edit");
 		}, false);
@@ -80,7 +80,7 @@
 							</button>
 							<input id="searchText" type="search" placeholder="Enter contact information" class="form-control" style="border: 1px solid #4b0c66;">
 							<button id="searchBtn" class="btn" type="submit" 
-							onclick="searchContacts();">
+							onclick="searchButton(document.getElementById('searchText').value.toLowerCase());">
 								Search
 							</button>
 						</div>
@@ -269,25 +269,20 @@
 
 	<!--Footer Section-->
 	<footer class="footer mt-auto py-3 text-white">
-		<!-- <div class="waves">
-			<div class="wave" id="wave1"></div>
-			<div class="wave" id="wave2"></div>
-			<div class="wave" id="wave3"></div>
-			<div class="wave" id="wave4"></div>
-		</div> -->
+
 		<button data-bs-toggle="modal" data-bs-target="#aboutModal"><u>About us</u></button>
 		<span>Contact icons by <a href="https://icons8.com/">Icons8</a></span>
 		<span>&copy; 2024 Cosmos. All rights reserved.</span>
-
-		<!-- About us modal -->
 
 		<!-- About us modal-->
 		<div class="modal fade" id="aboutModal" tabindex="-1" aria-hidden="true">
 			<div class="modal-dialog modal-xl">
 			  	<div class="modal-content">
-					<div class="modal-header text-center mt-3">
+					<div class="modal-header text-center mt-3 py-1">
 						<h1 class="modal-title fs-5 w-100" id="exampleModalLabel">Meet the developers!</h1>
-						<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+						<button type="button" class="btn rounded-circle" data-bs-dismiss="modal" aria-label="Close">
+							<span class="material-symbols-outlined ratio-1x1">close</span>
+						</button>
 					</div>
 					<div class="modal-body pb-5">
 						<div class="container">
@@ -328,7 +323,7 @@
 							<div class="row justify-content-center">
 								<div class="col-10">
 									<p>
-										We are students enrolled in University of Central Florida's Computer Science 
+										We are students enrolled in the University of Central Florida's Computer Science 
 										BS program. This small CRUD application was created as part of the 
 										Processes in Object Oriented Software Development course.
 									</p>

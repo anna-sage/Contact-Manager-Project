@@ -1,19 +1,4 @@
-/* body 
-{
-    background: radial-gradient(circle at top, #060c60 , #8c6c9d);
-    margin-top: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
-} */
-
-/* .nav-link, .navbar-brand, .navbar-text, .nav-item
-{
-    font-family: 'Comfortaa', sans-serif;
-    padding-inline: 10px;
-    text-align: center;
-    color: #4b0c66;
-    transition: color 0.3s ease-in-out;
-} */
+/* Styles for the info page */
 
 .navbar-nav .nav-item:hover .nav-link {
     color: white;
@@ -140,12 +125,6 @@
     display: none;
 }
 
-/* input:focus, button:focus, a:hover, input:hover, button:hover {
-    outline: none;
-    border-color: #6b1e94;
-    box-shadow: 0 0 0 2px rgba(107, 30, 148, 0.2);
-} */
-
 #desc
 {
     width: 100%;
@@ -153,37 +132,3 @@
     padding-bottom: 2%;
     margin-bottom: 5%;
 }
-
-/* footer section area */
-/* 
-.footer {
-    position: relative;
-    width: 100%;
-    background: #4b0c66;
-    min-height: 200px; 
-    padding: 20px 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    color: #ffffff; 
-} */
-
-/* animation for text */ 
-/* @keyframes colorShift {
-    0%, 100% {
-        color: #ffffff;
-    }
-    50% {
-        color: #FFEA00; 
-    }
-} */
-
-/* @keyframes float {
-    0%, 100% {
-        transform: translatey(0px);
-    }
-    50% {
-        transform: translatey(-20px);
-    }
-} */
