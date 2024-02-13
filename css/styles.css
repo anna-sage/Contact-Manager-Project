@@ -73,14 +73,16 @@ nav .nav-item .btn:focus
     color: #ffffff; 
 }
 
-.footer button
+.footer button,
+.footer a
 {
     color: white;
     background: none;
     border: 0px;
 }
 
-.footer button:hover
+.footer button:hover,
+.footer a:hover
 {
     color: #6f97fa;
 }

@@ -25,6 +25,8 @@
     border: 1px solid #4b0c66;
 }
 
+#accessUIDiv .btn:hover,
+#accessUIDiv .btn:focus,
 #accessUIDiv .uiNavBar .btn:hover,
 #accessUIDiv .uiNavBar .btn:focus
 {
