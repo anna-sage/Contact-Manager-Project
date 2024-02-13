@@ -6,27 +6,36 @@
     color: #4b0c66;
 }
 
-.navbar-nav .nav-item.active .nav-link,
-.navbar-nav .nav-item:active #logoutButton {
-    color: white;
-    background-color: #4b0c66;
+#accessUIDiv
+{
+    font-family: 'DM Sans', sans-serif;
 }
 
-.navbar-nav .nav-item.hover .nav-link,
-.navbar-nav .nav-item:hover #logoutButton {
+#accessUIDiv .btn
+{
+    color: #4b0c66;
+    background-color: white;
+    border: 1px solid #4b0c66;
+}
+
+#accessUIDiv .uiNavBar .btn
+{
+    color: white;
+    background-color: #4b0c66;
+    border: 1px solid #4b0c66;
+}
+
+#accessUIDiv .uiNavBar .btn:hover,
+#accessUIDiv .uiNavBar .btn:focus
+{
     color: white;
     background-color: #6b1e94;
+    border: 1px solid #6b1e94;
 }
 
 .material-symbols-outlined
 {
     vertical-align: middle;
-}
-
-#logoutButton
-{
-    border-color: #4b0c66;
-    color: #4b0c66;
 }
 
 .uiNavBar {
@@ -39,15 +48,15 @@
     width: 95%;
 }
 
-.btn 
+/* .btn 
 {
     color: #4b0c66;
     border: 1.5px solid #4b0c66;
     font-family: 'Comfortaa';
     font-weight: 550;
-}
+} */
 
-main .btn:hover 
+/* main .btn:hover 
 {
     color: white;
     background-color: #6b1e94;
@@ -59,7 +68,6 @@ main .btn:focus
     color: white;
     background-color: #6b1e94;
     outline: 4px solid #ae6bd2;
-    outline-color: #ae6bd2;
     outline-offset: 2px;
 }
 
@@ -68,7 +76,7 @@ main .btn:active
     color: white;
     background-color: #4b0c66;
     border: transparent;
-}
+} */
 
 #searchContainer
 {
@@ -104,20 +112,6 @@ main .btn:active
     border-radius: 35px;
     font-family: 'DM Sans', sans-serif;
     box-shadow: 0px 0px 30px rgb(198, 192, 192);
-}
-
-
-.btn
-{
-    color: white;
-    background-color: #4b0c66;
-    border: none;
-}
-
-.btn:hover 
-{
-    /* background-color: #6b1e94;  */
-    background-color: #a14bcf; 
 }
 
 .contactBtns

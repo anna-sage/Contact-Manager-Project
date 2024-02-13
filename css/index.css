@@ -6,14 +6,14 @@
     margin-right: 0px;
 } */
 
-.nav-link, .navbar-brand, .navbar-text, .nav-item
+/* .nav-link, .navbar-brand, .navbar-text, .nav-item
 {
     font-family: 'Comfortaa', sans-serif;
     padding-inline: 10px;
     text-align: center;
     color: #4b0c66;
-    transition: color 0.3s ease-in-out; /*should create a smoother color change*/
-}
+    transition: color 0.3s ease-in-out;
+} */
 
 .navbar-nav .nav-item:hover .nav-link {
     color: white;

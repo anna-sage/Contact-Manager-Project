@@ -15,12 +15,20 @@ body
     background-size: 200% 200%;
 }
 
-.btn:focus, .buttons:focus
+.nav-link, .navbar-brand, .navbar-text, .nav-item
 {
-    color: white;
-    background-color: #6b1e94;
-    outline: 4px solid #ae6bd297;
-    outline-offset: 2px;
+    font-family: 'Comfortaa', sans-serif;
+    padding-inline: 10px;
+    text-align: center;
+    color: #4b0c66;
+    transition: color 0.3s ease-in-out; /*should create a smoother color change*/
+}
+
+nav .nav-item .btn
+{
+    color: #4b0c66;
+    border: 1px solid #4b0c66;
+    background-color: white;
 }
 
 .btn
@@ -28,6 +36,23 @@ body
     color: #4b0c66;
     border: 1px solid #4b0c66;
     background-color: #ffffff;
+    font-family: 'Comfortaa', sans-serif;
+}
+
+.btn:hover, nav .nav-item .btn:hover
+{
+    color: white;
+    background-color: #6b1e94;
+    border-color: #6b1e94;
+}
+
+.btn:focus, .buttons:focus,
+nav .nav-item .btn:focus
+{
+    color: white;
+    background-color: #6b1e94;
+    outline: 4px solid #ae6bd297;
+    outline-offset: 2px;
 }
 
 .material-symbols-outlined
