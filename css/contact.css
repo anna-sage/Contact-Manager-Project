@@ -35,6 +35,7 @@
     color: white;
     background-color: #6b1e94;
     border: 1px solid #6b1e94;
+    box-shadow: 1px 1px 1px 1px #4b0c666b;
 }
 
 .material-symbols-outlined
@@ -98,17 +99,12 @@
 
 .contactBtns
 {
-    border-radius: 4cap;
+    border-radius: 6cap;
 }
 
-tbody td img
+tbody .contact img
 {
-    margin-left: 5px;
-    width: 7%;
-}
-
-.icons 
-{
+    margin: 0% 15%;
     height: 50px;
     width: 50px;
 }
@@ -132,6 +128,7 @@ tbody td img
 {
     color: #4b0c66;
     background-color: #d5cbe1;
+    box-shadow: 1px 1px 1px 1px #65606b42;
 }
 
 .modal .modal-footer #addCancel:focus,
