@@ -40,22 +40,8 @@
 
 #noContactsContainer
 {
-    display: none;
     min-height: 100px;
 }
-
-/* #searchAddBar .uiNavBar .btn
-{
-    color: white;
-    background-color: #4b0c66;
-    border: 1px solid #4b0c66;
-} */
-
-/* #searchAddBar .btn:focus,
-#searchAddBar .uiNavBar .btn:focus
-{
-
-} */
 
 .material-symbols-outlined
 {

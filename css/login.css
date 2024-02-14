@@ -94,7 +94,6 @@
 #loginResultDiv,
 #registerResultDiv
 {
-    display: none;
     font-size: 18px;
     color: #dc3545;
 }
@@ -147,7 +146,7 @@
     width: 75%;
 }
 
-#registerDiv #registerRight > *
+#registerDiv #registerRight #registerRightContainer > *
 {
     margin-left: 5%;
     margin-right: 5%;
@@ -156,6 +155,14 @@
 #registerDiv #registerRight > *:not(.buttons)
 {
     width: 100%;
+}
+
+#registerDiv #registerRight #registerRightContainer
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 #loginDiv input[type="text"],#loginDiv input[type="password"]{
@@ -195,10 +202,11 @@
     font-size: 23px;
 }
 
-#registerLeft
+/* #registerLeft,
+#registerRight
 {
     max-width: 500px;
-}
+} */
 
 .inner-title{
     display: inline-block;
@@ -223,6 +231,7 @@
 #passwordRequirements h3
 {
     font-size: 18px;
+    font-family: 'DM Sans', sans-serif;
 }
 
 #passwordRequirements ul
@@ -231,6 +240,7 @@
     list-style: none;
     padding-left: 0;
     font-size: 18px;
+    font-family: 'DM Sans', sans-serif;
 }
 
 /*

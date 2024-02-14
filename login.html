@@ -37,7 +37,7 @@
 				passwordVisToggle(registerPass, registerEye);
 			}
 
-			// Hide error msgs.
+			clearInputs();
 		});
 	</script>
 </head>
@@ -111,9 +111,9 @@
 								<input type="password" id="loginPassword" placeholder="Password"/>
 								<i class="fa-solid fa-eye" id="loginEye"></i><br />
 							</div>
-						<div id="loginResultDiv" class="container mt-2">
+						<div id="loginResultDiv" class="container mt-2" style="display: none;">
 							<span id="loginWarningIcon" class="material-symbols-outlined">warning</span>
-							<span id="loginResult" class="align-middle">Username/password combination invalid.</span>
+							<span id="loginResult" class="align-middle" style="display: none;">Username/password combination invalid.</span>
 						</div>
 						<button type="button" id="loginButton" class="buttons" onclick="doLogin();"> LOGIN </button>
 					</form>
@@ -125,7 +125,7 @@
 
 						<div class="row">
 
-						<div id="registerLeft" class="col-sm-6">
+						<div id="registerLeft" class="col">
 							<div>
 								<label for="firstName" class="form-label">FIRST NAME</label><br />
 								<input type="text" id="firstName" placeholder="First name" oninput="this.value = formatName(this.value);" /><br />
@@ -151,42 +151,44 @@
 							</div>
 						</div>
 
-						<div id="registerRight" class="col-sm-6">
-						<div id="passwordRequirements">
-								<h3>Password Requirements</h3>
-							<ul id="validatePassword">
-								<li id="char8">
-									<span id="char8Warning" class="warningIcon material-symbols-outlined">close</span>
-									<span id="char8Check" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
-									<span id="char8Txt">at least 8 characters</span>
-								</li>
-								<li id="digit">
-									<span id="digitWarning" class="warningIcon material-symbols-outlined">close</span>
-									<span id="digitCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
-									<span id="digitTxt">at least 1 digit</span>
-								</li>
-								<li id="lower">
-									<span id="lowerWarning" class="warningIcon material-symbols-outlined">close</span>
-									<span id="lowerCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
-									<span id="lowerTxt">at least 1 lower case letter</span>
-								</li>
-								<li id="upper">
-									<span id="upperWarning" class="warningIcon material-symbols-outlined">close</span>
-									<span id="upperCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
-									<span id="upperTxt">at least 1 upper case letter</span>
-								</li>
-								<li id="matchInput">
-									<span id="matchInputWarning" class="warningIcon material-symbols-outlined">close</span>
-									<span id="matchInputCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
-									<span id="matchInputTxt">passwords must match</span>
-								</li>
-							</ul>
-						</div>
-						<button type="button" id="registerButton" class="buttons" onclick="doRegister();"> REGISTER </button>
-						<div id="registerResultDiv" class="container mt-2">
-							<span id="registerWarningIcon" class="material-symbols-outlined">warning</span>
-							<span id="registerResult" class="align-middle ms-auto">Something went wrong.</span>
-						</div>
+						<div id="registerRight" class="col">
+							<div id="registerRightContainer">
+								<div id="passwordRequirements">
+									<h3>Password Requirements</h3>
+								<ul id="validatePassword">
+									<li id="char8">
+										<span id="char8Warning" class="warningIcon material-symbols-outlined">close</span>
+										<span id="char8Check" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
+										<span id="char8Txt">at least 8 characters</span>
+									</li>
+									<li id="digit">
+										<span id="digitWarning" class="warningIcon material-symbols-outlined">close</span>
+										<span id="digitCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
+										<span id="digitTxt">at least 1 digit</span>
+									</li>
+									<li id="lower">
+										<span id="lowerWarning" class="warningIcon material-symbols-outlined">close</span>
+										<span id="lowerCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
+										<span id="lowerTxt">at least 1 lower case letter</span>
+									</li>
+									<li id="upper">
+										<span id="upperWarning" class="warningIcon material-symbols-outlined">close</span>
+										<span id="upperCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
+										<span id="upperTxt">at least 1 upper case letter</span>
+									</li>
+									<li id="matchInput">
+										<span id="matchInputWarning" class="warningIcon material-symbols-outlined">close</span>
+										<span id="matchInputCheck" class="checkIcon material-symbols-outlined" style="display: none;">check</span>
+										<span id="matchInputTxt">passwords must match</span>
+									</li>
+								</ul>
+								<div id="registerResultDiv" class="container mt-2" style="display: none;">
+									<span id="registerWarningIcon" class="material-symbols-outlined">warning</span>
+									<span id="registerResult" class="align-middle ms-auto">Something went wrong.</span>
+								</div>
+							</div>
+							<button type="button" id="registerButton" class="buttons" onclick="doRegister();"> REGISTER </button>
+							</div>
 						</div>
 						</div>
 					</form>

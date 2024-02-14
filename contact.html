@@ -25,6 +25,7 @@
 		{
 			readCookie();
 			document.getElementById("navUser").innerHTML = firstName;
+			clearInputs();
 			clearSearch();
 			resetForm("add");
 			resetForm("edit");
@@ -149,7 +150,6 @@
 										<button id="addCancel" type="button" class="btn modalCancel float-start" onclick="resetForm('add');">
 											Cancel
 										</button>
-										<!-- todo clean this up -->
 										<button id="addSubmit" type="submit" class="btn modalSubmit"
 											  onclick="if(validateContactForm('add','addFname', 'addPhNum', 'addEmail')) {addContact(); }">
 											Add

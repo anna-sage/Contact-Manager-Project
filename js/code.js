@@ -23,6 +23,17 @@ window.onscroll = function() {
     }
 }
 
+// Clear input fields.
+function clearInputs()
+{
+	const inputs = [].slice.call(document.getElementsByTagName("input"));
+	for (let i = 0; i < inputs.length; i++)
+	{
+		inputs[i].value = "";
+	}
+}
+
+
 // Login, register, and logout functions.
 
 function doLogin()
@@ -115,10 +126,23 @@ function doRegister()
         	{
 				if (this.readyState==4)
 				{
+					const jsonObject = JSON.parse( xhr.responseText );
+					console.log(jsonObject.error);
+					if (jsonObject.error)
+					{
+						const resultDiv = document.getElementById("registerResultDiv");
+						resultDiv.style.display = "";
+						const result = document.getElementById("registerResult");
+						result.style.display = "";
+						result.innerHTML = jsonObject.error;						
+						return;
+					}
+
             		if (this.status == 409) 
 					{
-                		document.getElementById("registerResult").innerHTML = "User with this username already exists";
 						document.getElementById("registerResultDiv").style.display = "";
+						document.getElementById("registerResult").innerHTML = "User with this username already exists";
+
             	    	return;
             		}
 
@@ -251,17 +275,6 @@ function togglePassReq(valid, warningIconId, checkIconId, txtId)
 	document.getElementById(txtId).style.color = valid ? green : red;
 }
 
-// Toggle contacts display error when the search/load API returns an error.
-function displayContactsErr(errMsg)
-{
-	const errDisplay = document.getElementById("noContactsTxt");
-	errDisplay.innerHTML = errMsg;
-	errDisplay.style.display = "";
-
-	document.getElementById("contactsDisplay").style.display = "none";
-	document.getElementById("paginationDiv").style.display = "none";
-}
-
 // CRUD operations.
 
 // Adds a new contact to the top of the current page.
@@ -336,7 +349,7 @@ function addContact()
 	}
 	catch(err)
 	{
-		document.getElementById("contactErrTxt").innerText = "Error adding contact: " + err.message;
+		document.getElementById("contactErrTxt").innerHTML = "Error adding contact: " + err.message;
 	}
 }
 
@@ -364,6 +377,7 @@ function searchContacts(srchTerm)
 			if (this.readyState == 4 && this.status == 200) {
                 let jsonObject = JSON.parse(xhr.responseText);
 
+				console.log("error " + jsonObject.error);
                 if (jsonObject.error) {
 					if (pgNum == 0)
 					{
@@ -473,7 +487,7 @@ function updateContact(cx)
 	}
 	catch(err)
 	{
-		document.getElementById("contactErrTxt").innerText = "Error updating contact: " + err.message;
+		document.getElementById("contactErrTxt").innerHTML = "Error updating contact: " + err.message;
 	}	
 }
 
@@ -499,8 +513,9 @@ function deleteContact(contactId, rowId)
         };
         xhr.send(jsonPayload);
     } catch(err) {
-		// todo display this
         console.error("Error in deleteContact: " + err.message);
+		document.getElementById("noContactsTxt").innerHTML = err.message;
+		document.getElementById("noContactsTxt").style.display = "";
     }
 }
 
@@ -574,9 +589,7 @@ function clearError()
 	const errDisplay = document.getElementById("noContactsTxt");
 	errDisplay.innerHTML = "";
 	errDisplay.style.display = "none";
-
-	document.getElementById("contactsDisplay").style.display = "";
-	document.getElementById("paginationDiv").style.display = "";
+	document.getElementById("noContactsContainer").style.display = "none";
 }
 
 // Resets displayed pages to prepare for search or search clear.
@@ -584,6 +597,7 @@ function nukeAllPages()
 {
 	srch = ""; // Reset global.
 	clearError();
+	// Prepare to display page.
 	let pagesDisplayed = [].slice.call(document.getElementsByClassName("contactsBody"));
 	console.log("amount of pages to delete: " + pagesDisplayed.length);
 	for (let i = 0; i < pagesDisplayed.length; i++)
